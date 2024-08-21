@@ -15,7 +15,7 @@ $(NAME) : $(OBJS)
 	@$(ARRC) $(NAME) $(OBJS)
 	@clear
 
-%.o : %.c ../../include/parsing.h
+%.o : %.c ../../includes/parsing.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :

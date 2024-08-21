@@ -20,7 +20,7 @@ WHITE='\033[0;37m'
 all : $(NAME)
 
 $(NAME) : $(LIBFT) $(PARS) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT)
 	@clear
 	@if [ $$? -eq 0 ]; then \
     	echo ${GREEN}">-Compilation successful-<"${WHITE}; \

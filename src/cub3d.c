@@ -14,8 +14,10 @@
 
 #include <stdlib.h>
 
-int    main()
+int    main(int argc, char **argv)
 {
+    if (main_parsing(argc, argv))
+        return (1);
     system("/bin/ls");
     return (0);
 }
