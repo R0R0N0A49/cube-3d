@@ -9,6 +9,9 @@ OBJS=$(SRCS:.c=.o)
 PARS_DIR=src/parsing
 PARS=$(PARS_DIR)/parsing.a
 
+LIBFT_DIR= includes/libft
+LIBFT=$(LIBFT_DIR)/libft.a
+
 CYAN='\033[1;36m'
 BLUE='\033[1;34m'
 GREEN='\033[1;32m'
@@ -17,7 +20,7 @@ WHITE='\033[0;37m'
 all : $(NAME)
 
 $(NAME) : $(PARS) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARS)
 	@clear
 	@if [ $$? -eq 0 ]; then \
     	echo ${GREEN}">-Compilation successful-<"${WHITE}; \
@@ -25,6 +28,9 @@ $(NAME) : $(PARS) $(OBJS)
 
 %.o : %.c include/cub3d.h
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(LIBFT) :
+	@make --directory $(LIBFT_DIR)
 
 $(PARS) :
 	@make --directory $(PARS_DIR)
