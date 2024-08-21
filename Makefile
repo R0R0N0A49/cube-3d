@@ -31,13 +31,14 @@ $(NAME) : $(LIBFT) $(PARS) $(OBJS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
+	@mkdir OBJS
 	@make --directory $(LIBFT_DIR)
 
 $(PARS) :
 	@make --directory $(PARS_DIR)
 
 clean :
-	@$(RM) OBJS/*.o
+	@$(RM) OBJS
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
