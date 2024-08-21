@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   pars_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 18:02:46 by antoine           #+#    #+#             */
-/*   Updated: 2023/11/09 18:07:31 by antoine          ###   ########.fr       */
+/*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
+/*   Updated: 2024/08/21 15:57:07 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/parsing.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+static int	verif(char *line, t_map *data)
 {
-	if (!lst || !f)
-		return ;
-	if (lst->next)
-		ft_lstiter(lst->next, f);
-	f(lst->content);
+	(void)data;
+	ft_printf("%s", line);
+	return (1);
+}
+
+void	parsing_line(char *line, t_map *data)
+{
+	static int	i = 0;
+
+	if (i < 5)
+		i += verif(line, data);
+
 }

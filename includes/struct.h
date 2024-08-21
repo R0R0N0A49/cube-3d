@@ -18,7 +18,7 @@
 # define txt mlx_texture_t
 # define img mlx_image_t
 
-struct s_map
+typedef struct s_map
 {
 	txt		sud;
 	txt		nord;
@@ -27,6 +27,6 @@ struct s_map
 	char	*up;
 	char	*down;
 	char	**map;
-};
+} t_map;
 
 #endif

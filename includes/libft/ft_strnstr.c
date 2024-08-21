@@ -3,37 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 20:38:39 by antoine           #+#    #+#             */
-/*   Updated: 2023/11/09 10:05:37 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/01 10:20:58 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/02 11:29:34 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 {
 	size_t	i;
-	size_t	j;
+	size_t	len_s2;
 
 	i = 0;
-	if (!*((char *)little))
-		return ((char *) big);
-	if (len == 0)
-		return (NULL);
-	while (i < len && ((char *)big)[i])
+	len_s2 = 0;
+	if (!s2[i])
+		return ((char *)s1);
+	while (i < len && s1[i] && s2[len_s2])
 	{
-		j = 0;
-		while (((char *)little)[j] && ((char *)big)[i + j] && i + j < len)
+		if (s1[i] == s2[len_s2])
+			len_s2++;
+		else
 		{
-			if (((char *)little)[j] != ((char *)big)[i + j])
-				break ;
-			j++;
+			i -= len_s2;
+			len_s2 = 0;
 		}
-		if (!((char *)little)[j])
-			return (&((char *)big)[i]);
 		i++;
 	}
-	return (NULL);
+	if (!s2[len_s2])
+		return ((char *)(s1 + (i - len_s2)));
+	return (0);
 }

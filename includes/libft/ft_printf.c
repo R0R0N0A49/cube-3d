@@ -3,35 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 16:31:57 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/13 13:06:20 by acaffard         ###   ########.fr       */
+/*   Created: 2023/12/08 13:23:49 by trebours          #+#    #+#             */
+/*   Updated: 2024/01/26 09:32:35 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <stdio.h>
 
-int	ft_printf(const char *s, ...)
+int	ft_putchar(char src)
 {
-	va_list	lst;
-	int		total_length;
-	int		i;
+	write (1, &src, 1);
+	return (1);
+}
 
-	total_length = 0;
+int	ft_printf(const char *src, ...)
+{
+	int		result;
+	int		i;
+	va_list	param;
+
+	result = 0;
 	i = 0;
-	va_start(lst, s);
-	while (s[i])
+	if (!src)
+		return (-1);
+	va_start (param, src);
+	while (src[i])
 	{
-		if (s[i] == '%' && ft_strchr("cspdiuxX%", s[i + 1]) != 0)
+		if (src[i] == '%' && src[i + 1] != '\0')
 		{
-			total_length += ft_check_flags(lst, s[i + 1]);
 			i++;
+			result += ft_type(src[i], param);
 		}
 		else
-			total_length += ft_putchar_size(s[i]);
+		{
+			write(1, &src[i], 1);
+			result += 1;
+		}
 		i++;
 	}
-	va_end(lst);
-	return (total_length);
+	va_end (param);
+	return (result);
+}
+
+int	ft_type(const char src, va_list param)
+{
+	if (src == 's')
+		return (ft_putstr(va_arg(param, char *), 1));
+	if (src == 'c')
+		return (ft_putchar(va_arg(param, int)));
+	if (src == 'd')
+		return (ft_putnbr_base(va_arg(param, int), 10));
+	if (src == 'i')
+		return (ft_putnbr_base(va_arg(param, int), 10));
+	if (src == 'u')
+		return (ft_putnbr_usgd(va_arg(param, unsigned int), 1, "0123456789"));
+	if (src == 'x')
+		return (ft_putnbr_base(va_arg(param, int), 16));
+	if (src == 'X')
+		return (ft_putnbr_base(va_arg(param, int), 16));
+	if (src == 'p')
+		return (ft_putnbr_ll(va_arg(param, unsigned long long),
+				1, "0123456789abcdef"));
+	if (src == '%')
+		return (ft_putchar('%'));
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 16:11:35 by acaffard          #+#    #+#             */
-/*   Updated: 2023/11/09 10:08:32 by acaffard         ###   ########.fr       */
+/*   Created: 2023/10/31 11:02:02 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/04 16:52:10 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	size_t				count;
+	size_t				i;
+	unsigned char		*dest1;
+	const unsigned char	*src2;
 
-	if ((unsigned char *) src == NULL && (unsigned char *)dest == NULL && n)
+	dest1 = dest;
+	src2 = src;
+	if (!src2 && !dest1)
 		return (0);
-	count = 0;
-	if ((unsigned char *) dest > (unsigned char *) src)
+	if (dest1 > src2)
 	{
-		while (count < n)
-		{
-			((unsigned char *)dest)[n - 1] = ((unsigned char *)src)[n - 1];
-			n--;
-		}
+		while (n-- != 0)
+			dest1[n] = src2[n];
 	}
 	else
 	{
-		while (count < n)
+		i = 0;
+		while (i < n)
 		{
-			((unsigned char *)dest)[count] = ((unsigned char *)src)[count];
-			count++;
+			dest1[i] = src2[i];
+			i++;
 		}
 	}
 	return (dest);

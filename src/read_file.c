@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string_isdigit.c                                :+:      :+:    :+:   */
+/*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 15:09:41 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:28:29 by trebours         ###   ########.fr       */
+/*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
+/*   Updated: 2024/08/21 16:05:46 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/cub3d.h"
 
-int	ft_string_isdigit(char *src)
+void	init_struct(char **src, t_map *data)
 {
-	int	i;
+	char	*line;
+	int		fd;
+	int		i;
 
-	i = 0;
-	while (src[i])
+	fd = open(src[1], O_RDONLY);
+	if (fd < 0)
 	{
-		if (ft_isdigit(src[i]))
-			i++;
-		else
-			return (0);
+		ft_printf("error\n");
+		exit(1);
 	}
-	return (1);
+	line = get_next_line(fd);
+	i = 0;
+	while (line && i < 5)
+	{
+		i++;
+		parsing_line(line, data);
+		free(line);
+		line = get_next_line(fd);
+	}
 }

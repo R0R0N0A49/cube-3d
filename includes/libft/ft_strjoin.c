@@ -3,39 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 08:51:19 by acaffard          #+#    #+#             */
-/*   Updated: 2023/11/06 09:25:48 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/02 16:40:45 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/02 16:41:49 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	size_t	total_length;
-	size_t	i;
-	size_t	j;
-	char	*res;	
+	char	*rsl;
+	size_t	len_s1;
+	size_t	len_s2;
 
 	if (!s1 || !s2)
-		return (NULL);
-	total_length = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	res = (char *) ft_calloc(total_length + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (s1 && ((char *)s1)[i])
+		return (0);
+	len_s1 = 0;
+	len_s2 = 0;
+	rsl = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	if (rsl == 0)
+		return (0);
+	while (s2[len_s2] || s1[len_s1])
 	{
-		res[i] = ((char *)s1)[i];
-		i++;
+		if (s1[len_s1] && len_s2 == 0)
+		{
+			rsl[len_s1] = s1[len_s1];
+			len_s1++;
+		}
+		else
+		{
+			rsl[len_s1 + len_s2] = s2[len_s2];
+			len_s2++;
+		}
 	}
-	j = 0;
-	while (s2 && ((char *)s2)[j])
-	{
-		res[i + j] = ((char *)s2)[j];
-		j++;
-	}
-	return (res);
+	return (rsl);
 }

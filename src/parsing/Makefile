@@ -3,7 +3,7 @@ CC=cc
 CFLAGS= -Wall -Werror -Wextra -g
 RM=rm -rf
 
-SRCS=parsing.c
+SRCS=parsing.c pars_line.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rc
@@ -12,7 +12,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@clear
-	@$(ARRC) $(NAME) $(OBJS)
+	@$(ARRC) $(NAME) ../../includes/libft/libft.a $(OBJS)
 	@mv *.o ../../OBJS
 	@clear
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 12:16:23 by antoine           #+#    #+#             */
-/*   Updated: 2023/11/09 10:12:09 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/02 12:40:54 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/03 14:34:54 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned char	*result;
-	size_t			i;
+	char		*rsl;
+	size_t		i;
+	long int	size_maloc;
 
-	if ((int) nmemb < 0 && (int) size < 0)
-		return (NULL);
-	if ((unsigned long long) nmemb * size > UINT_MAX)
-		return (NULL);
-	result = (unsigned char *) malloc(nmemb * size);
-	if (!result)
-		return (NULL);
+	size_maloc = nmemb * size;
+	if (size_maloc < 0 || ((int)nmemb < 0 && (int)size < 0))
+		return (0);
 	i = 0;
-	while (i < nmemb * size)
+	rsl = malloc(nmemb * size);
+	if (rsl == 0)
+		return (0);
+	while (i < (nmemb * size))
 	{
-		result[i] = 0;
+		rsl[i] = 0;
 		i++;
 	}
-	return (result);
+	return (rsl);
 }

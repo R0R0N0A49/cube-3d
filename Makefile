@@ -4,7 +4,7 @@ CFLAGS= -Wall -Werror -Wextra -g
 MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 
-SRCS=src/cub3d.c
+SRCS=src/cub3d.c src/read_file.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing
@@ -22,7 +22,7 @@ all : $(NAME)
 
 $(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
 	$(MLX)
-	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARS) ./MLX42/build/libmlx42.a
 	@mv src/*.o OBJS
 	@clear
 	@if [ $$? -eq 0 ]; then \

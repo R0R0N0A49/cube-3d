@@ -3,53 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:44:26 by antoine           #+#    #+#             */
-/*   Updated: 2023/11/09 09:45:54 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/03 17:00:50 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/03 17:00:52 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	get_n_len(int n)
+static int	ft_count(int n)
 {
-	size_t	count;
+	int	i;
 
-	count = 0;
-	if (n < 0)
-		count ++;
-	while (n)
+	i = 1;
+	while (n > 9)
 	{
-		count++;
-		n = n / 10;
+		n /= 10;
+		i++;
 	}
-	return (count);
+	return (i);
+}
+
+static int	ft_sg(int n)
+{
+	if (n < 0)
+		return (1);
+	return (0);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*res;
-	size_t	count;
+	int		i;
+	int		sg;
+	char	*rsl;
 
-	if (n == 0)
-		return (ft_strdup("0"));
-	count = get_n_len(n);
-	res = (char *) ft_calloc(count + 1, sizeof(char));
-	if (!res)
-		return (NULL);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	sg = ft_sg(n);
 	if (n < 0)
+		n *= -1;
+	i = ft_count(n) + sg;
+	rsl = ft_calloc(i-- + 1, sizeof(char));
+	if (!rsl)
+		return (0);
+	while (n > 9)
 	{
-		res[0] = '-';
-		res[count - 1] = (n % -10) * -1 + '0';
-		n = n / -10;
-		count --;
+		rsl[i--] = (n % 10) + '0';
+		n /= 10;
 	}
-	while (n != 0)
-	{
-		res[count - 1] = (n % 10) + '0';
-		n = n / 10;
-		count--;
-	}
-	return (res);
+	rsl[i] = n + '0';
+	if (sg == 1)
+		rsl[i - 1] = '-';
+	return (rsl);
 }

@@ -3,90 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 11:02:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 09:37:55 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/03 12:06:25 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/04 14:52:05 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	word_len(char const *word, size_t st, char c)
+static int	ft_count(char const *s, char c)
+{
+	int		j;
+	int		i;
+
+	i = 0;
+	j = 0;
+	if (!s[i])
+		return (0);
+	if (s[i] == c)
+	{
+		if (s[ft_strlen(s) - 1] != c)
+			j = 1;
+		i++;
+	}
+	else if (s[ft_strlen(s) - 1] != c)
+		j = 1;
+	while (s[i])
+	{
+		if (s[i] == c && s[i - 1] != c)
+			j++;
+		i++;
+	}
+	return (j);
+}
+
+size_t	ft_lenword(const char *s, char chr)
 {
 	size_t	i;
 
 	i = 0;
-	while ((word)[st + i] != '\0' && ((char *)word)[st + i] != c)
+	while (s[i] != chr && s[i])
 		i++;
 	return (i);
 }
 
-static size_t	count_words(char const *s, char c)
+static char	*ft_strdup_mod(const char *s, char chr)
 {
-	size_t	i;
-	size_t	res;
+	char	*rsl;
+	size_t	len_s;
+	int		i;
 
-	i = 1;
-	res = 0;
-	if (!s[0])
+	i = 0;
+	len_s = ft_lenword(s, chr);
+	rsl = (char *)ft_calloc((len_s + 1), sizeof(char));
+	if (rsl == 0)
 		return (0);
-	if (s[0] != c)
-		res++;
-	while (s[i])
+	while (s[i] && s[i] != chr)
 	{
-		if (s[i] != c && s[i -1] == c && s[i])
-			res++;
+		rsl[i] = s[i];
 		i++;
 	}
-	return (res);
+	return (rsl);
 }
 
-static void	fill(char const *s, char c, char **res)
+void	ft_free(char **tab)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
 
-	i = 1;
-	j = 0;
-	if (((char *)s)[0] != c)
+	i = 0;
+	while (tab[i])
 	{
-		res[j] = ft_substr(s, 0, word_len(s, 0, c));
-		j++;
-	}
-	while (((char *)s)[i])
-	{
-		if (((char *)s)[i] != c && ((char *)s)[i -1] == c)
-		{
-			res[j] = ft_substr(s, i, word_len(s, i, c));
-			j++;
-		}
+		free(tab[i]);
 		i++;
 	}
+	free(tab);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	size_t	size;
-	size_t	i;
+	int		i;
+	int		j;
+	char	**tab;
 
-	if (!s)
-		return (NULL);
-	size = count_words(s, c);
-	res = ft_calloc(size + 1, sizeof(char *));
-	if (!res)
-		return (NULL);
-	if (size == 0)
-		return (res);
-	fill(s, c, res);
 	i = 0;
-	while (res[i])
-		i++;
-	if (i != size)
+	j = 0;
+	if (!s)
+		return (0);
+	tab = ft_calloc((ft_count(s, c) + 1), sizeof(char *));
+	if (!tab)
+		return (0);
+	while (s[i])
 	{
-		ft_free_stringtab(res);
-		return (NULL);
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+		{
+			tab[j++] = ft_strdup_mod(&s[i], c);
+			while (s[i] && s[i] != c)
+				i++;
+		}
 	}
-	return (res);
+	return (tab);
 }

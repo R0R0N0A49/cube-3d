@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:02:22 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/21 12:53:35 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:15:46 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_verif_cub(char *src)
 {
-	int	len_src;
+	size_t	len_src;
 	int	i;
 
 	len_src = ft_strlen(src);
@@ -36,13 +36,12 @@ void	ft_verif_cub(char *src)
 	}
 }
 
-int main_parsing(int len, char **src)
+void main_parsing(int len, char **src)
 {
 	if (len != 2)
 	{
 		ft_printf("Error\ncub3d nead a file\n");
-		return (2);
+		exit(2);
 	}
 	ft_verif_cub(src[1]);
-	return (0);
 }

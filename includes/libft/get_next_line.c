@@ -3,113 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 14:10:07 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/13 13:05:51 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/13 10:46:58 by trebours          #+#    #+#             */
+/*   Updated: 2024/01/27 13:56:58 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-static char	*ft_fusion(char *left, char *buffer)
+int	ft_verif(char *result)
+{
+	int	i;
+
+	if (!result)
+		return (0);
+	i = 0;
+	while (result[i])
+	{
+		if (result[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_strlen_gnl(char *src)
+{
+	int	i;
+
+	if (!src)
+		return (0);
+	i = 0;
+	while (src[i])
+		i++;
+	return (i);
+}
+
+static char	*ft_strjoin(char *buf, char *result, int t)
 {
 	char	*tmp;
-
-	tmp = ft_strjoin(left, buffer);
-	free(left);
-	return (tmp);
-}
-
-static char	*read_line(int fd, char *left)
-{
-	char	*buffer;
-	int		read_value;
-
-	if (!left)
-		left = ft_calloc(1, 1);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer || !left)
-		return (NULL);
-	read_value = 1;
-	while (read_value > 0)
-	{
-		read_value = read(fd, buffer, BUFFER_SIZE);
-		if (read_value == -1)
-		{
-			free (left);
-			free (buffer);
-			return (NULL);
-		}
-		buffer[read_value] = 0;
-		left = ft_fusion(left, buffer);
-		if (ft_strchr(left, '\n'))
-			break ;
-	}
-	free (buffer);
-	return (left);
-}
-
-static char	*get_line(char *left)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	if (!left[i])
-		return (NULL);
-	while (left[i] && left[i] != '\n')
-		i++;
-	str = ft_calloc(i + 2, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (left[i] && left[i] != '\n')
-	{
-		str[i] = left[i];
-		i++;
-	}
-	if (left[i] && left[i] == '\n')
-		str[i++] = '\n';
-	return (str);
-}
-
-static char	*get_left(char *left)
-{
 	int		i;
 	int		j;
-	char	*str;
 
 	i = 0;
 	j = 0;
-	while (left[i] && left[i] != '\n')
-		i++;
-	if (!left[i])
+	tmp = malloc(BUFFER_SIZE + ft_strlen_gnl(result) + 1);
+	if (!tmp)
+		return (0);
+	while (result && result[i])
 	{
-		free (left);
-		return (NULL);
+		tmp[i] = result[i];
+		i++;
 	}
-	str = ft_calloc((ft_strlen(left) - i + 1), sizeof(char));
-	if (!str)
-		return (NULL);
-	while (left[++i])
-		str[j++] = left[i];
-	str[j] = '\0';
-	free (left);
-	return (str);
+	while (j < BUFFER_SIZE)
+	{
+		tmp[i + j] = buf[j];
+		buf[j] = 0;
+		j++;
+	}
+	tmp[i + j] = 0;
+	if (t > 0)
+		free(result);
+	return (tmp);
+}
+
+static char	*read_finish(char *result)
+{
+	if (result[0] == '\0')
+	{
+		free (result);
+		result = NULL;
+	}
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*result;
-	static char	*left;
+	static char	buf[BUFFER_SIZE + 1];
+	static char	*result;
+	static int	t;
+	int			len_read;
 
-	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0)
-		return (NULL);
-	left = read_line(fd, left);
-	if (!left)
-		return (NULL);
-	result = get_line(left);
-	left = get_left(left);
-	return (result);
+	if (t > 0)
+	{
+		result = NULL;
+		result = ft_strjoin(buf, result, 0);
+	}
+	while (1)
+	{
+		if (ft_verif(result) == 0)
+		{
+			len_read = read(fd, buf, BUFFER_SIZE);
+			if (len_read < 0)
+				return (NULL);
+			result = ft_strjoin(buf, result, t++);
+		}
+		if (ft_verif(result) > 0)
+			return (ft_cutting(result, buf));
+		if (len_read == 0)
+			return (read_finish(result));
+	}
+	return (0);
 }

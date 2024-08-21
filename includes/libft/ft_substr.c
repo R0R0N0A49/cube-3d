@@ -3,42 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 08:24:16 by acaffard          #+#    #+#             */
-/*   Updated: 2023/11/09 10:01:07 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/02 15:58:37 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/10 17:17:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_len(const char *str, size_t n)
+static size_t	ft_min(const char *s, size_t len)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < n && str[i])
-		i++;
-	return (i);
+	if (len > ft_strlen(s))
+		return (ft_strlen(s));
+	return (len);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	char	*res;
-	size_t	i;
+	char			*rsl;
+	unsigned int	i;
 
-	if (!s)
-		return (NULL);
-	if (start > ft_strlen(s) || len == 0)
-		return (ft_strdup(""));
-	res = ft_calloc((get_len(s + start, len) + 1), sizeof(char));
-	if (!res)
-		return (NULL);
 	i = 0;
-	while (((char *)s)[i + start] && i < len)
+	if (!s)
+		return (0);
+	if (start >= ft_strlen(s))
 	{
-		res[i] = ((char *)s)[i + start];
-		i++;
+		rsl = ft_calloc(1, sizeof(char));
+		if (rsl == 0)
+			return (0);
 	}
-	return (res);
+	else
+	{
+		len = ft_min(&s[start], len);
+		rsl = ft_calloc((len + 1), sizeof(char));
+		if (rsl == 0)
+			return (0);
+		while (len > i && s[start])
+		{
+			rsl[i] = s[start + i];
+			i++;
+		}
+	}
+	return (rsl);
 }

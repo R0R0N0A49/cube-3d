@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 16:53:22 by acaffard          #+#    #+#             */
-/*   Updated: 2023/11/09 10:08:51 by acaffard         ###   ########.fr       */
+/*   Created: 2023/10/31 18:35:37 by trebours          #+#    #+#             */
+/*   Updated: 2023/10/31 18:35:39 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, long unsigned int n)
 {
-	unsigned char	*s1_search;
-	unsigned char	*s2_search;
+	long unsigned int	i;
+	const char			*src1;
+	const char			*src2;
 
-	s1_search = (unsigned char *) s1;
-	s2_search = (unsigned char *) s2;
-	while (*s1_search == *s2_search && n - 1 > 0)
+	src1 = s1;
+	src2 = s2;
+	i = 0;
+	while (i < n)
 	{
-		s1_search++;
-		s2_search++;
-		n--;
+		if (src1[i] != src2[i])
+			return ((unsigned char)src1[i] - (unsigned char)src2[i]);
+		i++;
 	}
-	if (n == 0)
-		return (0);
-	return ((int) *s1_search - (int) *s2_search);
+	return (0);
 }

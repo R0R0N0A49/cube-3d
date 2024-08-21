@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 13:01:12 by antoine           #+#    #+#             */
-/*   Updated: 2023/11/09 10:12:53 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/01 11:20:56 by trebours          #+#    #+#             */
+/*   Updated: 2023/11/01 11:20:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *s1)
 {
-	int		sign;
-	char	*str;
-	int		res;
-	int		i;
+	int	i;
+	int	y;
+	int	rsl;
 
-	res = 0;
 	i = 0;
-	sign = 1;
-	str = (char *) nptr;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	y = 1;
+	rsl = 0;
+	if (!s1[i])
+		return (rsl);
+	while (s1[i] == 32 || (s1[i] >= '\t' && s1[i] <= '\r'))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (s1[i] == '-' || s1[i] == '+')
 	{
-		if (str[i] == '-')
-			sign = -1;
+		if (s1[i] == '-')
+			y = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (s1[i] >= '0' && s1[i] <= '9')
 	{
-		res = res * 10 + (str[i] - '0');
+		rsl = rsl * 10 + (s1[i] - '0');
 		i++;
 	}
-	return (res * sign);
+	return (rsl * y);
 }

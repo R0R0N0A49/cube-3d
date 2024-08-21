@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:08 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/21 12:29:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:58:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "cub3d.h"
 
-int main_parsing(int len, char **src);
+void	main_parsing(int len, char **src);
+void	parsing_line(char *line, t_map *data);
 
 #endif

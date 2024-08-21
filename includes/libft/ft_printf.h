@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   locate_string_in_stringtab.c                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 08:52:01 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/19 10:46:26 by trebours         ###   ########.fr       */
+/*   Created: 2023/12/08 13:23:16 by trebours          #+#    #+#             */
+/*   Updated: 2024/01/26 09:30:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <stdarg.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-int	locate_string_in_stringtab(char **stringtab, char *string, int len_check)
-{
-	int	i;
+int		ft_printf(const char *src, ...);
+int		ft_putnbr_base(int n, int base);
+int		ft_putstr(char *s, int fd);
+int		ft_type(const char src, va_list param);
+int		ft_putnbr_usgd(unsigned int n, int fd, char *charbase);
+int		ft_putnbr_ll(unsigned long long n, int fd, char *charbase);
 
-	if (!stringtab || !string)
-		return (-1);
-	i = 0;
-	while (stringtab[i])
-	{
-		if (len_check && !ft_strncmp(stringtab[i], string, len_check))
-			return (i);
-		else if (!len_check && !ft_strncmp(stringtab[i],
-				string, ft_strlen(stringtab[i])))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
+#endif
