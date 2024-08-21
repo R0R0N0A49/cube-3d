@@ -1,6 +1,7 @@
 NAME=cub3d
 CC=cc
 CFLAGS= -Wall -Werror -Wextra -g
+MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 
 SRCS=src/cub3d.c
@@ -19,16 +20,28 @@ WHITE='\033[0;37m'
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT) $(PARS) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT)
+$(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
+	$(MLX)
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a
 	@mv src/*.o OBJS
 	@clear
 	@if [ $$? -eq 0 ]; then \
     	echo ${GREEN}">-Compilation successful-<"${WHITE}; \
     fi
 
-%.o : %.c include/cub3d.h
+%.o : %.c includes/cub3d.h
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+MLX :
+	@if ls | grep -q "MLX42"; then \
+		clear; \
+		echo "MLX42 already exist"; \
+	else \
+		git clone https://github.com/codam-coding-college/MLX42.git; \
+		cmake ./MLX42 -B ./MLX42/build; \
+		make -C ./MLX42/build --no-print-directory -j4; \
+		make --directory ./MLX42/build; \
+	fi
 
 $(LIBFT) :
 	@mkdir OBJS
@@ -43,9 +56,7 @@ clean :
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
 fclean : clean
-	@$(RM) $(PARS)
-	@$(RM) $(LIBFT)
-	@$(RM) $(NAME)
+	@$(RM) MLX42 $(PARS) $(LIBFT) $(NAME)
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
 
 re : fclean all
