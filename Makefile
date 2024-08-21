@@ -21,6 +21,7 @@ all : $(NAME)
 
 $(NAME) : $(LIBFT) $(PARS) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT)
+	@mv src/*.o OBJS
 	@clear
 	@if [ $$? -eq 0 ]; then \
     	echo ${GREEN}">-Compilation successful-<"${WHITE}; \
@@ -36,9 +37,7 @@ $(PARS) :
 	@make --directory $(PARS_DIR)
 
 clean :
-	@make clean --directory $(PARS_DIR)
-	@make clean --directory $(LIBFT_DIR)
-	@$(RM) $(OBJS)
+	@$(RM) OBJS/*.o
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 

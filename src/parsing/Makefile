@@ -13,6 +13,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@clear
 	@$(ARRC) $(NAME) $(OBJS)
+	@mv *.o ../../OBJS
 	@clear
 
 %.o : %.c ../../includes/parsing.h

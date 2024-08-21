@@ -81,6 +81,7 @@ FLAGS = -Wall -Wextra -Werror
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
+	@mv *.o ../../OBJS
 
 all: $(NAME)
 
