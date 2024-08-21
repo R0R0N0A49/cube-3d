@@ -19,7 +19,7 @@ WHITE='\033[0;37m'
 
 all : $(NAME)
 
-$(NAME) : $(PARS) $(OBJS)
+$(NAME) : $(LIBFT) $(PARS) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARS)
 	@clear
 	@if [ $$? -eq 0 ]; then \
@@ -37,12 +37,14 @@ $(PARS) :
 
 clean :
 	@make clean --directory $(PARS_DIR)
+	@make clean --directory $(LIBFT_DIR)
 	@$(RM) $(OBJS)
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
 fclean : clean
 	@$(RM) $(PARS)
+	@$(RM) $(LIBFT)
 	@$(RM) $(NAME)
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
 
