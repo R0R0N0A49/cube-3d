@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/21 14:33:54 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:29:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 typedef struct s_map
 {
-	txt		sud;
-	txt		nord;
-	txt		est;
-	txt		oest;
+	char	*sud;
+	char	*nord;
+	char	*est;
+	char	*oest;
 	char	*up;
 	char	*down;
 	char	**map;

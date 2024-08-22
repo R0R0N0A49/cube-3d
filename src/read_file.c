@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/21 16:05:46 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:19:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ void	init_struct(char **src, t_map *data)
 	}
 	line = get_next_line(fd);
 	i = 0;
-	while (line && i < 5)
+	while (line)
 	{
 		i++;
 		parsing_line(line, data);
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 }

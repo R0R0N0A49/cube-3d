@@ -20,5 +20,6 @@
 # include <unistd.h>
 
 void	init_struct(char **src, t_map *data);
+void	free_struct(t_map *data);
 
 #endif

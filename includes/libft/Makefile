@@ -18,10 +18,10 @@ SRC=ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c
 	ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
 	get_next_line.c get_next_line_utils.c ft_printf.c ft_printf_utils.c
 OBJS=$(SRC:.c=.o)
-RM=rm -f
+RM=rm -rf
 CC=cc
 CFLAGS=-Wextra -Werror -Wall
-ARRC=ar -rc
+ARRC=ar -rcs
 
 CYAN='\033[1;46m'
 BLUE='\033[1;44m'
@@ -34,7 +34,7 @@ $(NAME): $(OBJS)
 	@$(ARRC) $(NAME) $(OBJS)
 	@mv *.o ../../OBJS
 
-%.o: %.c
+%.o: %.c libft.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 clean:
 	@$(RM) $(OBJS)

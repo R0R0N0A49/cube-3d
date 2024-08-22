@@ -6,13 +6,13 @@ RM=rm -rf
 SRCS=parsing.c pars_line.c
 OBJS=$(SRCS:.c=.o)
 
-ARRC=ar -rc
+ARRC=ar -rcs
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@clear
-	@$(ARRC) $(NAME) ../../includes/libft/libft.a $(OBJS)
+	@$(ARRC) $(NAME) $(OBJS)
 	@mv *.o ../../OBJS
 	@clear
 

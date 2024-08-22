@@ -16,13 +16,13 @@ LIBFT=$(LIBFT_DIR)/libft.a
 CYAN='\033[1;36m'
 BLUE='\033[1;34m'
 GREEN='\033[1;32m'
-WHITE='\033[0;37m'
+WHITE='\033[1;37m'
 
 all : $(NAME)
 
 $(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
 	$(MLX)
-	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARS) ./MLX42/build/libmlx42.a
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a
 	@mv src/*.o OBJS
 	@clear
 	@if [ $$? -eq 0 ]; then \
@@ -56,8 +56,12 @@ clean :
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
 fclean : clean
-	@$(RM) MLX42 $(PARS) $(LIBFT) $(NAME)
+	@$(RM) $(PARS) $(LIBFT) $(NAME)
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
+
+end :
+	@$(RM) MLX42
+	@echo ${BLUE}"\n>------MLX42 clean-------<\n"${WHITE}
 
 re : fclean all
 	@clear
