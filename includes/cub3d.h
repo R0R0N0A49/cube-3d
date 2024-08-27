@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/21 15:11:48 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:19:40 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 void	init_struct(char **src, t_map *data);
 void	free_struct(t_map *data);
+void	print_error(char *line);
 
 #endif
