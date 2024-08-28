@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:02:22 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/22 11:24:44 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:05:31 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_verif_cub(char *src)
 {
 	size_t	len_src;
-	int	i;
+	int		i;
 
 	len_src = ft_strlen(src);
 	i = 0;
@@ -36,7 +36,7 @@ void	ft_verif_cub(char *src)
 	}
 }
 
-void main_parsing(int len, char **src)
+void	main_parsing(int len, char **src)
 {
 	if (len != 2)
 	{

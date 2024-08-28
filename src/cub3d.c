@@ -6,57 +6,55 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/22 12:15:30 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:10:39 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void    init_null(t_map *data)
+void	init_null(t_map *data)
 {
-    data->nord = NULL;
-    data->sud = NULL;
-    data->oest = NULL;
-    data->est = NULL;
-    data->down = NULL;
-    data->up = NULL;
+	data->no = NULL;
+	data->so = NULL;
+	data->we = NULL;
+	data->ea = NULL;
+	data->down = NULL;
+	data->up = NULL;
 }
 
-void    free_struct(t_map *data)
+void	free_struct(t_map *data)
 {
-    if (data->nord)
-        free(data->nord);
-    if (data->sud)
-        free(data->sud);
-    if (data->est)
-        free(data->est);
-    if (data->oest)
-        free(data->oest);
-    if (data->down)
-        free(data->down);
-    if (data->up)
-        free(data->up);
+	if (data->no)
+		mlx_delete_texture(data->no);
+	if (data->so)
+		mlx_delete_texture(data->so);
+	if (data->ea)
+		mlx_delete_texture(data->ea);
+	if (data->we)
+		mlx_delete_texture(data->we);
+	if (data->down)
+		free(data->down);
+	if (data->up)
+		free(data->up);
+	if (data->map) {
+		free(data->map);
+//		ft_free_stringtab();
+	}
 }
 
-int    main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_map   data;
+	int i;
+	t_map	data;
 
-    init_null(&data);
-    main_parsing(argc, argv);
-    init_struct(argv, &data);
-    if (data.nord)
-        ft_printf("%s", data.nord);
-    if (data.sud)
-        ft_printf("%s", data.sud);
-    if (data.est)
-        ft_printf("%s", data.est);
-    if (data.oest)
-        ft_printf("%s", data.oest);
-    if (data.down)
-        ft_printf("%s", data.down);
-    if (data.up)
-        ft_printf("%s", data.down);
-    free_struct(&data);
-    return (0);
+	init_null(&data);
+	main_parsing(argc, argv);
+	init_struct(argv, &data);
+	i = 0;
+	while (data.map && data.map[i]) {
+		ft_printf("%s", data.map);
+		i++;
+	}
+	free_struct(&data);
+	return (0);
 }

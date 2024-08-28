@@ -4,7 +4,7 @@ CFLAGS= -Wall -Werror -Wextra -g
 MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 
-SRCS=src/cub3d.c src/read_file.c src/print_error.c
+SRCS=src/cub3d.c src/read_file.c src/print_error.c src/t_test.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing
@@ -25,9 +25,7 @@ $(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
 	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a
 	@mv src/*.o OBJS
 	@clear
-	@if [ $$? -eq 0 ]; then \
-    	echo ${GREEN}">-Compilation successful-<"${WHITE}; \
-    fi
+	@echo ${GREEN}">-Compilation successful-<"${WHITE};
 
 %.o : %.c includes/cub3d.h
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -71,4 +69,4 @@ re : fclean all
 
 bonus : all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus MLX end
