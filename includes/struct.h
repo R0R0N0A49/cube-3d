@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 13:55:37 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:54:39 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCT_H
 
 # include "../MLX42/include/MLX42/MLX42.h"
+# include <math.h>
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
@@ -24,6 +25,18 @@ typedef struct s_test
 	struct s_test *next;
 }	t_test;
 
+typedef struct s_mini
+{
+	int pos_x;
+	int pos_y;
+	TXT *red_t;
+	TXT *white_t;
+	TXT *player_t;
+	IMG *red;
+	IMG *white;
+	IMG *player;
+}	t_mini;
+
 typedef struct s_map
 {
 	TXT		*so;
@@ -33,6 +46,8 @@ typedef struct s_map
 	char	*up;
 	char	*down;
 	char	**map;
+	t_mini	*mini_map;
+	mlx_t	*mlx;
 }	t_map;
 
 char	**ft_test_to_tab(t_test *src);

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 15:50:20 by trebours         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:02:51 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_struct(char **src, t_map *data)
 	fd = open(src[1], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("error\n");
+		ft_printf("error\n"); // a changer
 		exit(1);
 	}
 	line = get_next_line(fd);

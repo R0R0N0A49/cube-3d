@@ -4,7 +4,7 @@ CFLAGS= -Wall -Werror -Wextra -g
 MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 
-SRCS=src/cub3d.c src/read_file.c src/print_error.c src/t_test.c
+SRCS=src/cub3d.c src/read_file.c src/print_error.c src/t_test.c src/free.c src/display/minimap.c src/display/move.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing
