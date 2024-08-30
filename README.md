@@ -6,7 +6,7 @@
   
   *- map entourer de mur*
   
-  *- seulement des 1, 0, N, S, E, W (seulement une letre par map)*
+  *- seulement des 1, 0, N, S, E, W (seulement une lettre par map)*
   
   *- le fichier doit conteneir les lien ver les image et le couleur du sol et du plafont* ✅
   
