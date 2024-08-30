@@ -23,7 +23,7 @@ typedef struct s_test
 {
 	char	*line_map;
 	struct s_test *next;
-}	t_test;
+}	t_test; // a changer ici et dans les fichier
 
 typedef struct s_mini
 {
@@ -37,6 +37,17 @@ typedef struct s_mini
 	IMG *player;
 }	t_mini;
 
+typedef struct s_game
+{
+	mlx_image_t *frame;
+	int triangle_x;
+	int triangle_y;
+	double angle;
+	bool moving_forward;
+	bool rotating_left;
+	bool rotating_right;
+} t_game;
+
 typedef struct s_map
 {
 	TXT		*so;
@@ -47,6 +58,7 @@ typedef struct s_map
 	char	*down;
 	char	**map;
 	t_mini	*mini_map;
+	t_game	*game;
 	mlx_t	*mlx;
 }	t_map;
 
