@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 15:06:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:21:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	init_null(t_map *data)
 
 static void	ft_free_stringtab(char **src)
 {
-	int i;
+	int	i;
 
 	i = 0;
-//	if (!src)
-//		return ;
 	if (!src[0] || !src[0][0])
 		return ;
 	while (src[i])
@@ -67,7 +65,8 @@ int	main(int argc, char **argv)
 	main_parsing(argc, argv);
 	init_struct(argv, &data);
 	i = 0;
-	while (data.map && data.map[i]) {
+	while (data.map && data.map[i])
+	{
 		ft_printf("%s", data.map[i]);
 		i++;
 	}
