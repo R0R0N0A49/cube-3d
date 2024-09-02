@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 15:58:59 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:06:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	check_map(char *line, t_test **map, t_map *data)
 			ft_testclear(map, free);
 		exit(1);
 	}
-	if (!testlen(map[0]))
+	if (!map[0] || !testlen(map[0]))
 	{
 		(*map)->line_map = ft_strdup(line);
 		return ;

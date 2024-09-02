@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 16:10:39 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:59:30 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 	init_struct(argv, &data);
 	i = 0;
 	while (data.map && data.map[i]) {
-		ft_printf("%s", data.map);
+		ft_printf("%s", data.map[i]);
 		i++;
 	}
 	free_struct(&data);

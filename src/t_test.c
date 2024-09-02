@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 16:05:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:07:41 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	testlen(t_test *src)
 	if (!src->line_map)
 		return (0);
 	tmp = src;
+	if (!tmp)
+		return (0);
 	i = 0;
 	while (tmp)
 	{
@@ -76,7 +78,7 @@ char	**ft_test_to_tab(t_test *src)
 	while (tmp)
 	{
 		map[i] = ft_strdup(tmp->line_map);
-		ft_printf("tmp->line_map = %s", tmp->line_map);
+//		ft_printf("tmp->line_map = %s", tmp->line_map);
 		if (tmp->next)
 			tmp = tmp->next;
 		else
