@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:14:37 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 10:58:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:02:00 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	print_error(char *line)
 	{
 		ft_putstr_fd("repetition of the texture for ", STDERR_FILENO);
 		write(STDERR_FILENO, line, 2);
+	}
+	else if (line[0] == '\n')
+	{
+		ft_putstr_fd("the map must not contain an empty line", STDERR_FILENO);
 	}
 	else
 		ft_putstr_fd("the first line should be texture and color",
