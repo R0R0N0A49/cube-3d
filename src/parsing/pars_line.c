@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 15:58:59 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:01:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	verif(char *line, t_map *data)
 
 void	check_map(char *line, t_test **map, t_map *data)
 {
-	t_test *tmp;
+	t_test	*tmp;
 
 	if (verif_start_line(line))
 	{

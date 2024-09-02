@@ -64,7 +64,7 @@ int	testlen(t_test *src)
 char	**ft_test_to_tab(t_test *src)
 {
 	int		i;
-	char 	**map;
+	char	**map;
 	t_test	*tmp;
 
 	if (!src)
