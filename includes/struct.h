@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 13:55:37 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:59:26 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 
 typedef struct s_test
 {
-	char	*line_map;
-	struct s_test *next;
+	char			*line_map;
+	struct s_test	*next;
 }	t_test;
 
 typedef struct s_map

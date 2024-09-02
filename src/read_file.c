@@ -17,8 +17,9 @@ void	init_struct(char **src, t_map *data)
 	char	*line;
 	int		fd;
 	int		i;
-	t_test	*map = malloc(1 * sizeof(t_test));
+	t_test	*map;
 
+	map = malloc(1 * sizeof(t_test));
 	map->line_map = NULL;
 	map->next = NULL;
 	fd = open(src[1], O_RDONLY);
