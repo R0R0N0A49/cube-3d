@@ -90,7 +90,6 @@ char	**ft_test_to_tab(t_test *src)
 
 	if (!src)
 		return (NULL);
-	ft_printf("len = %d\n", testlen(src));
 	map = ft_calloc(testlen(src) + 1, sizeof(src));
 	tmp = src;
 	i = 0;
