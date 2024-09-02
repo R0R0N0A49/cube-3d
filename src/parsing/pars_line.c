@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 11:06:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:50:49 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,28 @@ static int	verif(char *line, t_map *data)
 
 void	check_map(char *line, t_test **map, t_map *data)
 {
-	t_test *tmp;
-
 	if (verif_start_line(line))
 	{
 		print_error(line);
 		free_struct(data);
+
 		if (map)
 			ft_testclear(map, free);
 		exit(1);
 	}
-	if (!map[0] || !testlen(map[0]))
+	if (!(*map)->next && !testlen(*map))
 	{
 		(*map)->line_map = ft_strdup(line);
+		(*map)->next = NULL;
 		return ;
 	}
-	tmp = *map;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = ft_testnew(line);
+	ft_lstadd_back(map, ft_testnew(line));
 }
 
 int	parsing_line(char *line, t_map *data, int i, t_test *map)
 {
-	if (line[0] == '\n')
-		return (0);
+	if (line == NULL)
+		return (-1);
 	if (i < 6)
 		return (verif(line, data));
 	check_map(line, &map, data);

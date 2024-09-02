@@ -23,5 +23,6 @@ void	init_struct(char **src, t_map *data);
 void	free_struct(t_map *data);
 void	print_error(char *line);
 int		verif_start_line(char *line);
+void	ft_lstadd_back(t_test **lst, t_test *new_tail);
 
 #endif

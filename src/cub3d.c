@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 10:59:30 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:52:46 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ void	init_null(t_map *data)
 	data->ea = NULL;
 	data->down = NULL;
 	data->up = NULL;
+}
+
+static void	ft_free_stringtab(char **src)
+{
+	int i;
+
+	i = 0;
+	while (src[i])
+	{
+		free(src[i]);
+		i++;
+	}
+	free(src);
 }
 
 void	free_struct(t_map *data)
@@ -37,8 +50,7 @@ void	free_struct(t_map *data)
 	if (data->up)
 		free(data->up);
 	if (data->map) {
-		free(data->map);
-//		ft_free_stringtab();
+		ft_free_stringtab(data->map);
 	}
 }
 
