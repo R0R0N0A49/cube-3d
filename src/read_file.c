@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 15:50:20 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/02 13:38:24 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_struct(char **src, t_map *data)
 
 	map = malloc(1 * sizeof(t_test));
 	map->line_map = NULL;
+	map->next = NULL;
 	fd = open(src[1], O_RDONLY);
 	if (fd < 0)
 	{

@@ -42,33 +42,32 @@ static int	verif(char *line, t_map *data)
 
 void	check_map(char *line, t_test **map, t_map *data)
 {
-	t_test	*tmp;
-
-	if (verif_start_line(line))
-	{
-		print_error(line);
+	if (verif_start_line(line) || line[0] == '\n')
+  {
+    print_error(line);
 		free_struct(data);
+		free(line);
 		if (map)
 			ft_testclear(map, free);
 		exit(1);
 	}
-	if (!testlen(map[0]))
+	if (!(*map)->next && !testlen(*map))
 	{
 		(*map)->line_map = ft_strdup(line);
+		(*map)->next = NULL;
 		return ;
 	}
-	tmp = *map;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = ft_testnew(line);
+	ft_lstadd_back(map, ft_testnew(line));
 }
 
 int	parsing_line(char *line, t_map *data, int i, t_test *map)
 {
-	if (line[0] == '\n')
-		return (0);
+	if (line == NULL)
+		return (-1);
 	if (i < 6)
 		return (verif(line, data));
+	if (i == 6 && line[0] == '\n')
+		return (0);
 	check_map(line, &map, data);
-	return (0);
+	return (1);
 }
