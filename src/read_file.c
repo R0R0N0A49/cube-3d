@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 16:08:11 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:05:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_struct(char **src, t_map *data)
 		line = get_next_line(fd);
 	}
 	data->map = ft_test_to_tab(map);
+	data->len_map = testlen(map);
 	ft_testclear(&map, free);
 	i = verif_char(data);
 	if (i)

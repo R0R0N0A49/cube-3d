@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 14:59:26 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:03:01 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_map
 	char	*up;
 	char	*down;
 	char	**map;
+	int		len_map;
 }	t_map;
 
 char	**ft_test_to_tab(t_test *src);
