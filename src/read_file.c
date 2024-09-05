@@ -42,6 +42,7 @@ void	init_struct(char **src, t_map *data)
 	i = verif_char(data);
 	if (i)
 	{
+		free_struct(data);
 		exit(1);
 	// printf msg error
 	// fonction pour free et exit
