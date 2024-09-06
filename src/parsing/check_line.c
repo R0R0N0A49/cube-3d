@@ -35,6 +35,14 @@ int	loop(char **map, int j, int i)
 		if (map[j][i] == '0' || map[j][i] == '2')
 			return (print_charerror(map, j, i));
 	}
+	if (ft_strlen(map[j - 1] < ft_strlent(map[j]))
+	{
+		i = ft_strlen(map[j - 1]) - 1;
+		while (map[j][i] == '1')
+			i++;
+		if (map[j][i] == '0' || map[j][i] == '2')
+			return (print_charerror(map, j, i))
+	}
 	return (0);
 }
 
