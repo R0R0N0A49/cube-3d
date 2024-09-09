@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/03 11:07:06 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/05 09:47:50 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	checkline(char **map, int j, int len)
 	int		i;
 
 	i = 0;
+	(void)len;
 	while (map[j][i] == ' ')
 		i++;
 	if (j == 0)

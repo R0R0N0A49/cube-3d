@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 15:21:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:12:20 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,56 @@ void	free_struct(t_map *data)
 		ft_free_stringtab(data->map);
 }
 
+void	mini_map(t_map *data, mlx_t *mlx)
+{
+	int i;
+	int j = 0;
+
+	(void)mlx;
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (data->map[j][i] == 'N' || data->map[j][i] == 'S' ||  data->map[j][i] == 'E' || data->map[j][i] == 'W')
+			{
+                data->mini_map->pos_x = i;
+	            data->mini_map->pos_y = j;
+                data->game->triangle_x = ARROUND * H_CUBE + H_CUBE /2;
+                data->game->triangle_y = ARROUND * H_CUBE + H_CUBE /4;
+				break;
+            }
+			i++;
+		}
+		j++;
+	}
+}
+
+void	cub3d(t_map *data)
+{
+	(void)data;
+	t_mini	map;
+	t_game	game;
+
+	game.angle = 0;
+	data->mlx = mlx_init(1920,1080, "cub3d", true);
+	data->minima = mlx_new_image(data->mlx, 1920, 1080);
+	game.frame = mlx_new_image(data->mlx, 1920, 1080);
+	data->game = &game;
+	data->mini_map = &map;
+	data->game->moove = 0;
+	data->game->move = 0;
+	data->game->rotating_left = false;
+	data->game->rotating_right = false;
+	mini_map(data, data->mlx);
+	mlx_image_to_window(data->mlx, data->minima, 0, 0);
+	mlx_image_to_window(data->mlx, game.frame, 0, 0);
+	mlx_loop_hook(data->mlx, loop, data);
+	mlx_key_hook(data->mlx, key_press, data);
+	mlx_loop(data->mlx);
+	mlx_terminate(data->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	int		i;
@@ -70,6 +120,7 @@ int	main(int argc, char **argv)
 		ft_printf("%s", data.map[i]);
 		i++;
 	}
+	cub3d(&data);
 	free_struct(&data);
 	return (0);
 }
