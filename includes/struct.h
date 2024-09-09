@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/03 11:03:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:03:49 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,34 @@
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
+# define H_CUBE 20
+# define W_CUBE 20
+# define ARROUND 3
+# define COLOR_GRID 0x646464
+
+typedef struct s_mini
+{
+	int pos_x;
+	int pos_y;
+	TXT *red_t;
+	TXT *white_t;
+	TXT *player_t;
+	IMG *red;
+	IMG *white;
+	IMG *player;
+}	t_mini;
+
+typedef struct s_game
+{
+	mlx_image_t *frame;
+	int triangle_x;
+	int triangle_y;
+	double angle;
+	int 	moove;
+	int		move;
+	bool rotating_left;
+	bool rotating_right;
+} t_game;
 
 typedef struct s_test
 {
@@ -34,6 +62,10 @@ typedef struct s_map
 	char	*down;
 	char	**map;
 	int		len_map;
+	IMG 	*minima;
+	t_mini	*mini_map;
+	t_game	*game;
+	mlx_t	*mlx;
 }	t_map;
 
 char	**ft_test_to_tab(t_test *src);
