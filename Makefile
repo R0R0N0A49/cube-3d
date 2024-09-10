@@ -22,7 +22,7 @@ all : $(NAME)
 
 $(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
 	$(MLX)
-	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a  $(MLXFLAGS)
 	@mv src/*.o OBJS
 	@clear
 	@echo ${GREEN}">-Compilation successful-<"${WHITE};

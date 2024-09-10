@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 16:14:31 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:47:12 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	loop(char **map, int j, int i)
 		if (map[j][i] == '0' || map[j][i] == '2')
 			return (print_charerror(map, j, i));
 	}
-	if (ft_strlen(map[j - 1] < ft_strlent(map[j]))
+	if (ft_strlen(map[j - 1]) < ft_strlen(map[j]))
 	{
 		i = ft_strlen(map[j - 1]) - 1;
 		while (map[j][i] == '1')
 			i++;
 		if (map[j][i] == '0' || map[j][i] == '2')
-			return (print_charerror(map, j, i))
+			return (print_charerror(map, j, i));
 	}
 	return (0);
 }
