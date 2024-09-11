@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/10 18:47:12 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:11:11 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	loop(char **map, int j, int i)
 		i = ft_strlen(map[j - 1]) - 1;
 		while (map[j][i] == '1')
 			i++;
-		if (map[j][i] == '0' || map[j][i] == '2')
+		if (map[j][i] == '0' || (map[j][i] == ' ' && map[j - 1][i] != '1'))
 			return (print_charerror(map, j, i));
 	}
 	return (0);

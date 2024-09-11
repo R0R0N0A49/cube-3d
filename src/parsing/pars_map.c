@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 16:43:52 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:08:20 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	verif_char(t_map *data)
 			if (isplayer(data->map[j][i]))
 				player++;
 		}
-		checkline(data->map, j, data->len_map);
+		if (checkline(data->map, j, data->len_map))
+			return (1);
 		j++;
 	}
 	if (player != 1) {
