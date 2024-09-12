@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/09/12 13:40:21 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/12 16:04:21 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,24 +141,54 @@ void	mini(t_map *data, mlx_t *mlx)
     data->mini_map->end_map = 0;
     data->len_col = data->len_map - 1;
     data->len_line = ft_strlen(data->map[data->mini_map->pos_y]) - 1;
-    i = -6;
-    j = -6;
+    i = data->mini_map->pos_x - ARROUND;
+    j = data->mini_map->pos_y - ARROUND;
     system("clear");
     usleep(1);
     printf("<pos Y = %d, pos X = %d, case = %c>\n", ((data->game->triangle_y - 5) / 20), ((data->game->triangle_x - 10) / 20), data->map[((data->game->triangle_y - 5) / 20)][((data->game->triangle_x - 10) / 20)]);
     printf("<map Y = %d, map X = %d, case = %c>\n", data->mini_map->pos_y, data->mini_map->pos_x, data->map[data->mini_map->pos_y][data->mini_map->pos_x]);
     printf("longueur line = %d, longueur colone = %d\n", data->len_line, data->len_col);
-   /* if (data->mini_map->pos_y + ARROUND >= data->len_col && ((data->game->triangle_y - 5) / 20) < 7)
+    /*if (data->mini_map->pos_x + ARROUND >= data->len_line && ((data->game->triangle_x - 10) / 20) < 7)
     {
-        j = data->len_col - ARROUND * 2;
-        if (data->game->moove == 2 && data->mini_map->pos_y + ARROUND > data->len_col && data->map[((data->game->triangle_y - 5) / 20) + 1][data->mini_map->pos_x] != '1')
+        i = data->len_line - (ARROUND * 2);
+        if (data->game->moove == 4)
+        {
+            data->game->moove = 0;
+            data->game->triangle_x += H_CUBE;
+        }
+    }
+    if (data->mini_map->pos_y + ARROUND >= data->len_col && ((data->game->triangle_y - 5) / 20) < 7)
+    {
+        j = data->len_col - (ARROUND * 2);
+        if (data->game->moove == 2 && data->mini_map->pos_y + ARROUND > data->len_col)
         {
             ft_printf("down\n");
             data->game->moove = 0;
-            data->game->triangle_y += H_CUBE;
+            if (data->map[((data->game->triangle_y - 5) / 20) + 1][data->mini_map->pos_x] != '1')
+                data->game->triangle_y += H_CUBE;
         }
     }
-    else*/ if (data->mini_map->pos_y < ARROUND && ((data->game->triangle_y - 5) / 20) > 1 && data->map[((data->game->triangle_y - 5) / 20) - 1][data->mini_map->pos_x] != '1')
+    if (data->mini_map->pos_y + ARROUND >= data->len_col && ((data->game->triangle_y - 5) / 20) < 7)
+    {
+        j = data->len_col - (ARROUND * 2);
+        if (data->game->moove == 1)
+        {
+            ft_printf("up\n");
+            data->game->moove = 0;
+            data->game->triangle_y -= H_CUBE;
+        }
+    }
+    if (data->mini_map->pos_x + ARROUND >= data->len_line && ((data->game->triangle_y - 10) / 20) < 7)
+    {
+        i = data->len_line - (ARROUND * 2);
+        if (data->game->moove == 4 && data->mini_map->pos_x + ARROUND > data->len_line && data->map[data->mini_map->pos_y][((data->game->triangle_y - 10) / 20) + 1] != '1')
+        {
+            ft_printf("down\n");
+            data->game->moove = 0;
+            data->game->triangle_x += H_CUBE;
+        }
+    }
+    else */if (data->mini_map->pos_y < ARROUND && ((data->game->triangle_y - 5) / 20) > 1 && data->map[((data->game->triangle_y - 5) / 20) - 1][data->mini_map->pos_x] != '1')
     {
         j = 0;
         ft_printf("1\n");
@@ -199,13 +229,6 @@ void	mini(t_map *data, mlx_t *mlx)
             data->game->moove = 0;
             data->game->triangle_x += H_CUBE;
         }
-    }
-    else
-    {
-        if (i == -6)
-            i = data->mini_map->pos_x - ARROUND;
-        if (j == -6)
-            j = data->mini_map->pos_y - ARROUND;
     }
     if (((data->game->triangle_y - 5) / 20) <= 1 || j <= 0)
         j = 0;

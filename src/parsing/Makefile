@@ -3,7 +3,7 @@ CC=cc
 CFLAGS= -Wall -Werror -Wextra -g
 RM=rm -rf
 
-SRCS=parsing.c pars_line.c pars_map.c
+SRCS=parsing.c pars_line.c pars_map.c check_line.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rcs

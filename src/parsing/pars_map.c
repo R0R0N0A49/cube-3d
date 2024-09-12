@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 09:47:50 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/12 13:47:27 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int isfine(char **map, int i, int j)
 	char	*lstchar;
 	int 	k;
 
-	lstchar = "10 NSWE\n\0";
+	lstchar = "210 NSWE\n\0";
 	k = 0;
 	while (lstchar[k])
 	{
@@ -28,40 +28,44 @@ static int isfine(char **map, int i, int j)
 	return (1);
 }
 
-void	checkline(char **map, int j, int len)
+int	isplayer(char const c)
 {
-	int		i;
-
-	i = 0;
-	(void)len;
-	while (map[j][i] == ' ')
-		i++;
-	if (j == 0)
-	{
-		while (map[j][i] == '1' || map[j][i] == ' ')
-			i++;
-	}
-	// else
-	// {
-		// if (map[j][i] == '1')
-	// }
-	if (map[j][i] == '\n')
-		return ;
-	exit(231);
+	if (c == 'S')
+		return (1);
+	if (c == 'N')
+		return (1);
+	if (c == 'W')
+		return (1);
+	if (c == 'E')
+		return (1);
+	return (0);
 }
 
-void	check_space(t_map *data, int i , int j)
+void	check_space(char **map, int j)
 {
-	if (data->map[j][i] == '0')
+	int	i;
+	int	t;
+
+	i = 0;
+	t = 0;
+	while (map[j][i])
 	{
-		if (data->map[j + 1][i] == ' ')
-			data->map[j + 1][i] = '1';
-		if (j && data->map[j - 1][i] == ' ')
-			data->map[j - 1][i] = '1';
-		if (i && data->map[j][i - 1] == ' ')
-			data->map[j][i - 1] = '1';
-		if (data->map[j][i + 1] == ' ')
-			data->map[j][i + 1] = '1';
+		if (j && map[j][i] == '1')
+			t = 1;
+		if (j == 0 && map[j][i] == '2')
+			map[j][i] = ' ';
+		if (t && (map[j][i] == '0' || isplayer(map[j][i])))
+		{
+			if (map[j + 1] && map[j + 1][i] == ' ')
+				map[j + 1][i] = '2';
+			if (j == 2 && map[j - 1][i] == ' ')
+				map[j - 1][i] = '2';
+			if (i && map[j][i - 1] == ' ')
+				map[j][i - 1] = '2';
+			if (map[j][i + 1] == ' ')
+				map[j][i + 1] = '2';
+		}
+		i++;
 	}
 }
 
@@ -69,10 +73,12 @@ int	verif_char(t_map *data)
 {
 	int i;
 	int j;
+	int player;
 
 	if (!data->map)
 		return (-1);
 	j = 0;
+	player = 0;
 	while (data->map[j])
 	{
 		i = 0;
@@ -80,13 +86,21 @@ int	verif_char(t_map *data)
 		{
 			if (isfine(data->map, i, j))
 			{
-				print_charerror(data->map[j], i, j);
+				print_charerror(data->map, j, i);
 				return (1);
 			}
-			check_space(data, i, j);
+			check_space(data->map, j);
 			i++;
+			if (isplayer(data->map[j][i]))
+				player++;
 		}
+		if (checkline(data->map, j, data->len_map))
+			return (1);
 		j++;
+	}
+	if (player != 1) {
+		ft_printf("\033[1;31myou must have 1 player but you have %d player.s\n\033[1;m", player);
+		return (1);
 	}
 	return (0);
 }

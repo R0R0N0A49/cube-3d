@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/09 10:41:17 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/12 13:50:25 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <math.h>
 
 void	init_struct(char **src, t_map *data);
-void	free_struct(t_map *data);
+int		free_struct(t_map *data);
 void	print_error(char *line);
 int		verif_start_line(char *line);
 void	ft_lstadd_back(t_test **lst, t_test *new_tail);

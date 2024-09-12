@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/09 17:10:03 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/12 13:55:04 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_free_stringtab(char **src)
 	free(src);
 }
 
-void	free_struct(t_map *data)
+int	free_struct(t_map *data)
 {
 	if (data->no)
 		mlx_delete_texture(data->no);
@@ -54,6 +54,19 @@ void	free_struct(t_map *data)
 		free(data->up);
 	if (data->map)
 		ft_free_stringtab(data->map);
+	return (1);
+}
+
+void	close_wind(mlx_key_data_t keycode, void *param)
+{
+	(void)keycode;
+	mlx_t *mlx = (mlx_t *)param;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
+		|| mlx_is_key_down(mlx, MLX_KEY_Q))
+	{
+		mlx_close_window(mlx);
+	}
 }
 
 void	mini_map(t_map *data, mlx_t *mlx)
