@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 17:12:20 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/09 17:10:03 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	mini_map(t_map *data, mlx_t *mlx)
 	            data->mini_map->pos_y = j;
                 data->game->triangle_x = ARROUND * H_CUBE + H_CUBE /2;
                 data->game->triangle_y = ARROUND * H_CUBE + H_CUBE /4;
+				data->mini_map->arround_x = i;
+				data->mini_map->arround_y = j;
 				break;
             }
 			i++;
@@ -86,18 +88,24 @@ void	cub3d(t_map *data)
 	(void)data;
 	t_mini	map;
 	t_game	game;
+	t_ray	raycast;
 
 	game.angle = 0;
-	data->mlx = mlx_init(1920,1080, "cub3d", true);
-	data->minima = mlx_new_image(data->mlx, 1920, 1080);
-	game.frame = mlx_new_image(data->mlx, 1920, 1080);
+	data->mlx = mlx_init(WINDOWSW,WINDOWSH, "cub3d", true);
+	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+	game.frame = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->game = &game;
 	data->mini_map = &map;
+	data->raycast = &raycast;
+	data->raycast->wallH = 500;
+	data->raycast->wallW = WINDOWSW;
 	data->game->moove = 0;
 	data->game->move = 0;
 	data->game->rotating_left = false;
 	data->game->rotating_right = false;
 	mini_map(data, data->mlx);
+	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
 	mlx_image_to_window(data->mlx, game.frame, 0, 0);
 	mlx_loop_hook(data->mlx, loop, data);

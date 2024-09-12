@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 12:06:36 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/09 10:41:17 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void	right(t_map *data);
 void	botom(t_map *data);
 void	high(t_map *data);
 void	loop(void *param);
+
+void    raycasting(t_map *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/05 16:54:16 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/09 17:10:12 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,24 +150,32 @@ void	loop(void *param)
 	t_map	*data;
 
 	data = (t_map *)param;
-	for (int y = 0; y < 1920; y++) {
-		for (int x = 0; x < 1080; x++) {
+	for (int y = 0; y < WINDOWSW; y++) {
+		for (int x = 0; x < WINDOWSH; x++) {
 			mlx_put_pixel(data->game->frame, y, x, 0x00000000); // Black color
 		}
 	}
-    if (data->game->move == 1) {
+	for (int y = 0; y < WINDOWSW; y++) {
+		for (int x = 0; x < WINDOWSH; x++) {
+			mlx_put_pixel(data->rayc, y, x, 0x00000000); // Black color
+		}
+	}
+	raycasting(data);
+    if (data->game->move == 1 && data->map[data->mini_map->pos_y - 1][data->mini_map->pos_x] != '1') {
 		data->mini_map->pos_y = data->mini_map->pos_y - 1;
+		data->raycast->wallH += 40;
         data->game->move = 0;
 	}
-    if (data->game->move == 2) {
+    if (data->game->move == 2 && data->map[data->mini_map->pos_y + 1][data->mini_map->pos_x] != '1') {
 		data->mini_map->pos_y = data->mini_map->pos_y + 1;
         data->game->move = 0;
+		data->raycast->wallH -= 40;
 	}
-    if (data->game->move == 3) {
+    if (data->game->move == 3 && data->map[data->mini_map->pos_y][data->mini_map->pos_x - 1] != '1') {
 		data->mini_map->pos_x = data->mini_map->pos_x - 1;
         data->game->move = 0;
 	}
-    if (data->game->move == 4) {
+    if (data->game->move == 4 && data->map[data->mini_map->pos_y][data->mini_map->pos_x + 1] != '1') {
 		data->mini_map->pos_x = data->mini_map->pos_x + 1;
         data->game->move = 0;
 	}

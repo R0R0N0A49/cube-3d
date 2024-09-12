@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/05 17:03:49 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:10:31 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
+# define WINDOWSW 700
+# define WINDOWSH 500
 # define H_CUBE 20
 # define W_CUBE 20
 # define ARROUND 3
@@ -26,6 +28,9 @@ typedef struct s_mini
 {
 	int pos_x;
 	int pos_y;
+	int	end_map;
+	int	arround_y;
+	int	arround_x;
 	TXT *red_t;
 	TXT *white_t;
 	TXT *player_t;
@@ -52,6 +57,12 @@ typedef struct s_test
 	struct s_test	*next;
 }	t_test;
 
+typedef struct s_ray
+{
+	int	wallW;
+	int	wallH;
+}	t_ray;
+
 typedef struct s_map
 {
 	TXT		*so;
@@ -62,7 +73,11 @@ typedef struct s_map
 	char	*down;
 	char	**map;
 	int		len_map;
+	int		len_line;
+	int		len_col;
+	IMG		*rayc;
 	IMG 	*minima;
+	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;
 	mlx_t	*mlx;
