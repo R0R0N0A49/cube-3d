@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/12 11:10:31 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:19:59 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,16 @@
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
-# define WINDOWSW 700
-# define WINDOWSH 500
-# define H_CUBE 20
-# define W_CUBE 20
-# define ARROUND 3
+# define WINDOWSW 1920
+# define WINDOWSH 1080
+# define CUBE 20
 # define COLOR_GRID 0x646464
 
 typedef struct s_mini
 {
 	int pos_x;
 	int pos_y;
-	int	end_map;
-	int	arround_y;
-	int	arround_x;
-	TXT *red_t;
-	TXT *white_t;
-	TXT *player_t;
-	IMG *red;
-	IMG *white;
-	IMG *player;
 }	t_mini;
-
-typedef struct s_game
-{
-	mlx_image_t *frame;
-	int triangle_x;
-	int triangle_y;
-	double angle;
-	int 	moove;
-	int		move;
-	bool rotating_left;
-	bool rotating_right;
-} t_game;
 
 typedef struct s_test
 {
@@ -73,13 +50,10 @@ typedef struct s_map
 	char	*down;
 	char	**map;
 	int		len_map;
-	int		len_line;
-	int		len_col;
 	IMG		*rayc;
 	IMG 	*minima;
 	t_ray	*raycast;
 	t_mini	*mini_map;
-	t_game	*game;
 	mlx_t	*mlx;
 }	t_map;
 
