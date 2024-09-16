@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:20:40 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:29:00 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	draw_cube(t_map *data, int i, int j, uint32_t te);
 void	key_press(mlx_key_data_t keydata, void *param);
 void	loop(void *param);
 
-void    raycasting(t_map *data);
+void	raycasting(t_map *data);
 
 #endif

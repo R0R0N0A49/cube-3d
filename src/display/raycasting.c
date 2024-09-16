@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/16 09:13:58 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:30:11 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	draw_lineray(t_map *data, int y, int x)
 	int	i;
 
 	i = 0;
-	while (i < data->raycast->wallH)
+	while (i < data->raycast->wallh)
 	{
 		mlx_put_pixel(data->rayc, x, i + y, 0xFFFFFF);
 		i++;
@@ -30,8 +30,8 @@ void	raycasting(t_map *data)
 	int	test;
 
 	i = 0;
-	test = (WINDOWSH / 2) - (data->raycast->wallH / 2);
-	while (i < data->raycast->wallW)
+	test = (WINDOWSH / 2) - (data->raycast->wallh / 2);
+	while (i < data->raycast->wallw)
 	{
 		draw_lineray(data, test, i);
 		i++;

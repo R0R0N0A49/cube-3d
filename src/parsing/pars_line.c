@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/12 13:55:33 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:27:35 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ bool	stringisdigit(char *src)
 	return (true);
 }
 
-char *gethexa(char **src)
+char	*gethexa(char **src)
 {
 	char	*rsl;
 	int		nmb;
-	char	*base = "0123456789ABCDEF";
+	char	*base;
 
+	base = "0123456789ABCDEF";
 	nmb = ft_atoi(*src);
 	if (nmb > 255 || nmb < 0)
 		return (NULL);
@@ -46,7 +47,7 @@ char *gethexa(char **src)
 	return (*src);
 }
 
-char *pasthexa(char *line)
+char	*pasthexa(char *line)
 {
 	char	*rsl;
 	char	*tmprsl;
@@ -82,7 +83,6 @@ char *pasthexa(char *line)
 		return (NULL);
 	free(tmp);
 	return (rsl);
-
 }
 
 TXT	*verif_png(char *png)

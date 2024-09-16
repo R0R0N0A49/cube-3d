@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:16:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:29:46 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ int	free_struct(t_map *data)
 
 void	close_wind(mlx_key_data_t keycode, void *param)
 {
-	(void)keycode;
-	mlx_t *mlx = (mlx_t *)param;
+	mlx_t	*mlx;
 
+	(void)keycode;
+	mlx = (mlx_t *)param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
 		|| mlx_is_key_down(mlx, MLX_KEY_Q))
 	{
@@ -72,8 +73,9 @@ void	close_wind(mlx_key_data_t keycode, void *param)
 void	mini_map(t_map *data, mlx_t *mlx)
 {
 	int	i;
-	int	j = 0;
+	int	j;
 
+	j = 0;
 	(void)mlx;
 	while (data->map[j])
 	{
@@ -81,11 +83,11 @@ void	mini_map(t_map *data, mlx_t *mlx)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == 'N' || data->map[j][i] == 'S'
-				||  data->map[j][i] == 'E' || data->map[j][i] == 'W')
+				|| data->map[j][i] == 'E' || data->map[j][i] == 'W')
 			{
 				data->mini_map->pos_x = i;
 				data->mini_map->pos_y = j;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -95,17 +97,17 @@ void	mini_map(t_map *data, mlx_t *mlx)
 
 void	cub3d(t_map *data)
 {
-	(void)data;
 	t_mini	map;
 	t_ray	raycast;
 
-	data->mlx = mlx_init(WINDOWSW,WINDOWSH, "cub3d", true);
+	(void)data;
+	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->mini_map = &map;
 	data->raycast = &raycast;
-	data->raycast->wallH = 500;
-	data->raycast->wallW = WINDOWSW;
+	data->raycast->wallh = 500;
+	data->raycast->wallw = WINDOWSW;
 	mini_map(data, data->mlx);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);

@@ -6,16 +6,16 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/12 13:47:27 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:26:43 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int isfine(char **map, int i, int j)
+static int	isfine(char **map, int i, int j)
 {
 	char	*lstchar;
-	int 	k;
+	int		k;
 
 	lstchar = "210 NSWE\n\0";
 	k = 0;
@@ -71,9 +71,9 @@ void	check_space(char **map, int j)
 
 int	verif_char(t_map *data)
 {
-	int i;
-	int j;
-	int player;
+	int	i;
+	int	j;
+	int	player;
 
 	if (!data->map)
 		return (-1);

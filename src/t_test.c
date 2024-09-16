@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_test.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 13:28:52 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/16 09:23:11 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_testclear(t_test **list, void (*del)(void*))
 int	testlen(t_test *src)
 {
 	int		i;
-	t_test *tmp;
+	t_test	*tmp;
 
 	if (!src)
 		return (-1);

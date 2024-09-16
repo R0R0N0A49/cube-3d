@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:19:59 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:30:33 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 typedef struct s_mini
 {
-	int pos_x;
-	int pos_y;
+	int	pos_x;
+	int	pos_y;
 }	t_mini;
 
 typedef struct s_test
@@ -36,8 +36,8 @@ typedef struct s_test
 
 typedef struct s_ray
 {
-	int	wallW;
-	int	wallH;
+	int	wallw;
+	int	wallh;
 }	t_ray;
 
 typedef struct s_map
@@ -51,7 +51,7 @@ typedef struct s_map
 	char	**map;
 	int		len_map;
 	IMG		*rayc;
-	IMG 	*minima;
+	IMG		*minima;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	mlx_t	*mlx;

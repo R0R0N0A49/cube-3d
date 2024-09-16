@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:14:37 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/12 13:52:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 09:22:25 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	error_pline(char *line, int j, int i, int k)
 
 int	print_charerror(char **line, int posline, int pos)
 {
-	int k;
+	int	k;
 
 	ft_putstr_fd("Error\nwrong char at line ", STDERR_FILENO);
 	ft_putnbr_fd(posline + 1, STDERR_FILENO);
