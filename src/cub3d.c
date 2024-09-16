@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:29:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 17:02:02 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,39 @@ void	mini_map(t_map *data, mlx_t *mlx)
 			if (data->map[j][i] == 'N' || data->map[j][i] == 'S'
 				|| data->map[j][i] == 'E' || data->map[j][i] == 'W')
 			{
+				data->game->player_x = (double)i + 0.5;
+				data->game->player_y = (double)j + 0.5;
 				data->mini_map->pos_x = i;
 				data->mini_map->pos_y = j;
+				if (data->map[j][i] == 'N')
+				{
+					data->game->plane_x = 0.66;
+					data->game->plane_y = 0;
+					data->game->dir_x = 0;
+					data->game->dir_y = -1;
+				}
+				if (data->map[j][i] == 'S')
+				{
+					data->game->plane_x = -0.66;
+					data->game->plane_y = 0;
+					data->game->dir_x = 0;
+					data->game->dir_y = 1;
+				}
+				if (data->map[j][i] == 'W')
+				{
+					data->game->plane_x = 0;
+					data->game->plane_y = -0.66;
+					data->game->dir_x = -1;
+					data->game->dir_y = 0;
+				}
+				if (data->map[j][i] == 'E')
+				{
+					data->game->plane_x = 0;
+					data->game->plane_y = 0.66;
+					data->game->dir_x = 1;
+					data->game->dir_y = 0;
+				}
+				data->map[j][i] = '0';
 				break ;
 			}
 			i++;
@@ -99,15 +130,17 @@ void	cub3d(t_map *data)
 {
 	t_mini	map;
 	t_ray	raycast;
+	t_game	game;
 
 	(void)data;
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->mini_map = &map;
+	data->game = &game;
 	data->raycast = &raycast;
-	data->raycast->wallh = 500;
-	data->raycast->wallw = WINDOWSW;
+	data->game->player_x = 0;
+	data->game->player_y = 0;
 	mini_map(data, data->mlx);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);

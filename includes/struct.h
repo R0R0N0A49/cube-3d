@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:30:33 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 16:46:43 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define WINDOWSH 1080
 # define CUBE 20
 # define COLOR_GRID 0x646464
+# define rotspeed 0.03
 
 typedef struct s_mini
 {
@@ -34,10 +35,37 @@ typedef struct s_test
 	struct s_test	*next;
 }	t_test;
 
+typedef struct s_game
+{
+	double	player_y;
+	double	player_x;
+	double	plane_x;
+	double	plane_y;
+	double	dir_x;
+	double	dir_y;
+}	t_game;
+
+
 typedef struct s_ray
 {
-	int	wallw;
-	int	wallh;
+	double	camera_x;
+	double	raydir_x;
+	double	raydir_y;
+	int		map_x;
+	int		map_y;
+	double	sidedist_x;
+	double	sidedist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+	double	perpwalldist;
+	int		step_x;
+	int		step_y;
+	double wall_dist;
+	double wall_x;
+	int side;
+	int line_height;
+	int draw_start;
+	int draw_end;
 }	t_ray;
 
 typedef struct s_map
@@ -54,6 +82,7 @@ typedef struct s_map
 	IMG		*minima;
 	t_ray	*raycast;
 	t_mini	*mini_map;
+	t_game	*game;
 	mlx_t	*mlx;
 }	t_map;
 

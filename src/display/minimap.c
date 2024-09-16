@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/09/16 09:20:39 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 16:58:13 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	draw_cube(t_map *data, int i, int j, uint32_t te)
 		}
 		i++;
 	}
-	draw_grid(data, a, b, te);
+	//draw_grid(data, a, b, te);
 }
 
 void	loop_top(t_map *data, int j, int i)
@@ -79,7 +79,7 @@ void	loop_top(t_map *data, int j, int i)
 				draw_cube(data, i * CUBE, j * CUBE, 0xCCFF9999);
 			else if ((data->map[j][i] == 'N' || data->map[j][i] == 'S'
 				|| data->map[j][i] == 'E' || data->map[j][i] == 'W'))
-				draw_cube(data, i * CUBE, j * CUBE, 0xCCFF9999);
+				draw_cube(data, i * CUBE, j * CUBE, 0xFFFFFF);
 			else
 				draw_cube(data, i * CUBE, j * CUBE, 0x00000000);
 			i++;
@@ -106,6 +106,29 @@ void	clean_minimap(t_map *data)
 	}
 }
 
+void	draw_player(t_map *data, double i, double j, uint32_t te)
+{
+	double	a;
+	double	b;
+	double	c;
+
+	a = i + 1;
+	b = j + 1;
+	c = j;
+	(void) data;
+	while (i < a)
+	{
+		j = c;
+		while (j < b)
+		{
+			mlx_put_pixel(data->minima, i, j, te);
+			j++;
+		}
+		i++;
+	}
+	//draw_grid(data, a, b, te);
+}
+
 void	mini(t_map *data)
 {
 	int	i;
@@ -115,4 +138,5 @@ void	mini(t_map *data)
 	j = 0;
 	i = 0;
 	loop_top(data, j, i);
+	draw_player(data, data->game->player_x * CUBE, data->game->player_y * CUBE, 0xFFFF);
 }
