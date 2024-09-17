@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:41:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:51:37 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct s_map
 	TXT		*no;
 	TXT		*ea;
 	TXT		*we;
-	char	*up;
-	char	*down;
+	uint32_t	up;
+	uint32_t	down;
 	char	**map;
 	int		len_map;
 	IMG		*rayc;

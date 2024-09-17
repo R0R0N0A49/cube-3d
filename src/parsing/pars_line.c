@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:10:21 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:54:24 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,42 +47,50 @@ char	*gethexa(char **src)
 	return (*src);
 }
 
-char	*pasthexa(char *line)
+uint32_t pasthexa(char *line)
 {
-	char	*rsl;
-	char	*tmprsl;
+	// char	*rsl;
+	// char	*tmprsl;
 	char	**tmp;
-	int		i;
+	// int		i;
 
 	if (!line)
-		return (NULL);
+		return (0);
 	tmp = ft_split(&line[2], ',');
 	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (tmp[i] && stringisdigit(tmp[i]))
-		i++;
-	if (tmp[i] != NULL)
-		exit(1);
-	i = 0;
-	rsl = ft_strdup("0x");
-	while (tmp[i])
-	{
-		tmprsl = ft_strdup(rsl);
-		free(rsl);
-		rsl = ft_strjoin(tmprsl, gethexa(&tmp[i]));
-		free(tmp[i]);
-		free(tmprsl);
-		i++;
-	}
-	tmprsl = ft_strdup(rsl);
-	free(rsl);
-	rsl = ft_strjoin(tmprsl, "FF");
-	free(tmprsl);
-	if (ft_strlen(rsl) > 10)
-		return (NULL);
-	free(tmp);
-	return (rsl);
+		return (0);
+	int r = ft_atoi(tmp[0]);
+	int g = ft_atoi(tmp[1]);
+	int b = ft_atoi(tmp[2]);
+	// i = 0;
+	// while (tmp[i])
+		// free(tmp[i]);
+	// free(tmp);
+	return ((r << 24) + ((g) << 16) + ((b << 8)) + 255);
+	// i = 0;
+	// while (tmp[i] && stringisdigit(tmp[i]))
+	// 	i++;
+	// if (tmp[i] != NULL)
+	// 	exit(1);
+	// i = 0;
+	// rsl = ft_strdup("0x");
+	// while (tmp[i])
+	// {
+	// 	tmprsl = ft_strdup(rsl);
+	// 	free(rsl);
+	// 	rsl = ft_strjoin(tmprsl, gethexa(&tmp[i]));
+	// 	free(tmp[i]);
+	// 	free(tmprsl);
+	// 	i++;
+	// }
+	// tmprsl = ft_strdup(rsl);
+	// free(rsl);
+	// rsl = ft_strjoin(tmprsl, "FF");
+	// free(tmprsl);
+	// if (ft_strlen(rsl) > 10)
+	// 	return (NULL);
+	// free(tmp);
+	// return (rsl);
 }
 
 TXT	*verif_png(char *png)
