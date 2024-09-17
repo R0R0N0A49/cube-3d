@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/09/16 16:58:13 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/16 17:08:06 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ void	draw_player(t_map *data, double i, double j, uint32_t te)
 	double	b;
 	double	c;
 
-	a = i + 1;
-	b = j + 1;
+	a = i + 4;
+	b = j + 4;
 	c = j;
 	(void) data;
-	while (i < a)
+	while (i <= a)
 	{
 		j = c;
-		while (j < b)
+		while (j <= b)
 		{
 			mlx_put_pixel(data->minima, i, j, te);
 			j++;

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 17:02:02 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 11:08:10 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,15 +136,23 @@ void	cub3d(t_map *data)
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
 	data->mini_map = &map;
 	data->game = &game;
 	data->raycast = &raycast;
 	data->game->player_x = 0;
 	data->game->player_y = 0;
+	data->game->move_w = false;
+	data->game->move_s = false;
+	data->game->move_a = false;
+	data->game->move_d = false;
+	data->game->rotate_left = false;
+	data->game->rotate_right = false;
 	mini_map(data, data->mlx);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
 	mlx_loop_hook(data->mlx, loop, data);
+	mlx_cursor_hook(data->mlx, cursor, data);
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 16:46:43 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 11:07:09 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define WINDOWSH 1080
 # define CUBE 20
 # define COLOR_GRID 0x646464
-# define rotspeed 0.03
+# define rotspeed 0.025
+# define speed 0.05
 
 typedef struct s_mini
 {
@@ -43,6 +44,14 @@ typedef struct s_game
 	double	plane_y;
 	double	dir_x;
 	double	dir_y;
+	double	cursor_x;
+	double	cursor_y;
+	bool	move_w;
+	bool	move_a;
+	bool	move_d;
+	bool	move_s;
+	bool	rotate_left;
+	bool	rotate_right;
 }	t_game;
 
 
