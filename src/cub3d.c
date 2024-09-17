@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 17:00:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:10:30 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	init_null(t_map *data)
 	data->so = NULL;
 	data->we = NULL;
 	data->ea = NULL;
-	data->down = NULL;
-	data->up = NULL;
+	data->down = 0;
+	data->up = 0;
 	data->map = NULL;
 }
 
@@ -48,10 +48,10 @@ int	free_struct(t_map *data)
 		mlx_delete_texture(data->ea);
 	if (data->we)
 		mlx_delete_texture(data->we);
-	if (data->down)
-		free(data->down);
-	if (data->up)
-		free(data->up);
+	// if (data->down)
+		// free(data->down);
+	// if (data->up)
+		// free(data->up);
 	if (data->map)
 		ft_free_stringtab(data->map);
 	return (1);
