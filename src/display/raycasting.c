@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/17 17:08:41 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:12:44 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 		color = 0x7f11e0;
 	while (i < start)
 	{
-		mlx_put_pixel(data->rayc, x, i, 0xFFFFFFF);
+		mlx_put_pixel(data->rayc, x, i, data->up);
 		i++;
 	}
 	tex = get_texture(ray, data);
@@ -196,7 +196,7 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	i = ray->draw_end;
 	while (i < WINDOWSH)
 	{
-		mlx_put_pixel(data->rayc, x, i, 0xFFF);
+		mlx_put_pixel(data->rayc, x, i, data->down);
 		i++;
 	}
 }
