@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:27:35 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 12:10:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static int	verif(char *line, t_map *data)
 	return (1);
 }
 
-void	check_map(char *line, t_test **map, t_map *data)
+void	check_map(char *line, t_tmp **map, t_map *data)
 {
 	if (verif_start_line(line) || line[0] == '\n')
 	{
@@ -137,19 +137,19 @@ void	check_map(char *line, t_test **map, t_map *data)
 		free_struct(data);
 		free(line);
 		if (map)
-			ft_testclear(map, free);
+			ft_tmpclear(map, free);
 		exit(1);
 	}
-	if (!(*map)->next && !testlen(*map))
+	if (!(*map)->next && !ft_tmplen(*map))
 	{
 		(*map)->line_map = ft_strdup(line);
 		(*map)->next = NULL;
 		return ;
 	}
-	ft_lstadd_back(map, ft_testnew(line));
+	ft_tmpadd_back(map, ft_tmpnew(line));
 }
 
-int	parsing_line(char *line, t_map *data, int i, t_test *map)
+int	parsing_line(char *line, t_map *data, int i, t_tmp *map)
 {
 	if (line == NULL)
 		return (-1);

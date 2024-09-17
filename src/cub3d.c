@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 17:02:02 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 11:49:26 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,15 +152,15 @@ void	cub3d(t_map *data)
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	t_map	data;
 
 	init_null(&data);
 	main_parsing(argc, argv);
 	init_struct(argv, &data);
-	i = 0;
+	int i = 0;
 	while (data.map && data.map[i])
 	{
+		check_space(data.map, i, '2', '1');
 		ft_printf("%s", data.map[i]);
 		i++;
 	}
