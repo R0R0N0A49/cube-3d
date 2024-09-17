@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/17 11:22:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 13:11:30 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,66 +57,75 @@ void	loop(void *param)
 
 void	move_w(t_map *data)
 {
-	int testx;
-	int testy;
+	double testx;
+	double testy;
 
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
 	testx += data->game->dir_x * speed;
 	testy += data->game->dir_y * speed;
-	if (data->map[testy][testx] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
-	data->game->player_x += data->game->dir_x * speed;
-	data->game->player_y += data->game->dir_y * speed;
+	data->game->player_y = testy;
+	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		return;
+	data->game->player_x = testx;
+	
 }
 
 void	move_s(t_map *data)
 {
-	int testx;
-	int testy;
+	double testx;
+	double testy;
 
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
 	testx -= data->game->dir_x * speed;
 	testy -= data->game->dir_y * speed;
-	if (data->map[testy][testx] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
-	data->game->player_x -= data->game->dir_x * speed;
-	data->game->player_y -= data->game->dir_y * speed;
+	data->game->player_y = testy;
+	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		return;
+	data->game->player_x = testx;
 }
 
 void	move_a(t_map *data)
 {
-	int testx;
-	int testy;
+	double testx;
+	double testy;
 
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
 	testx += data->game->dir_y * speed;
 	testy -= data->game->dir_x * speed;
-	if (data->map[testy][testx] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
-	data->game->player_x += data->game->dir_y * speed;
-	data->game->player_y -= data->game->dir_x * speed;
+	data->game->player_y = testy;
+	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		return;
+	data->game->player_x = testx;
 }
 
 void	move_d(t_map *data)
 {
-	int testx;
-	int testy;
+	double testx;
+	double testy;
 
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
 	testx -= data->game->dir_y * speed;
 	testy += data->game->dir_x * speed;
-	if (data->map[testy][testx] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
-	data->game->player_x -= data->game->dir_y * speed;
-	data->game->player_y += data->game->dir_x * speed;
+	data->game->player_y = testy;
+	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		return;
+	data->game->player_x = testx;
 }
 
 void	rotate_left(t_map *map)
@@ -152,19 +161,17 @@ void	cursor(double xpos, double ypos, void* param)
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	if (data->game->cursor_x < WINDOWSW / 2 - 100)
+	if (data->game->cursor_x < WINDOWSW / 2)
 	{
 		data->game->rotate_left = true;
-		if (data->game->cursor_x < WINDOWSW / 2 - 65)
-			mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
 	}
 	else
 		data->game->rotate_left = false;
-	if (data->game->cursor_x > WINDOWSW / 2 + 100)
+	if (data->game->cursor_x > WINDOWSW / 2)
 	{
 		data->game->rotate_right = true;
-		if (data->game->cursor_x > WINDOWSW / 2 + 65)
-			mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
 	}
 	else
 		data->game->rotate_right = false;
