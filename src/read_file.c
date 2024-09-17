@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/11 12:43:40 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:21:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void	init_struct(char **src, t_map *data)
 	char	*line;
 	int		fd;
 	int		i;
-	t_test	*map;
+	t_tmp	*map;
 
-	map = malloc(1 * sizeof(t_test));
+	map = malloc(1 * sizeof(t_tmp));
 	map->line_map = NULL;
 	map->next = NULL;
-	fd = open(src[1], O_RDONLY);
+	fd = open(src[1],  O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("error\n"); // modif msg
+		ft_putstr_fd("error\nFile can't open\n", 2);
 		exit(1);
 	}
 	line = get_next_line(fd);
@@ -54,12 +54,16 @@ void	init_struct(char **src, t_map *data)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	data->map = ft_test_to_tab(map);
-	data->len_map = testlen(map);
-	ft_testclear(&map, free);
-	i = verif_char(data);
 	if (ft_verif_first(data))
+	{
+		ft_putstr_fd("error\nfile empty\n", 2);
+		ft_tmpclear(&map, free);
 		exit (free_struct(data));
+	}
+	data->map = ft_tmp_to_tab(map);
+	data->len_map = ft_tmplen(map);
+	ft_tmpclear(&map, free);
+	i = verif_char(data);
 	if (i)
 	{
 		free_struct(data);

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:26:43 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 11:51:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	isplayer(char const c)
 	return (0);
 }
 
-void	check_space(char **map, int j)
+void	check_space(char **map, int j, char fst, char scd)
 {
 	int	i;
 	int	t;
@@ -56,14 +56,14 @@ void	check_space(char **map, int j)
 			map[j][i] = ' ';
 		if (t && (map[j][i] == '0' || isplayer(map[j][i])))
 		{
-			if (map[j + 1] && map[j + 1][i] == ' ')
-				map[j + 1][i] = '2';
-			if (j == 2 && map[j - 1][i] == ' ')
-				map[j - 1][i] = '2';
-			if (i && map[j][i - 1] == ' ')
-				map[j][i - 1] = '2';
-			if (map[j][i + 1] == ' ')
-				map[j][i + 1] = '2';
+			if (map[j + 1] && map[j + 1][i] == fst)
+				map[j + 1][i] = scd;
+			if (j == 2 && map[j - 1][i] == fst)
+				map[j - 1][i] = scd;
+			if (i && map[j][i - 1] == fst)
+				map[j][i - 1] = scd;
+			if (map[j][i + 1] == fst)
+				map[j][i + 1] = scd;
 		}
 		i++;
 	}
@@ -89,11 +89,11 @@ int	verif_char(t_map *data)
 				print_charerror(data->map, j, i);
 				return (1);
 			}
-			check_space(data->map, j);
 			i++;
 			if (isplayer(data->map[j][i]))
 				player++;
 		}
+		check_space(data->map, j, ' ', '2');
 		if (checkline(data->map, j, data->len_map))
 			return (1);
 		j++;

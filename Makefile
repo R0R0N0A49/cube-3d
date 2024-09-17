@@ -7,7 +7,7 @@ RM=rm -rf
 SRCS=	src/cub3d.c \
 		src/read_file.c \
 		src/print_error.c \
-		src/t_test.c
+		src/t_tmp.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing
@@ -28,7 +28,7 @@ all : $(NAME)
 
 $(NAME) : MLX $(LIBFT) $(PARS) $(DISP) $(OBJS)
 	$(MLX)
-	@$(CC) $(CFLAGS) $(MLXFLAGS) -o $(NAME) $(OBJS) $(PARS) $(DISP) $(LIBFT) ./MLX42/build/libmlx42.a
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(DISP) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 	@mv src/*.o OBJS
 	@clear
 	@echo ${GREEN}">-Compilation successful-<"${WHITE};

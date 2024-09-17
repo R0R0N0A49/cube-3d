@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 11:07:09 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 12:41:38 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ typedef struct s_mini
 	int	pos_y;
 }	t_mini;
 
-typedef struct s_test
+typedef struct s_tmp
 {
 	char			*line_map;
-	struct s_test	*next;
-}	t_test;
+	struct s_tmp	*next;
+}	t_tmp;
 
 typedef struct s_game
 {
@@ -95,10 +95,11 @@ typedef struct s_map
 	mlx_t	*mlx;
 }	t_map;
 
-char	**ft_test_to_tab(t_test *src);
-int		testlen(t_test *src);
-void	ft_testclear(t_test **list, void (*del)(void*));
-void	ft_testdelone(t_test **list, void (*del)(void*));
-t_test	*ft_testnew(char *line);
+char	**ft_tmp_to_tab(t_tmp *src);
+void	ft_tmpadd_back(t_tmp **lst, t_tmp *new_tail);
+int		ft_tmplen(t_tmp *src);
+void	ft_tmpclear(t_tmp **list, void (*del)(void*));
+void	ft_tmpdelone(t_tmp **list, void (*del)(void*));
+t_tmp	*ft_tmpnew(char *line);
 
 #endif
