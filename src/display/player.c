@@ -6,29 +6,17 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/17 13:11:30 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:50:42 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #define COLOR_PLAYER 0xFF5000FF
 
-void	clean_frame(t_map *data)
+void	time_fps(t_map	*data)
 {
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < WINDOWSW)
-	{
-		while (x < WINDOWSH)
-		{
-			mlx_put_pixel(data->rayc, y, x, 0xFFFFFF);
-			x++;
-		}
-		y++;
-	}
+	//mlx_put_string(data->mlx, ft_itoa((int)(1 / data->mlx->delta_time)), 0, 0);
+	printf("%d\n", (int)(1 / data->mlx->delta_time));
 }
 
 void	loop(void *param)
@@ -36,10 +24,9 @@ void	loop(void *param)
 	t_map	*data;
 
 	data = (t_map *)param;
-	clean_frame(data);
+	time_fps(data);
 	raycasting(data);
-	clean_frame(data);
-	mini(data);
+	//mini(data);
 	if (data->game->move_w)
 		move_w(data);
 	if (data->game->move_s)
@@ -52,7 +39,7 @@ void	loop(void *param)
 		rotate_left(data);
 	if (data->game->rotate_right)
 		rotate_right(data);
-	printf("pos_y = %f, pos_x = %f\n", data->game->player_y, data->game->player_x);
+	//printf("pos_y = %f, pos_x = %f\n", data->game->player_y, data->game->player_x);
 }
 
 void	move_w(t_map *data)
@@ -63,8 +50,8 @@ void	move_w(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx += data->game->dir_x * speed;
-	testy += data->game->dir_y * speed;
+	testx += data->game->dir_x * data->speed;
+	testy += data->game->dir_y * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
 	data->game->player_y = testy;
@@ -82,8 +69,8 @@ void	move_s(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx -= data->game->dir_x * speed;
-	testy -= data->game->dir_y * speed;
+	testx -= data->game->dir_x * data->speed;
+	testy -= data->game->dir_y * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
 	data->game->player_y = testy;
@@ -100,8 +87,8 @@ void	move_a(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx += data->game->dir_y * speed;
-	testy -= data->game->dir_x * speed;
+	testx += data->game->dir_y * data->speed;
+	testy -= data->game->dir_x * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
 	data->game->player_y = testy;
@@ -118,8 +105,8 @@ void	move_d(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx -= data->game->dir_y * speed;
-	testy += data->game->dir_x * speed;
+	testx -= data->game->dir_y * data->speed;
+	testy += data->game->dir_x * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 		return;
 	data->game->player_y = testy;
@@ -134,11 +121,11 @@ void	rotate_left(t_map *map)
 	double	oldplane_x;
 
 	olddri_x = map->game->dir_x;
-	map->game->dir_x = map->game->dir_x * cos(-rotspeed) - map->game->dir_y * sin(-rotspeed);
-	map->game->dir_y = olddri_x * sin(-rotspeed) + map->game->dir_y* cos(-rotspeed);
+	map->game->dir_x = map->game->dir_x * cos(-map->rotspeed) - map->game->dir_y * sin(-map->rotspeed);
+	map->game->dir_y = olddri_x * sin(-map->rotspeed) + map->game->dir_y* cos(-map->rotspeed);
 	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(-rotspeed) -  map->game->plane_y * sin(-rotspeed);
-	map->game->plane_y =  oldplane_x * sin(-rotspeed) +  map->game->plane_y * cos(-rotspeed);
+	map->game->plane_x =  map->game->plane_x * cos(-map->rotspeed) -  map->game->plane_y * sin(-map->rotspeed);
+	map->game->plane_y =  oldplane_x * sin(-map->rotspeed) +  map->game->plane_y * cos(-map->rotspeed);
 }
 
 void	rotate_right(t_map *map)
@@ -147,11 +134,11 @@ void	rotate_right(t_map *map)
 	double	oldplane_x;
 
 	olddri_x = map->game->dir_x;
-	map->game->dir_x = map->game->dir_x * cos(rotspeed) - map->game->dir_y * sin(rotspeed);
-	map->game->dir_y = olddri_x * sin(rotspeed) + map->game->dir_y * cos(rotspeed);
+	map->game->dir_x = map->game->dir_x * cos(map->rotspeed) - map->game->dir_y * sin(map->rotspeed);
+	map->game->dir_y = olddri_x * sin(map->rotspeed) + map->game->dir_y * cos(map->rotspeed);
 	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(rotspeed) -  map->game->plane_y * sin(rotspeed);
-	map->game->plane_y =  oldplane_x * sin(rotspeed) +  map->game->plane_y * cos(rotspeed);
+	map->game->plane_x =  map->game->plane_x * cos(map->rotspeed) -  map->game->plane_y * sin(map->rotspeed);
+	map->game->plane_y =  oldplane_x * sin(map->rotspeed) +  map->game->plane_y * cos(map->rotspeed);
 }
 
 void	cursor(double xpos, double ypos, void* param)

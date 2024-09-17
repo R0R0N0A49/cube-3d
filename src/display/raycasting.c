@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/16 17:02:37 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:08:41 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,58 @@ void	calcul_projected_cam(t_ray *ray, t_map *data)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
+mlx_texture_t *get_texture(t_ray *ray, t_map *data)
+{
+	if (ray->side == 0 && ray->raydir_x > 0)
+		return (data->we);
+	if (ray->side == 0 && ray->raydir_x < 0)
+		return (data->ea);
+	if (ray->side == 1 && ray->raydir_y < 0)
+		return (data->so);
+	if (ray->side == 1 && ray->raydir_y > 0)
+		return (data->no);
+	return (data->no);
+}
+
+int	ft_abs(int nb)
+{
+	if (nb < 0)
+		return (-nb);
+	return (nb);
+}
+
+void	try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
+{
+	if (x < 0 || x > img->width || y < 0 || y > img->height)
+		return ;
+	mlx_put_pixel(img, x, y, color);
+}
+
+void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
+{
+	int y;
+
+	y = ray->draw_start - 1;
+	while (y < ray->draw_end)
+	{
+		ray->texture_y = (int)ray->texture_pos & (tex->height - 1);
+		ray->texture_pos += ray->step;
+		ray->color = tex->pixels[tex->height * ray->texture_y * 4 + \
+		ft_abs(ray->texture_x - tex->width + 1) * 4] << 24 | \
+		tex->pixels[tex->height * ray->texture_y * 4 + ft_abs(ray->texture_x - \
+		tex->width + 1) * 4 + 1] << 16 | tex->pixels[tex->height * ray->texture_y * \
+		4 + ft_abs(ray->texture_x - tex->width + 1) * 4 + 2] << 8 | \
+		tex->pixels[tex->height * ray->texture_y * 4 + ft_abs(ray->texture_x - \
+		tex->width + 1) * 4 + 3];
+		try_put_pixel(data->rayc, x, y + 1, ray->color);
+		y++;
+	}
+}
+
 void	draw_ray(int x, t_ray *ray, t_map *data)
 {
 	uint32_t color;
+	mlx_texture_t *tex;
 	int	start;
 	int	i;
 
@@ -132,11 +181,18 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 		mlx_put_pixel(data->rayc, x, i, 0xFFFFFFF);
 		i++;
 	}
-	while (start <= ray->draw_end)
+	tex = get_texture(ray, data);
+	ray->texture_x = (int)(ray->wall_x * (double)tex->height);
+	if ((ray->side == 0 && ray->raydir_x > 0) || (ray->side == 1 && ray->raydir_y < 0))
+		ray->texture_x = tex->width - ray->texture_x - 1;
+	ray->step = 1.0 * tex->height / ray->line_height;
+	ray->texture_pos = (ray->draw_start - WINDOWSH / 2 + ray->line_height / 2) * ray->step;
+	draw_tex(ray, data, x, tex);
+	/*while (start <= ray->draw_end)
 	{
 		mlx_put_pixel(data->rayc, x, start, color);
 		start++;
-	}
+	}*/
 	i = ray->draw_end;
 	while (i < WINDOWSH)
 	{
@@ -152,7 +208,6 @@ void	raycasting(t_map *data)
 
 	x = 0;
 	ray = data->raycast;
-	clean_frame(data);
 	while (x < WINDOWSW)
 	{
 		init_raycast(x, ray, data->game);

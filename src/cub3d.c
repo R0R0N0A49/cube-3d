@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:41:09 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:00:46 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,12 @@ void	cub3d(t_map *data)
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	data->mini_map = &map;
 	data->game = &game;
 	data->raycast = &raycast;
+	data->speed = 0.069;
+	data->rotspeed = 0.035;
 	data->game->player_x = 0;
 	data->game->player_y = 0;
 	data->game->move_w = false;

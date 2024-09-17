@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:41:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:47:29 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # define WINDOWSH 1080
 # define CUBE 20
 # define COLOR_GRID 0x646464
-# define rotspeed 0.025
-# define speed 0.05
 
 typedef struct s_mini
 {
@@ -75,10 +73,17 @@ typedef struct s_ray
 	int line_height;
 	int draw_start;
 	int draw_end;
+	int	texture_x;
+	int	texture_y;
+	int	color;
+	double step;
+	double texture_pos;
 }	t_ray;
 
 typedef struct s_map
 {
+	double	rotspeed;
+	double 	speed;
 	TXT		*so;
 	TXT		*no;
 	TXT		*ea;
