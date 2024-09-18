@@ -6,7 +6,6 @@ RM=rm -rf
 
 SRCS=	src/cub3d.c \
 		src/read_file.c \
-		src/print_error.c \
 		src/t_tmp.c
 OBJS=$(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 16:54:24 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:10:03 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,69 +28,57 @@ bool	stringisdigit(char *src)
 	return (true);
 }
 
-char	*gethexa(char **src)
-{
-	char	*rsl;
-	int		nmb;
-	char	*base;
+// char	*gethexa(char **src)
+// {
+// 	char	*rsl;
+// 	int		nmb;
+// 	char	*base;
+//
+// 	base = "0123456789ABCDEF";
+// 	nmb = ft_atoi(*src);
+// 	if (nmb > 255 || nmb < 0)
+// 		return (NULL);
+// 	rsl = ft_calloc(3, sizeof(char));
+// 	rsl[0] = base[(nmb / 16) % 16];
+// 	rsl[1] = base[nmb % 16];
+// 	free(*src);
+// 	*src = ft_strdup(rsl);
+// 	free(rsl);
+// 	return (*src);
+// }
 
-	base = "0123456789ABCDEF";
-	nmb = ft_atoi(*src);
-	if (nmb > 255 || nmb < 0)
-		return (NULL);
-	rsl = ft_calloc(3, sizeof(char));
-	rsl[0] = base[(nmb / 16) % 16];
-	rsl[1] = base[nmb % 16];
-	free(*src);
-	*src = ft_strdup(rsl);
-	free(rsl);
-	return (*src);
+int	ft_stringtab_len(char **src)
+{
+	int	i;
+	i = 0;
+	while (src[i])
+		i++;
+	return (i);
 }
 
-uint32_t pasthexa(char *line)
+uint32_t pasthexa(char *line, t_map *data, t_tmp *map)
 {
-	// char	*rsl;
-	// char	*tmprsl;
 	char	**tmp;
-	// int		i;
+	int		r;
+	int		g;
+	int		b;
 
 	if (!line)
 		return (0);
 	tmp = ft_split(&line[2], ',');
-	if (!tmp)
-		return (0);
-	int r = ft_atoi(tmp[0]);
-	int g = ft_atoi(tmp[1]);
-	int b = ft_atoi(tmp[2]);
-	// i = 0;
-	// while (tmp[i])
-		// free(tmp[i]);
-	// free(tmp);
+	if (!tmp || ft_stringtab_len(tmp) != 3)
+	{
+		if (!tmp)
+			error_colors(line, 4, data, map);
+		ft_free_stringtab(tmp);
+		error_colors(line, 5, data, map);
+	}
+	// ajouter une verification pour avoir seulement des nombre
+	r = ft_atoi(tmp[0]);
+	g = ft_atoi(tmp[1]);
+	b = ft_atoi(tmp[2]);
+	ft_free_stringtab(tmp);
 	return ((r << 24) + ((g) << 16) + ((b << 8)) + 255);
-	// i = 0;
-	// while (tmp[i] && stringisdigit(tmp[i]))
-	// 	i++;
-	// if (tmp[i] != NULL)
-	// 	exit(1);
-	// i = 0;
-	// rsl = ft_strdup("0x");
-	// while (tmp[i])
-	// {
-	// 	tmprsl = ft_strdup(rsl);
-	// 	free(rsl);
-	// 	rsl = ft_strjoin(tmprsl, gethexa(&tmp[i]));
-	// 	free(tmp[i]);
-	// 	free(tmprsl);
-	// 	i++;
-	// }
-	// tmprsl = ft_strdup(rsl);
-	// free(rsl);
-	// rsl = ft_strjoin(tmprsl, "FF");
-	// free(tmprsl);
-	// if (ft_strlen(rsl) > 10)
-	// 	return (NULL);
-	// free(tmp);
-	// return (rsl);
 }
 
 TXT	*verif_png(char *png)
@@ -102,14 +90,14 @@ TXT	*verif_png(char *png)
 	while (png[i] == ' ')
 		i++;
 	if (png[i] == '\0')
-		return (NULL);
+		return (NULL); // messqge error
 	tmp = mlx_load_png(&png[i]);
 	if (!tmp)
-		return (NULL);
+		return (NULL); // messqge error
 	return (tmp);
 }
 
-static int	verif(char *line, t_map *data)
+static int	verif(char *line, t_map *data, t_tmp *tmp)
 {
 	(void)data;
 	if (line[0] == '\n')
@@ -124,30 +112,18 @@ static int	verif(char *line, t_map *data)
 	else if (!data->ea && !ft_strncmp(line, "EA ", 3))
 		data->ea = verif_png(&line[3]);
 	else if (!data->down && !ft_strncmp(line, "F ", 2))
-		data->down = pasthexa(line);
+		data->down = pasthexa(line, data, tmp);
 	else if (!data->up && !ft_strncmp(line, "C ", 2))
-		data->up = pasthexa(line);
+		data->up = pasthexa(line, data, tmp);
 	else
-	{
-		free_struct(data);
-		print_error(line);
-		free(line);
-		exit(1);
-	}
+		print_error(line, data, tmp);
 	return (1);
 }
 
 void	check_map(char *line, t_tmp **map, t_map *data)
 {
 	if (verif_start_line(line) || line[0] == '\n')
-	{
-		print_error(line);
-		free_struct(data);
-		free(line);
-		if (map)
-			ft_tmpclear(map, free);
-		exit(1);
-	}
+		print_error(line, data, *map);
 	if (!(*map)->next && !ft_tmplen(*map))
 	{
 		(*map)->line_map = ft_strdup(line);
@@ -162,7 +138,7 @@ int	parsing_line(char *line, t_map *data, int i, t_tmp *map)
 	if (line == NULL)
 		return (-1);
 	if (i < 6)
-		return (verif(line, data));
+		return (verif(line, data, map));
 	if (i == 6 && line[0] == '\n')
 		return (0);
 	check_map(line, &map, data);

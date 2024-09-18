@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:21:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:58:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,28 @@ bool	ft_verif_first(t_map *data)
 void	init_struct(char **src, t_map *data)
 {
 	char	*line;
-	int		fd;
 	int		i;
 	t_tmp	*map;
 
 	map = malloc(1 * sizeof(t_tmp));
 	map->line_map = NULL;
 	map->next = NULL;
-	fd = open(src[1],  O_RDONLY);
-	if (fd < 0)
+	data->file = open(src[1],  O_RDONLY);
+	if (data->file < 0)
 	{
 		ft_putstr_fd("error\nFile can't open\n", 2);
 		exit(1);
 	}
-	line = get_next_line(fd);
+	line = get_next_line(data->file);
 	i = 0;
 	while (line)
 	{
 		i += parsing_line(line, data, i, map);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(data->file);
 	}
-	close(fd);
+	close(data->file);
+	data->file = -1;
 	if (ft_verif_first(data))
 	{
 		ft_putstr_fd("error\nfile empty\n", 2);

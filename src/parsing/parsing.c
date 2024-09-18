@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:02:22 by trebours          #+#    #+#             */
-/*   Updated: 2024/08/28 11:05:31 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:33:40 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,12 @@ void	ft_verif_cub(char *src)
 	else if (src[len_src - 4] != '.')
 		i++;
 	if (i > 0)
-	{
-		ft_printf("Error\nthe file has the wrong format\n");
-		exit(1);
-	}
+		error_file(src, 1);
 }
 
 void	main_parsing(int len, char **src)
 {
 	if (len != 2)
-	{
-		ft_printf("Error\ncub3d nead a file\n");
-		exit(2);
-	}
+		error_file(src[1], 2);
 	ft_verif_cub(src[1]);
 }

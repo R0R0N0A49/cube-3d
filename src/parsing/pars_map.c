@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 11:51:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:44:25 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,17 @@ int	verif_char(t_map *data)
 		while (data->map[j][i])
 		{
 			if (isfine(data->map, i, j))
-			{
-				print_charerror(data->map, j, i);
-				return (1);
-			}
-			i++;
+				exit(print_charerror(data->map, j, i, data));
 			if (isplayer(data->map[j][i]))
 				player++;
+			i++;
 		}
 		check_space(data->map, j, ' ', '2');
-		if (checkline(data->map, j, data->len_map))
-			return (1);
+		if (checkline(data->map, j, data->len_map, data))
+			exit(10); // A modif pour reduir les ligne
 		j++;
 	}
-	if (player != 1) {
-		ft_printf("\033[1;31myou must have 1 player but you have %d player.s\n\033[1;m", player);
-		return (1);
-	}
+	if (player != 1)
+		error_player(player, data);
 	return (0);
 }

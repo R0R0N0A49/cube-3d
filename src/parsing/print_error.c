@@ -6,11 +6,11 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:14:37 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/16 09:22:25 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/18 15:17:06 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 static void	error_pline(char *line, int j, int i, int k)
 {
@@ -33,7 +33,7 @@ static void	error_pline(char *line, int j, int i, int k)
 	}
 }
 
-int	print_charerror(char **line, int posline, int pos)
+int	print_charerror(char **line, int posline, int pos, t_map *data)
 {
 	int	k;
 
@@ -51,7 +51,8 @@ int	print_charerror(char **line, int posline, int pos)
 		pos--;
 	}
 	ft_putstr_fd("\033[1;31m^\n\033[1;m", STDERR_FILENO);
-	return (1);
+	free_struct(data);
+	return (10);
 }
 
 int	verif_start_line(char *line)
@@ -71,18 +72,26 @@ int	verif_start_line(char *line)
 	return (0);
 }
 
-void	print_error(char *line)
+void	print_error(char *line, t_map *data, t_tmp *map)
 {
+	int index;
+
+	ft_putstr_fd(RED, STDERR_FILENO);
 	write(STDERR_FILENO, "Error\n", 6);
 	if (verif_start_line(line))
 	{
 		ft_putstr_fd("repetition of the texture for ", STDERR_FILENO);
 		write(STDERR_FILENO, line, 2);
+		index = 7;
 	}
 	else if (line[0] == '\n')
-		ft_putstr_fd("the map must not contain an empty line", STDERR_FILENO);
+		index = write(STDERR_FILENO, "the map must not contain an empty line", 38) - 30;
 	else
-		ft_putstr_fd("the first line should be texture and color",
-			STDERR_FILENO);
+		index = write(STDERR_FILENO, "the first lines must be texture or color", 40) - 31;
 	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd(WHITE, STDERR_FILENO);
+	free(line);
+	free_struct(data);
+	ft_tmpclear(&map, free);
+	exit(index);
 }

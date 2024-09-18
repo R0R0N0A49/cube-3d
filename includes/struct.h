@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 17:10:50 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/18 11:56:32 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
-# define WINDOWSW 1920
-# define WINDOWSH 1080
+# define WINDOWSW 1230
+# define WINDOWSH 720
 # define CUBE 20
 # define COLOR_GRID 0x646464
 
@@ -82,18 +82,19 @@ typedef struct s_ray
 
 typedef struct s_map
 {
-	double	rotspeed;
-	double 	speed;
+	int		file;
+	char	**map;
+	int		len_map;
 	TXT		*so;
 	TXT		*no;
 	TXT		*ea;
 	TXT		*we;
 	uint32_t	up;
 	uint32_t	down;
-	char	**map;
-	int		len_map;
 	IMG		*rayc;
 	IMG		*minima;
+	double	rotspeed;
+	double 	speed;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;

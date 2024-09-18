@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/17 17:12:44 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/18 10:44:33 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	ft_abs(int nb)
 
 void	try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
 {
-	if (x < 0 || x > img->width || y < 0 || y > img->height)
+	if (/*x < (uint32_t)0 ||*/ x > img->width /*|| y < (uint32_t)0 */|| y > img->height)
 		return ;
 	mlx_put_pixel(img, x, y, color);
 }
@@ -166,16 +166,16 @@ void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 
 void	draw_ray(int x, t_ray *ray, t_map *data)
 {
-	uint32_t color;
+//	uint32_t color;
 	mlx_texture_t *tex;
 	int	start;
 	int	i;
 
 	i= 0;
 	start = ray->draw_start;
-	color = 0x7f;
-	if (ray->side == 1)
-		color = 0x7f11e0;
+//	color = 0x7f;
+//	if (ray->side == 1)
+//		color = 0x7f11e0;
 	while (i < start)
 	{
 		mlx_put_pixel(data->rayc, x, i, data->up);

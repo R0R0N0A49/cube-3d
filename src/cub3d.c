@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 17:10:30 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/18 11:59:14 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	init_null(t_map *data)
 	data->ea = NULL;
 	data->down = 0;
 	data->up = 0;
+	data->file = -1;
 	data->map = NULL;
 }
 
-static void	ft_free_stringtab(char **src)
+void	ft_free_stringtab(char **src)
 {
 	int	i;
 
@@ -48,27 +49,28 @@ int	free_struct(t_map *data)
 		mlx_delete_texture(data->ea);
 	if (data->we)
 		mlx_delete_texture(data->we);
-	// if (data->down)
-		// free(data->down);
-	// if (data->up)
-		// free(data->up);
 	if (data->map)
 		ft_free_stringtab(data->map);
+	if (data->file != -1)
+	{
+		close(data->file);
+		data->file = -1;
+	}
 	return (1);
 }
 
-void	close_wind(mlx_key_data_t keycode, void *param)
-{
-	mlx_t	*mlx;
-
-	(void)keycode;
-	mlx = (mlx_t *)param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
-		|| mlx_is_key_down(mlx, MLX_KEY_Q))
-	{
-		mlx_close_window(mlx);
-	}
-}
+// void	close_wind(mlx_key_data_t keycode, void *param)
+// {
+// 	mlx_t	*mlx;
+//
+// 	(void)keycode;
+// 	mlx = (mlx_t *)param;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
+// 		|| mlx_is_key_down(mlx, MLX_KEY_Q))
+// 	{
+// 		mlx_close_window(mlx);
+// 	}
+// }
 
 void	mini_map(t_map *data, mlx_t *mlx)
 {
@@ -175,7 +177,7 @@ int	main(int argc, char **argv)
 		ft_printf("%s", data.map[i]);
 		i++;
 	}
-	cub3d(&data);
+	// cub3d(&data);
 	free_struct(&data);
 	return (0);
 }

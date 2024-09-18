@@ -24,7 +24,6 @@
 
 void	init_struct(char **src, t_map *data);
 int		free_struct(t_map *data);
-void	print_error(char *line);
 int		verif_start_line(char *line);
 void	ft_lstadd_back(t_tmp **lst, t_tmp *new_tail);
 void	mini_map(t_map *data, mlx_t *mlx);
