@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/17 16:50:42 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/20 16:51:02 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	time_fps(t_map	*data)
 {
-	//mlx_put_string(data->mlx, ft_itoa((int)(1 / data->mlx->delta_time)), 0, 0);
 	printf("%d\n", (int)(1 / data->mlx->delta_time));
 }
 
@@ -24,7 +23,7 @@ void	loop(void *param)
 	t_map	*data;
 
 	data = (t_map *)param;
-	time_fps(data);
+	//time_fps(data);
 	raycasting(data);
 	//mini(data);
 	if (data->game->move_w)
@@ -39,7 +38,29 @@ void	loop(void *param)
 		rotate_left(data);
 	if (data->game->rotate_right)
 		rotate_right(data);
-	//printf("pos_y = %f, pos_x = %f\n", data->game->player_y, data->game->player_x);
+	/*if (data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max)
+		data->pause = false;*/
+	if (data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max && data->press == true)
+		data->but_play->click = true;
+	if (data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max && data->good == true)
+	{
+		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+		data->pause = false;
+		data->good = false;
+		data->menu->enabled = false;
+		data->cubd->enabled = false;
+		data->img_play->enabled = false;
+		data->img_option->enabled = false;
+		data->img_edit->enabled = false;
+		data->img_exit->enabled = false;
+		data->game->move_w = false;
+		data->game->rotate_left = false;
+		data->game->rotate_right = false;
+		data->game->move_s = false;
+		data->game->move_a = false;
+		data->game->move_d = false;
+	}
+	button_play(data);
 }
 
 void	move_w(t_map *data)
@@ -53,7 +74,12 @@ void	move_w(t_map *data)
 	testx += data->game->dir_x * data->speed;
 	testy += data->game->dir_y * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
-		return;
+	{
+		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+			return;
+		data->game->player_x = testx;
+		return ;
+	}
 	data->game->player_y = testy;
 	if (data->map[(int)data->game->player_y][(int)testx] == '1')
 		return;
@@ -72,7 +98,12 @@ void	move_s(t_map *data)
 	testx -= data->game->dir_x * data->speed;
 	testy -= data->game->dir_y * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
-		return;
+	{
+		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+			return;
+		data->game->player_x = testx;
+		return ;
+	}
 	data->game->player_y = testy;
 	if (data->map[(int)data->game->player_y][(int)testx] == '1')
 		return;
@@ -90,7 +121,12 @@ void	move_a(t_map *data)
 	testx += data->game->dir_y * data->speed;
 	testy -= data->game->dir_x * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
-		return;
+	{
+		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+			return;
+		data->game->player_x = testx;
+		return ;
+	}
 	data->game->player_y = testy;
 	if (data->map[(int)data->game->player_y][(int)testx] == '1')
 		return;
@@ -108,7 +144,12 @@ void	move_d(t_map *data)
 	testx -= data->game->dir_y * data->speed;
 	testy += data->game->dir_x * data->speed;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
-		return;
+	{
+		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+			return;
+		data->game->player_x = testx;
+		return ;
+	}
 	data->game->player_y = testy;
 	if (data->map[(int)data->game->player_y][(int)testx] == '1')
 		return;
@@ -141,6 +182,21 @@ void	rotate_right(t_map *map)
 	map->game->plane_y =  oldplane_x * sin(map->rotspeed) +  map->game->plane_y * cos(map->rotspeed);
 }
 
+void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
+{
+	t_map	*data;
+	
+	data = (t_map *)param;
+	(void)mods;
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+		data->press = true;
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
+	{
+		data->press = false;
+		data->good = true;
+	}
+}
+
 void	cursor(double xpos, double ypos, void* param)
 {
 	t_map	*data;
@@ -148,17 +204,19 @@ void	cursor(double xpos, double ypos, void* param)
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	if (data->game->cursor_x < WINDOWSW / 2)
+	if (data->game->cursor_x < WINDOWSW / 2 - 200 && data->pause == false)
 	{
 		data->game->rotate_left = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH /2);
 	}
 	else
 		data->game->rotate_left = false;
-	if (data->game->cursor_x > WINDOWSW / 2)
+	if (data->game->cursor_x > WINDOWSW / 2 + 200 && data->pause == false)
 	{
 		data->game->rotate_right = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, ypos);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH /2);
 	}
 	else
 		data->game->rotate_right = false;
@@ -166,41 +224,72 @@ void	cursor(double xpos, double ypos, void* param)
 
 void	key_press(mlx_key_data_t keydata, void *param)
 {
-	t_map	*map;
+	t_map	*data;
 	
 
-	map = (t_map *)param;
-	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	data = (t_map *)param;
+	if (keydata.action == MLX_PRESS)
 	{
-		if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
-			mlx_close_window(map->mlx);
-		if (keydata.key == MLX_KEY_W)
-			map->game->move_w = true;
-		if (keydata.key == MLX_KEY_S)
-			map->game->move_s = true;
-		if (keydata.key == MLX_KEY_A)
-			map->game->move_a = true;
-		if (keydata.key == MLX_KEY_D)
-			map->game->move_d = true;
-		if (keydata.key == MLX_KEY_LEFT)
-			map->game->rotate_left = true;
-		if (keydata.key == MLX_KEY_RIGHT)
-			map->game->rotate_right = true;
-		
+		if (keydata.key == MLX_KEY_ESCAPE)
+			mlx_close_window(data->mlx);
+		if (keydata.key == MLX_KEY_W && data->pause == false)
+			data->game->move_w = true;
+		if (keydata.key == MLX_KEY_S && data->pause == false)
+			data->game->move_s = true;
+		if (keydata.key == MLX_KEY_A && data->pause == false)
+			data->game->move_a = true;
+		if (keydata.key == MLX_KEY_D && data->pause == false)
+			data->game->move_d = true;
+		if (keydata.key == MLX_KEY_LEFT && data->pause == false)
+			data->game->rotate_left = true;
+		if (keydata.key == MLX_KEY_RIGHT && data->pause == false)
+			data->game->rotate_right = true;
+		if (keydata.key == MLX_KEY_P)
+		{
+			if (data->menu->enabled == true)
+			{
+				mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+				data->pause = false;
+				data->menu->enabled = false;
+				data->cubd->enabled = false;
+				data->img_play->enabled = false;
+				data->img_option->enabled = false;
+				data->img_edit->enabled = false;
+				data->img_exit->enabled = false;
+			}
+			else if (data->menu->enabled == false)
+			{
+				mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
+				data->pause = true;
+				data->menu->enabled = true;
+				data->cubd->enabled = true;
+				data->img_play->enabled = true;
+				data->img_option->enabled = true;
+				data->img_edit->enabled = true;
+				data->img_exit->enabled = true;
+				data->game->move_w = false;
+				data->game->rotate_left = false;
+				data->game->rotate_right = false;
+				data->game->move_s = false;
+				data->game->move_a = false;
+				data->game->move_d = false;
+				
+			}
+		}
 	}
-	if (keydata.action == MLX_RELEASE)
+	if (keydata.action == MLX_RELEASE && data->pause == false)
 	{
 		if (keydata.key == MLX_KEY_W)
-			map->game->move_w = false;
+			data->game->move_w = false;
 		if (keydata.key == MLX_KEY_LEFT)
-			map->game->rotate_left = false;
+			data->game->rotate_left = false;
 		if (keydata.key == MLX_KEY_RIGHT)
-			map->game->rotate_right = false;
+			data->game->rotate_right = false;
 		if (keydata.key == MLX_KEY_S)
-			map->game->move_s = false;
+			data->game->move_s = false;
 		if (keydata.key == MLX_KEY_A)
-			map->game->move_a = false;
+			data->game->move_a = false;
 		if (keydata.key == MLX_KEY_D)
-			map->game->move_d = false;
+			data->game->move_d = false;
 	}
 }

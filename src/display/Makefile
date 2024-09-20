@@ -5,7 +5,8 @@ RM=rm -rf
 
 SRCS=	minimap.c \
 		player.c \
-		raycasting.c
+		raycasting.c \
+		menu.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rcs

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 11:56:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:46:12 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 # define TXT mlx_texture_t
 # define IMG mlx_image_t
-# define WINDOWSW 1230
-# define WINDOWSH 720
+# define WINDOWSW 1920
+# define WINDOWSH 1080
 # define CUBE 20
 # define COLOR_GRID 0x646464
 
@@ -80,6 +80,15 @@ typedef struct s_ray
 	double texture_pos;
 }	t_ray;
 
+typedef	struct s_button
+{
+	int	but_x_min;
+	int	but_x_max;
+	int	but_y_min;
+	int	but_y_max;
+	bool	click;
+} t_button;
+
 typedef struct s_map
 {
 	int		file;
@@ -89,15 +98,33 @@ typedef struct s_map
 	TXT		*no;
 	TXT		*ea;
 	TXT		*we;
+	TXT		*cub;
+	TXT		*texplay;
+	TXT		*texopt;
+	TXT		*texedi;
+	TXT		*texexit;
+	IMG		*cubd;
+	IMG		*img_play;
+	IMG		*img_option;
+	IMG		*img_edit;
+	IMG		*img_exit;
 	uint32_t	up;
 	uint32_t	down;
 	IMG		*rayc;
 	IMG		*minima;
+	IMG		*menu;
 	double	rotspeed;
 	double 	speed;
+	bool	press;
+	bool	good;
+	bool	pause;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;
+	t_button	*but_play;
+	t_button	*but_option;
+	t_button	*but_edit;
+	t_button	*but_exit;
 	mlx_t	*mlx;
 }	t_map;
 

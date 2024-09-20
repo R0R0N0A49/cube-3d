@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 15:14:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/20 16:27:08 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,10 @@ void	move_a(t_map *data);
 void	move_d(t_map *data);
 void	rotate_left(t_map *map);
 void	rotate_right(t_map *map);
+
+void	menu(t_map *data);
+void	button_play(t_map *data);
+void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+
 
 #endif
