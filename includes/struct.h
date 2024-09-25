@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/20 16:46:12 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/25 15:14:30 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define WINDOWSH 1080
 # define CUBE 20
 # define COLOR_GRID 0x646464
+# define FOG 0xFF
+# define FOG_MIN 4
+# define FOG_MAX 16
 
 typedef struct s_mini
 {
@@ -75,7 +78,7 @@ typedef struct s_ray
 	int draw_end;
 	int	texture_x;
 	int	texture_y;
-	int	color;
+	uint32_t	color;
 	double step;
 	double texture_pos;
 }	t_ray;
@@ -87,6 +90,8 @@ typedef	struct s_button
 	int	but_y_min;
 	int	but_y_max;
 	bool	click;
+	bool	good;
+	bool	press_enter;
 } t_button;
 
 typedef struct s_map
@@ -94,6 +99,8 @@ typedef struct s_map
 	int		file;
 	char	**map;
 	int		len_map;
+	int		w;
+	int		h;
 	TXT		*so;
 	TXT		*no;
 	TXT		*ea;
@@ -103,6 +110,8 @@ typedef struct s_map
 	TXT		*texopt;
 	TXT		*texedi;
 	TXT		*texexit;
+	TXT		*nuit;
+	TXT		*herbe;
 	IMG		*cubd;
 	IMG		*img_play;
 	IMG		*img_option;
@@ -116,8 +125,9 @@ typedef struct s_map
 	double	rotspeed;
 	double 	speed;
 	bool	press;
-	bool	good;
 	bool	pause;
+	bool	plafond;
+	int		idx_menu;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;

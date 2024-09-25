@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/20 16:46:24 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/25 15:15:59 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ void	cub3d(t_map *data)
 	data->texopt = mlx_load_png ("./tiles/option.png");
 	data->texedi = mlx_load_png ("./tiles/edit.png");
 	data->texexit = mlx_load_png ("./tiles/exit.png");
+	data->nuit = mlx_load_png("./tiles/nuit.png");
+	data->herbe = mlx_load_png("./tiles/herbe.png");
+	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_icon(data->mlx, logo);
 	data->pause = true;
 	data->mini_map = &map;
@@ -167,6 +170,8 @@ void	cub3d(t_map *data)
 	data->but_option = &option;
 	data->but_edit = &edit;
 	data->but_exit = &exi;
+	data->idx_menu = 0;
+	data->plafond = false;
 	data->game->player_x = 0;
 	data->game->player_y = 0;
 	data->game->move_w = false;
@@ -174,10 +179,13 @@ void	cub3d(t_map *data)
 	data->game->move_a = false;
 	data->game->move_d = false;
 	data->press = false;
-	data->good = false;
 	data->game->rotate_left = false;
 	data->game->rotate_right = false;
 	data->but_play->click = false;
+	data->but_play->press_enter = false;
+	data->but_option->press_enter = false;
+	data->but_edit->press_enter = false;
+	data->but_exit->press_enter = false;
 	mini_map(data, data->mlx);
 	data->cubd = mlx_texture_to_image(data->mlx, data->cub);
 	data->img_play = mlx_texture_to_image(data->mlx, data->texplay);
