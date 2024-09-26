@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/25 15:17:48 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/26 14:24:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	check_but_play(t_map *data)
 	if ((data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max && data->but_play->good == true ) || data->but_play->press_enter == true)
 	{
 		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
 		data->pause = false;
 		data->idx_menu = 0;
 		data->but_play->press_enter = false;
@@ -72,6 +73,58 @@ void	check_but_play(t_map *data)
 		data->game->move_s = false;
 		data->game->move_a = false;
 		data->game->move_d = false;
+
+		data->but_play->good = false;
+		data->but_option->good = false;
+		data->but_edit->good = false;
+		data->but_exit->good = false;
+		data->opt->but_rtn->good = false;
+
+	}
+}
+
+void	verif_option(t_opt *opt)
+{
+	if (opt->play_music)
+	{
+		opt->m_valid->enabled = true;
+		opt->m_unvalid->enabled = false;
+	}
+	else if (!opt->play_music)
+	{
+		opt->m_valid->enabled = false;
+		opt->m_unvalid->enabled = true;
+	}
+	if (opt->show_fov)
+	{
+		opt->f_valid->enabled = true;
+		opt->f_unvalid->enabled = false;
+	}
+	else
+	{
+		opt->f_valid->enabled = false;
+		opt->f_unvalid->enabled = true;
+	}
+	if (opt->txt_floor)
+	{
+		opt->fl_valid->enabled = true;
+		opt->fl_unvalid->enabled = false;
+	}
+	else
+	{
+		opt->fl_unvalid->enabled = true;
+		opt->fl_valid->enabled = false;
+
+	}
+	if (opt->txt_roof)
+	{
+		opt->r_valid->enabled = true;
+		opt->r_unvalid->enabled = false;
+	}
+	else
+	{
+		opt->r_unvalid->enabled = true;
+		opt->r_valid->enabled = false;
 	}
 }
 
@@ -84,6 +137,25 @@ void	check_but_option(t_map *data)
 	}	
 	if (data->game->cursor_x < data->but_option->but_x_min || data->game->cursor_x > data->but_option->but_x_max || data->game->cursor_y < data->but_option->but_y_min || data->game->cursor_y > data->but_option->but_y_max)
 		data->but_option->good = false;
+	if ((data->game->cursor_x > data->but_option->but_x_min && data->game->cursor_x < data->but_option->but_x_max && data->game->cursor_y >= data->but_option->but_y_min && data->game->cursor_y < data->but_option->but_y_max && data->but_option->good == true) || data->but_option->press_enter == true )
+	{
+		data->pause = true;
+		data->idx_menu = 0;
+		data->but_option->press_enter = false;
+		data->but_option->good = false;
+		data->menu->enabled = false;
+		data->opt->option = true;
+		data->cubd->enabled = false;
+		data->img_play->enabled = false;
+		data->img_option->enabled = false;
+		data->img_edit->enabled = false;
+		data->img_exit->enabled = false;
+		data->opt->bottom->enabled = true;
+		data->opt->rtn->enabled = true;
+		data->opt->cub->enabled = true;
+		data->opt->music->enabled = true;
+		verif_option(data->opt);
+	}
 }
 
 void	check_but_edit(t_map *data)
@@ -108,6 +180,121 @@ void	check_but_exit(t_map *data)
 		data->but_exit->good = false;
 	if ((data->game->cursor_x > data->but_exit->but_x_min && data->game->cursor_x < data->but_exit->but_x_max && data->game->cursor_y > data->but_exit->but_y_min && data->game->cursor_y < data->but_exit->but_y_max && data->but_exit->good == true) || data->but_exit->press_enter == true)
 		exit_cub3d(data);
+}
+
+void	check_but_rtn(t_opt *option, t_map *data)
+{
+	if (data->game->cursor_x > option->but_rtn->but_x_min && data->game->cursor_x < option->but_rtn->but_x_max && data->game->cursor_y > option->but_rtn->but_y_min && data->game->cursor_y < option->but_rtn->but_y_max)
+	{
+		data->idx_menu = 0;
+		data->opt->but_rtn->click = true;
+	}
+	if (data->game->cursor_x < option->but_rtn->but_x_min || data->game->cursor_x > option->but_rtn->but_x_max || data->game->cursor_y < option->but_rtn->but_y_min || data->game->cursor_y > option->but_rtn->but_y_max)
+		data->opt->but_rtn->good = false;
+	if (data->game->cursor_x > option->but_rtn->but_x_min && data->game->cursor_x < option->but_rtn->but_x_max && data->game->cursor_y > option->but_rtn->but_y_min && data->game->cursor_y < option->but_rtn->but_y_max && data->opt->but_rtn->good)
+	{
+		data->pause = true;
+		data->idx_menu = 0;
+		data->menu->enabled = true;
+		data->opt->option = false;
+		data->cubd->enabled = true;
+		data->img_play->enabled = true;
+		data->img_option->enabled = true;
+		data->img_edit->enabled = true;
+		data->img_exit->enabled = true;
+		data->opt->bottom->enabled = false;
+		data->opt->rtn->enabled = false;
+		data->opt->cub->enabled = false;
+
+		data->opt->m_unvalid->enabled = false;
+		data->opt->f_unvalid->enabled = false;
+		data->opt->fl_unvalid->enabled = false;
+		data->opt->r_unvalid->enabled = false;
+		data->opt->m_valid->enabled = false;
+		data->opt->f_valid->enabled = false;
+		data->opt->fl_valid->enabled = false;
+		data->opt->r_valid->enabled = false;
+	}
+}
+
+void	check_but_music(t_map *data)
+{
+	if (data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max)
+	{
+		data->idx_menu = 0;
+		data->opt->but_music->click = true;
+	}
+	if (data->game->cursor_x < data->opt->but_music->but_x_min || data->game->cursor_x > data->opt->but_music->but_x_max || data->game->cursor_y < data->opt->but_music->but_y_min || data->game->cursor_y > data->opt->but_music->but_y_max)
+		data->opt->but_music->good = false;
+	if (data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max && data->opt->but_music->good)
+	{
+		data->opt->but_music->good = false;
+		if (data->opt->play_music)
+			data->opt->play_music = false;
+		else if (!data->opt->play_music)
+			data->opt->play_music = true;
+		verif_option(data->opt);
+	}
+}
+
+void	check_but_fov(t_map *data)
+{
+	if (data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max)
+	{
+		data->idx_menu = 0;
+		data->opt->but_fov->click = true;
+	}
+	if (data->game->cursor_x < data->opt->but_fov->but_x_min || data->game->cursor_x > data->opt->but_fov->but_x_max || data->game->cursor_y < data->opt->but_fov->but_y_min || data->game->cursor_y > data->opt->but_fov->but_y_max)
+		data->opt->but_fov->good = false;
+	if (data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max && data->opt->but_fov->good)
+	{
+		data->opt->but_fov->good = false;
+		if (data->opt->show_fov)
+			data->opt->show_fov = false;
+		else if (!data->opt->show_fov)
+			data->opt->show_fov = true;
+		verif_option(data->opt);
+	}
+}
+
+void	check_but_floor(t_map *data)
+{
+	if (data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max)
+	{
+		data->idx_menu = 0;
+		data->opt->but_floor->click = true;
+	}
+	if (data->game->cursor_x < data->opt->but_floor->but_x_min || data->game->cursor_x > data->opt->but_floor->but_x_max || data->game->cursor_y < data->opt->but_floor->but_y_min || data->game->cursor_y > data->opt->but_floor->but_y_max)
+		data->opt->but_floor->good = false;
+	if (data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max && data->opt->but_floor->good)
+	{
+		data->opt->but_floor->good = false;
+		if (data->opt->txt_floor)
+			data->opt->txt_floor = false;
+		else if (!data->opt->txt_floor)
+			data->opt->txt_floor = true;
+		verif_option(data->opt);
+	}
+}
+
+void	check_but_roof(t_map *data)
+{
+	if (data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min - 43 && data->game->cursor_y < data->opt->but_roof->but_y_max - 49)
+	{
+		data->idx_menu = 0;
+		data->opt->but_roof->click = true;
+	}
+	if (data->game->cursor_x < data->opt->but_roof->but_x_min || data->game->cursor_x > data->opt->but_roof->but_x_max || data->game->cursor_y < data->opt->but_roof->but_y_min || data->game->cursor_y > data->opt->but_roof->but_y_max)
+		data->opt->but_roof->good = false;
+	if (data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min && data->game->cursor_y < data->opt->but_roof->but_y_max && data->opt->but_roof->good)
+	{
+		data->opt->but_roof->good = false;
+		if (data->opt->txt_roof)
+			data->opt->txt_roof = false;
+		else if (!data->opt->txt_roof)
+			data->opt->txt_roof = true;
+		verif_option(data->opt);
+	}
 }
 
 void	loop(void *param)
@@ -135,10 +322,20 @@ void	loop(void *param)
 	check_but_option(data);
 	check_but_edit(data);
 	check_but_exit(data);
+	check_but_rtn(data->opt, data);
+	check_but_music(data);
+	check_but_fov(data);
+	check_but_floor(data);
+	check_but_roof(data);
 	button_play(data);
 	button_option(data);
 	button_edit(data);
 	button_exit(data);
+	button_rtn(data->opt);
+	button_music(data->opt);
+	button_fov(data->opt);
+	button_floor(data->opt);
+	button_roof(data->opt);
 }
 
 void	move_w(t_map *data)
@@ -266,18 +463,30 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	
 	data = (t_map *)param;
 	(void)mods;
-	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+
+	if (data->pause && button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		data->idx_menu = 0;
 		data->press = true;
 	}
-	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
+	if (data->pause && button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{
 		data->press = false;
-		data->but_play->good = true;
-		data->but_option->good = true;
-		data->but_edit->good = true;
-		data->but_exit->good = true;
+		if (data->menu->enabled)
+		{
+			data->but_play->good = true;
+			data->but_option->good = true;
+			data->but_edit->good = true;
+			data->but_exit->good = true;
+		}
+		if (data->opt->option)
+		{
+			data->opt->but_rtn->good = true;
+			data->opt->but_music->good = true;
+			data->opt->but_fov->good = true;
+			data->opt->but_floor->good = true;
+			data->opt->but_roof->good = true;
+		}
 	}
 }
 

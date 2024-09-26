@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/25 15:15:59 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/26 14:26:49 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,16 +134,25 @@ void	cub3d(t_map *data)
 	t_ray	raycast;
 	t_game	game;
 	t_button play;
-	t_button option;
+	t_button option_;
 	t_button edit;
 	t_button exi;
 	mlx_texture_t *logo;
+
+	t_button rtn;
+	t_button music;
+	t_button fov;
+	t_button floor;
+	t_button roof;
 
 	(void)data;
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+
+	data->opt->bottom = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
 	logo = mlx_load_png("./tiles/logo.png");
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
@@ -160,14 +169,58 @@ void	cub3d(t_map *data)
 	data->herbe = mlx_load_png("./tiles/herbe.png");
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_icon(data->mlx, logo);
+
+	data->opt->unvalid_txt = mlx_load_png("./tiles/checkB.png");
+	data->opt->valid_txt = mlx_load_png("./tiles/checkG.png");
+	data->opt->m_unvalid = mlx_texture_to_image(data->mlx, data->opt->unvalid_txt);
+	data->opt->f_unvalid = mlx_texture_to_image(data->mlx, data->opt->unvalid_txt);
+	data->opt->fl_unvalid = mlx_texture_to_image(data->mlx, data->opt->unvalid_txt);
+	data->opt->r_unvalid = mlx_texture_to_image(data->mlx, data->opt->unvalid_txt);
+	data->opt->m_valid = mlx_texture_to_image(data->mlx, data->opt->valid_txt);
+	data->opt->f_valid = mlx_texture_to_image(data->mlx, data->opt->valid_txt);
+	data->opt->fl_valid = mlx_texture_to_image(data->mlx, data->opt->valid_txt);
+	data->opt->r_valid = mlx_texture_to_image(data->mlx, data->opt->valid_txt);
+	data->opt->cub = mlx_texture_to_image(data->mlx, data->cub);
+	data->opt->rtn_txt = mlx_load_png("./tiles/return.png");
+	data->opt->rtn = mlx_texture_to_image(data->mlx, data->opt->rtn_txt);
+	data->opt->music_txt = mlx_load_png("./tiles/music.png");
+	data->opt->music = mlx_texture_to_image(data->mlx, data->opt->music_txt);
+	data->opt->music->enabled = false;
+	data->opt->rtn->enabled = false;
+	data->opt->bottom->enabled = false;
+	data->opt->cub->enabled = false;
+	data->opt->m_unvalid->enabled = false;
+	data->opt->f_unvalid->enabled = false;
+	data->opt->fl_unvalid->enabled = false;
+	data->opt->r_unvalid->enabled = false;
+	data->opt->m_valid->enabled = false;
+	data->opt->f_valid->enabled = false;
+	data->opt->fl_valid->enabled = false;
+	data->opt->r_valid->enabled = false;
+	data->opt->but_rtn = &rtn;
+	data->but_option = &option_;
+	music.click = false;
+	fov.click = false;
+	floor.click = false;
+	roof.click = false;
+	data->opt->play_music = false;
+	data->opt->show_fov = false;
+	data->opt->txt_floor = false;
+	data->opt->txt_roof = false;
+	data->opt->but_music = &music;
+	data->opt->but_fov = &fov;
+	data->opt->but_floor = &floor;
+	data->opt->but_roof = &roof;
+	option(data);
+
 	data->pause = true;
+	data->opt->option = false;
 	data->mini_map = &map;
 	data->game = &game;
 	data->raycast = &raycast;
 	data->speed = 0.069;
 	data->rotspeed = 0.035;
 	data->but_play = &play;
-	data->but_option = &option;
 	data->but_edit = &edit;
 	data->but_exit = &exi;
 	data->idx_menu = 0;
@@ -200,6 +253,22 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 480);
 	mlx_image_to_window(data->mlx, data->img_edit, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 660);
 	mlx_image_to_window(data->mlx, data->img_exit, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 840);
+
+	mlx_image_to_window(data->mlx, data->opt->bottom, 0, 0);
+	mlx_image_to_window(data->mlx, data->opt->rtn, data->opt->but_rtn->but_x_min, data->opt->but_rtn->but_y_min + 5);
+	mlx_image_to_window(data->mlx, data->opt->cub, (WINDOWSW / 2 - WINDOWSW / 9), 50);
+	mlx_image_to_window(data->mlx, data->opt->music, data->opt->but_music->but_x_min + 20, data->opt->but_music->but_y_min + 4);
+
+	mlx_image_to_window(data->mlx, data->opt->m_unvalid, data->opt->but_music->but_x_max - 75, data->opt->but_music->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->f_unvalid, data->opt->but_fov->but_x_max - 75, data->opt->but_fov->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->fl_unvalid, data->opt->but_floor->but_x_max - 75, data->opt->but_floor->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->r_unvalid, data->opt->but_roof->but_x_max - 75, data->opt->but_roof->but_y_max - 100);
+
+	mlx_image_to_window(data->mlx, data->opt->m_valid, data->opt->but_music->but_x_max - 75, data->opt->but_music->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->f_valid, data->opt->but_fov->but_x_max - 75, data->opt->but_fov->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->fl_valid, data->opt->but_floor->but_x_max - 75, data->opt->but_floor->but_y_max - 100);
+	mlx_image_to_window(data->mlx, data->opt->r_valid, data->opt->but_roof->but_x_max - 75, data->opt->but_roof->but_y_max - 100);
+
 	menu(data);
 	mlx_loop_hook(data->mlx, loop, data);
 	mlx_cursor_hook(data->mlx, cursor, data);
@@ -212,7 +281,9 @@ void	cub3d(t_map *data)
 int	main(int argc, char **argv)
 {
 	t_map	data;
+	t_opt	option;
 
+	data.opt = &option;
 	init_null(&data);
 	main_parsing(argc, argv);
 	init_struct(argv, &data);

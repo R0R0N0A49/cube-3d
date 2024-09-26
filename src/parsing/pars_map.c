@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 15:44:25 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:35:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ void	check_space(char **map, int j, char fst, char scd)
 	}
 }
 
+int	checkline(char **map, int j, int len, t_map *data)
+{
+	int	i;
+
+	if (j == 0)
+		i = first_line(map, j, data);
+	else if (j == len - 1)
+		i = last_line(map, j, data);
+	else
+		i = middle_line(map, j, data);
+	return (i);
+}
+
 int	verif_char(t_map *data)
 {
 	int	i;
@@ -91,9 +104,7 @@ int	verif_char(t_map *data)
 			i++;
 		}
 		check_space(data->map, j, ' ', '2');
-		if (checkline(data->map, j, data->len_map, data))
-			exit(10); // A modif pour reduir les ligne
-		j++;
+		checkline(data->map, j++, data->len_map, data);
 	}
 	if (player != 1)
 		error_player(player, data);

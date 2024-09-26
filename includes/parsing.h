@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:08 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 15:44:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:56:04 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	ft_free_stringtab(char **src);
 void	error_file(char *file, int index);
 void	error_colors(char *line, int index, t_map *data, t_tmp *map);
 void	error_player(int player, t_map *data);
-void	print_error(char *line, t_map *data, t_tmp *map); // a enlever et a passer dans parsing
+void	print_error(char *line, t_map *data, t_tmp *map);
+int		first_line(char **map, int j, t_map *data);
+int		middle_line(char **map, int j, t_map *data);
+int		last_line(char **map, int j, t_map *data);
+
 
 #endif

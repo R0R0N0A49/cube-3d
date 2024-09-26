@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/25 15:14:30 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/26 14:20:36 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,42 @@ typedef	struct s_button
 	bool	press_enter;
 } t_button;
 
+typedef struct s_option
+{
+	IMG			*bottom;
+	IMG			*cub;
+	IMG			*rtn;
+	TXT			*rtn_txt;
+	bool		option;
+	t_button	*but_rtn;
+	t_button	*but_music;
+	t_button	*but_fov;
+	t_button	*but_floor;
+	t_button	*but_roof;
+
+	bool		play_music;
+	bool		txt_floor;
+	bool		txt_roof;
+	bool		show_fov;
+
+	TXT			*valid_txt;
+	TXT			*unvalid_txt;
+	IMG			*m_valid;
+	IMG			*f_valid;
+	IMG			*fl_valid;
+	IMG			*r_valid;
+	IMG			*m_unvalid;
+	IMG			*f_unvalid;
+	IMG			*fl_unvalid;
+	IMG			*r_unvalid;
+
+	TXT			*music_txt;
+	IMG			*music;
+} t_opt;
+
 typedef struct s_map
 {
+	t_opt	*opt;
 	int		file;
 	char	**map;
 	int		len_map;

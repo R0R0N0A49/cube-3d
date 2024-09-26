@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 15:10:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:24:49 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,6 @@ bool	stringisdigit(char *src)
 	return (true);
 }
 
-// char	*gethexa(char **src)
-// {
-// 	char	*rsl;
-// 	int		nmb;
-// 	char	*base;
-//
-// 	base = "0123456789ABCDEF";
-// 	nmb = ft_atoi(*src);
-// 	if (nmb > 255 || nmb < 0)
-// 		return (NULL);
-// 	rsl = ft_calloc(3, sizeof(char));
-// 	rsl[0] = base[(nmb / 16) % 16];
-// 	rsl[1] = base[nmb % 16];
-// 	free(*src);
-// 	*src = ft_strdup(rsl);
-// 	free(rsl);
-// 	return (*src);
-// }
-
 int	ft_stringtab_len(char **src)
 {
 	int	i;
@@ -56,7 +37,19 @@ int	ft_stringtab_len(char **src)
 	return (i);
 }
 
-uint32_t pasthexa(char *line, t_map *data, t_tmp *map)
+void	loop_hexa(char **tmp, int *r, int *g, int *b)
+{
+	if (stringisdigit(tmp[0]))
+		*r = ft_atoi(tmp[0]);
+	if (stringisdigit(tmp[1]))
+		*g = ft_atoi(tmp[1]);
+	if (stringisdigit(tmp[2]))
+		*b = ft_atoi(tmp[2]);
+	if (!r || !g || !b)
+		exit (0);
+}
+
+uint32_t	pasthexa(char *line, t_map *data, t_tmp *map)
 {
 	char	**tmp;
 	int		r;
@@ -73,10 +66,10 @@ uint32_t pasthexa(char *line, t_map *data, t_tmp *map)
 		ft_free_stringtab(tmp);
 		error_colors(line, 5, data, map);
 	}
-	// ajouter une verification pour avoir seulement des nombre
-	r = ft_atoi(tmp[0]);
-	g = ft_atoi(tmp[1]);
-	b = ft_atoi(tmp[2]);
+	r = 0;
+	g = 0;
+	b = 0;
+	loop_hexa(tmp, &r, &g, &b);
 	ft_free_stringtab(tmp);
 	return ((r << 24) + ((g) << 16) + ((b << 8)) + 255);
 }
@@ -96,6 +89,8 @@ TXT	*verif_png(char *png)
 		return (NULL); // messqge error
 	return (tmp);
 }
+
+// a metre dans un autre fichier
 
 static int	verif(char *line, t_map *data, t_tmp *tmp)
 {

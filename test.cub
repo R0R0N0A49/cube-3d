@@ -1,8 +1,8 @@
-NO ./tiles/parse1.png
+NO ./tiles/stone.png
 
 SO ./tiles/stone_eagle.png
 
-WE ./tiles/parse2.png
+WE ./tiles/brique.png
 
 EA ./tiles/bricks.png
 
