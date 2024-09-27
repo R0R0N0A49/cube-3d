@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/26 14:24:21 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 09:46:09 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	check_but_rtn(t_opt *option, t_map *data)
 	}
 	if (data->game->cursor_x < option->but_rtn->but_x_min || data->game->cursor_x > option->but_rtn->but_x_max || data->game->cursor_y < option->but_rtn->but_y_min || data->game->cursor_y > option->but_rtn->but_y_max)
 		data->opt->but_rtn->good = false;
-	if (data->game->cursor_x > option->but_rtn->but_x_min && data->game->cursor_x < option->but_rtn->but_x_max && data->game->cursor_y > option->but_rtn->but_y_min && data->game->cursor_y < option->but_rtn->but_y_max && data->opt->but_rtn->good)
+	if ((data->game->cursor_x > option->but_rtn->but_x_min && data->game->cursor_x < option->but_rtn->but_x_max && data->game->cursor_y > option->but_rtn->but_y_min && data->game->cursor_y < option->but_rtn->but_y_max && data->opt->but_rtn->good) || data->opt->but_rtn->press_enter)
 	{
 		data->pause = true;
 		data->idx_menu = 0;
@@ -205,6 +205,7 @@ void	check_but_rtn(t_opt *option, t_map *data)
 		data->opt->bottom->enabled = false;
 		data->opt->rtn->enabled = false;
 		data->opt->cub->enabled = false;
+		data->opt->but_rtn->press_enter = false;
 
 		data->opt->m_unvalid->enabled = false;
 		data->opt->f_unvalid->enabled = false;
@@ -214,6 +215,7 @@ void	check_but_rtn(t_opt *option, t_map *data)
 		data->opt->f_valid->enabled = false;
 		data->opt->fl_valid->enabled = false;
 		data->opt->r_valid->enabled = false;
+		data->opt->music->enabled = false;
 	}
 }
 
@@ -229,10 +231,7 @@ void	check_but_music(t_map *data)
 	if (data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max && data->opt->but_music->good)
 	{
 		data->opt->but_music->good = false;
-		if (data->opt->play_music)
-			data->opt->play_music = false;
-		else if (!data->opt->play_music)
-			data->opt->play_music = true;
+		data->opt->play_music = !data->opt->play_music;
 		verif_option(data->opt);
 	}
 }
@@ -249,10 +248,7 @@ void	check_but_fov(t_map *data)
 	if (data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max && data->opt->but_fov->good)
 	{
 		data->opt->but_fov->good = false;
-		if (data->opt->show_fov)
-			data->opt->show_fov = false;
-		else if (!data->opt->show_fov)
-			data->opt->show_fov = true;
+		data->opt->show_fov = !data->opt->show_fov;
 		verif_option(data->opt);
 	}
 }
@@ -269,10 +265,7 @@ void	check_but_floor(t_map *data)
 	if (data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max && data->opt->but_floor->good)
 	{
 		data->opt->but_floor->good = false;
-		if (data->opt->txt_floor)
-			data->opt->txt_floor = false;
-		else if (!data->opt->txt_floor)
-			data->opt->txt_floor = true;
+		data->opt->txt_floor = !data->opt->txt_floor;
 		verif_option(data->opt);
 	}
 }
@@ -289,10 +282,8 @@ void	check_but_roof(t_map *data)
 	if (data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min && data->game->cursor_y < data->opt->but_roof->but_y_max && data->opt->but_roof->good)
 	{
 		data->opt->but_roof->good = false;
-		if (data->opt->txt_roof)
-			data->opt->txt_roof = false;
-		else if (!data->opt->txt_roof)
-			data->opt->txt_roof = true;
+		data->opt->txt_roof = !data->opt->txt_roof;
+		data->plafond = !data->plafond;
 		verif_option(data->opt);
 	}
 }
@@ -464,12 +455,12 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	data = (t_map *)param;
 	(void)mods;
 
-	if (data->pause && button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		data->idx_menu = 0;
 		data->press = true;
 	}
-	if (data->pause && button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{
 		data->press = false;
 		if (data->menu->enabled)
@@ -523,8 +514,10 @@ void	key_press(mlx_key_data_t keydata, void *param)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
 		{
-			if (data->pause == true)
+			if (data->pause == true && !data->opt->option)
 				mlx_close_window(data->mlx);
+			else if (data->opt->option)
+				data->opt->but_rtn->press_enter = true;
 			else
 				pause_game(data);
 		}

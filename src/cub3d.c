@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/26 14:26:49 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 08:49:40 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,6 @@ int	free_struct(t_map *data)
 	}
 	return (1);
 }
-
-// void	close_wind(mlx_key_data_t keycode, void *param)
-// {
-// 	mlx_t	*mlx;
-//
-// 	(void)keycode;
-// 	mlx = (mlx_t *)param;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE)
-// 		|| mlx_is_key_down(mlx, MLX_KEY_Q))
-// 	{
-// 		mlx_close_window(mlx);
-// 	}
-// }
 
 void	mini_map(t_map *data, mlx_t *mlx)
 {
@@ -257,7 +244,7 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->opt->bottom, 0, 0);
 	mlx_image_to_window(data->mlx, data->opt->rtn, data->opt->but_rtn->but_x_min, data->opt->but_rtn->but_y_min + 5);
 	mlx_image_to_window(data->mlx, data->opt->cub, (WINDOWSW / 2 - WINDOWSW / 9), 50);
-	mlx_image_to_window(data->mlx, data->opt->music, data->opt->but_music->but_x_min + 20, data->opt->but_music->but_y_min + 4);
+	mlx_image_to_window(data->mlx, data->opt->music, data->opt->but_music->but_x_min + 4, data->opt->but_music->but_y_min + 15);
 
 	mlx_image_to_window(data->mlx, data->opt->m_unvalid, data->opt->but_music->but_x_max - 75, data->opt->but_music->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->opt->f_unvalid, data->opt->but_fov->but_x_max - 75, data->opt->but_fov->but_y_max - 100);

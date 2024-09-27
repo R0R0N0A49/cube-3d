@@ -114,10 +114,12 @@ typedef struct s_option
 
 	TXT			*valid_txt;
 	TXT			*unvalid_txt;
+
 	IMG			*m_valid;
 	IMG			*f_valid;
 	IMG			*fl_valid;
 	IMG			*r_valid;
+
 	IMG			*m_unvalid;
 	IMG			*f_unvalid;
 	IMG			*fl_unvalid;
@@ -125,6 +127,15 @@ typedef struct s_option
 
 	TXT			*music_txt;
 	IMG			*music;
+
+	TXT			*fov_txt;
+	IMG			*fov;
+
+	TXT			*floor_txt;
+	IMG			*floor;
+
+	TXT			*roof_txt;
+	IMG			*roof;
 } t_opt;
 
 typedef struct s_map
