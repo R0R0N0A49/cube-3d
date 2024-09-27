@@ -1,9 +1,13 @@
-NAME=parsing.a
+NAME=display.a
 CC=cc
 CFLAGS= -Wall -Werror -Wextra -g
 RM=rm -rf
 
-SRCS=parsing.c pars_line.c pars_map.c check_line.c printerrorpars.c print_error.c
+SRCS=	minimap.c \
+		player.c \
+		raycasting.c \
+		menu.c \
+		option.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rcs
@@ -16,7 +20,7 @@ $(NAME) : $(OBJS)
 	@mv *.o ../../OBJS
 	@clear
 
-%.o : %.c ../../includes/parsing.h
+%.o : %.c ../../includes/cub3d.h
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :

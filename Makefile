@@ -1,14 +1,19 @@
 NAME=cub3d
 CC=cc
-CFLAGS= -Wall -Werror -Wextra -g
+CFLAGS= -Wall -Werror -Wextra -I./MLX42/include -g
 MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 
-SRCS=src/cub3d.c src/read_file.c src/print_error.c src/t_test.c
+SRCS=	src/cub3d.c \
+		src/read_file.c \
+		src/t_tmp.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing
 PARS=$(PARS_DIR)/parsing.a
+
+DISP_DIR=src/display
+DISP=$(DISP_DIR)/display.a
 
 LIBFT_DIR= includes/libft
 LIBFT=$(LIBFT_DIR)/libft.a
@@ -20,9 +25,9 @@ WHITE='\033[1;37m'
 
 all : $(NAME)
 
-$(NAME) : MLX $(LIBFT) $(PARS) $(OBJS)
+$(NAME) : MLX $(LIBFT) $(PARS) $(DISP) $(OBJS)
 	$(MLX)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS) 
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(DISP) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 	@mv src/*.o OBJS
 	@clear
 	@echo ${GREEN}">-Compilation successful-<"${WHITE};
@@ -48,13 +53,16 @@ $(LIBFT) :
 $(PARS) :
 	@make --directory $(PARS_DIR)
 
+$(DISP) :
+	@make --directory $(DISP_DIR)
+
 clean :
 	@$(RM) OBJS
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
 fclean : clean
-	@$(RM) $(PARS) $(LIBFT) $(NAME)
+	@$(RM) $(PARS) $(DISP) $(LIBFT) $(NAME)
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
 
 end :

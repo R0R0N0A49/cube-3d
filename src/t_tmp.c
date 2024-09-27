@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_test.c                                           :+:      :+:    :+:   */
+/*   t_tmp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/02 13:28:52 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:12:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-t_test	*ft_lstlast(t_test *lst)
+t_tmp	*ft_tmplast(t_tmp *lst)
 {
 	if (!lst)
 		return (NULL);
 	if (!(lst->next))
 		return (lst);
-	return (ft_lstlast(lst->next));
+	return (ft_tmplast(lst->next));
 }
 
-void	ft_lstadd_back(t_test **lst, t_test *new_tail)
+void	ft_tmpadd_back(t_tmp **lst, t_tmp *new_tail)
 {
 	if (!lst || !new_tail)
 		return ;
@@ -30,14 +30,14 @@ void	ft_lstadd_back(t_test **lst, t_test *new_tail)
 		*lst = new_tail;
 		return ;
 	}
-	ft_lstlast(*lst)->next = new_tail;
+	ft_tmplast(*lst)->next = new_tail;
 }
 
-t_test	*ft_testnew(char *content)
+t_tmp	*ft_tmpnew(char *content)
 {
-	t_test	*res;
+	t_tmp	*res;
 
-	res = ft_calloc(1, sizeof(t_test));
+	res = ft_calloc(1, sizeof(t_tmp));
 	if (!res)
 		return (NULL);
 	res->line_map = ft_strdup(content);
@@ -45,7 +45,7 @@ t_test	*ft_testnew(char *content)
 	return (res);
 }
 
-void	ft_testdelone(t_test **list, void (*del)(void*))
+void	ft_tmpdelone(t_tmp **list, void (*del)(void*))
 {
 	if (!list || !del || !*list)
 		return ;
@@ -54,19 +54,19 @@ void	ft_testdelone(t_test **list, void (*del)(void*))
 	*list = NULL;
 }
 
-void	ft_testclear(t_test **list, void (*del)(void*))
+void	ft_tmpclear(t_tmp **list, void (*del)(void*))
 {
 	if (!list || !del || !*list)
 		return ;
 	if (((*list)->next) != NULL)
-		ft_testclear(&(*list)->next, del);
-	ft_testdelone(list, del);
+		ft_tmpclear(&(*list)->next, del);
+	ft_tmpdelone(list, del);
 }
 
-int	testlen(t_test *src)
+int	ft_tmplen(t_tmp *src)
 {
 	int		i;
-	t_test *tmp;
+	t_tmp	*tmp;
 
 	if (!src)
 		return (-1);
@@ -82,16 +82,15 @@ int	testlen(t_test *src)
 	return (i);
 }
 
-char	**ft_test_to_tab(t_test *src)
+char	**ft_tmp_to_tab(t_tmp *src)
 {
 	int		i;
 	char	**map;
-	t_test	*tmp;
+	t_tmp	*tmp;
 
-	if (!src)
+	if (!src || !ft_tmplen(src))
 		return (NULL);
-	ft_printf("len = %d\n", testlen(src));
-	map = ft_calloc(testlen(src) + 1, sizeof(src));
+	map = ft_calloc(ft_tmplen(src) + 1, sizeof(src));
 	tmp = src;
 	i = 0;
 	while (tmp)
