@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/26 14:20:36 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:25:23 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ typedef	struct s_button
 
 typedef struct s_option
 {
+	bool		option;
 	IMG			*bottom;
 	IMG			*cub;
 	IMG			*rtn;
 	TXT			*rtn_txt;
-	bool		option;
 	t_button	*but_rtn;
 	t_button	*but_music;
 	t_button	*but_fov;

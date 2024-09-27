@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 08:49:40 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:30:54 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	cub3d(t_map *data)
 	fov.click = false;
 	floor.click = false;
 	roof.click = false;
-	data->opt->play_music = false;
+	data->opt->play_music = true;
 	data->opt->show_fov = false;
 	data->opt->txt_floor = false;
 	data->opt->txt_roof = false;
@@ -283,5 +283,6 @@ int	main(int argc, char **argv)
 	}
 	cub3d(&data);
 	free_struct(&data);
+	system("killall paplay");
 	return (0);
 }
