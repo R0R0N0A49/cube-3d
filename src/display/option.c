@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 08:52:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:22:41 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	button_music(t_opt *option)
 	int x;
 	int y;
 
-	option->but_music->but_x_min = (WINDOWSW / 3) / 3 - 30;
+	option->but_music->but_x_min = (WINDOWSW / 3) / 3 - 40;
 	option->but_music->but_y_min = (WINDOWSH / 3);
-	option->but_music->but_x_max = option->but_music->but_x_min + WINDOWSW / 3 + 30;
+	option->but_music->but_x_max = option->but_music->but_x_min + WINDOWSW / 3 + 40;
 	option->but_music->but_y_max = option->but_music->but_y_min + WINDOWSW / 13;
 	y = option->but_music->but_y_min;
 	while (y < option->but_music->but_y_max)
@@ -80,7 +80,7 @@ void	button_fov(t_opt *option)
 
 	option->but_fov->but_x_min = ((WINDOWSW / 3) / 3) * 2 + (WINDOWSW / 3);
 	option->but_fov->but_y_min = (WINDOWSH / 3);
-	option->but_fov->but_x_max = option->but_fov->but_x_min + WINDOWSW / 3;
+	option->but_fov->but_x_max = option->but_fov->but_x_min + WINDOWSW / 3 + 40;
 	option->but_fov->but_y_max = option->but_fov->but_y_min + WINDOWSW / 13;
 	y = option->but_fov->but_y_min;
 	while (y < option->but_fov->but_y_max)
@@ -108,9 +108,9 @@ void	button_floor(t_opt *option)
 	int x;
 	int y;
 
-	option->but_floor->but_x_min = ((WINDOWSW / 3) / 3);
+	option->but_floor->but_x_min = ((WINDOWSW / 3) / 3) - 40;
 	option->but_floor->but_y_min = (WINDOWSH / 3) * 2;
-	option->but_floor->but_x_max = option->but_floor->but_x_min + WINDOWSW / 3;
+	option->but_floor->but_x_max = option->but_floor->but_x_min + WINDOWSW / 3 + 40;
 	option->but_floor->but_y_max = option->but_floor->but_y_min + WINDOWSW / 13;
 	y = option->but_floor->but_y_min;
 	while (y < option->but_floor->but_y_max)
@@ -140,7 +140,7 @@ void	button_roof(t_opt *option)
 
 	option->but_roof->but_x_min = ((WINDOWSW / 3) / 3) * 2 + (WINDOWSW / 3);
 	option->but_roof->but_y_min = (WINDOWSH / 3) * 2;
-	option->but_roof->but_x_max = option->but_roof->but_x_min + WINDOWSW / 3;
+	option->but_roof->but_x_max = option->but_roof->but_x_min + WINDOWSW / 3 + 40;
 	option->but_roof->but_y_max = option->but_roof->but_y_min + WINDOWSW / 13;
 	y = option->but_roof->but_y_min;
 	while (y < option->but_roof->but_y_max)

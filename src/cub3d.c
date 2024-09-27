@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 14:22:02 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 15:12:34 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,15 @@ void	cub3d(t_map *data)
 	data->opt->rtn = mlx_texture_to_image(data->mlx, data->opt->rtn_txt);
 	data->opt->music_txt = mlx_load_png("./tiles/music.png");
 	data->opt->music = mlx_texture_to_image(data->mlx, data->opt->music_txt);
+	data->opt->fps_txt = mlx_load_png("./tiles/FPS.png");
+	data->opt->roof_txt = mlx_load_png("./tiles/roof.png");
+	data->opt->mini_txt = mlx_load_png("./tiles/mini.png");
+	data->opt->fps = mlx_texture_to_image(data->mlx, data->opt->fps_txt);
+	data->opt->roof = mlx_texture_to_image(data->mlx, data->opt->roof_txt);
+	data->opt->mini = mlx_texture_to_image(data->mlx, data->opt->mini_txt);
+	data->opt->fps->enabled = false;
+	data->opt->roof->enabled = false;
+	data->opt->mini->enabled = false;
 	data->opt->music->enabled = false;
 	data->opt->rtn->enabled = false;
 	data->opt->bottom->enabled = false;
@@ -248,6 +257,9 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->opt->rtn, data->opt->but_rtn->but_x_min, data->opt->but_rtn->but_y_min + 5);
 	mlx_image_to_window(data->mlx, data->opt->cub, (WINDOWSW / 2 - WINDOWSW / 9), 50);
 	mlx_image_to_window(data->mlx, data->opt->music, data->opt->but_music->but_x_min + 4, data->opt->but_music->but_y_min + 15);
+	mlx_image_to_window(data->mlx, data->opt->fps, data->opt->but_floor->but_x_min + 4, data->opt->but_floor->but_y_min + 10);
+	mlx_image_to_window(data->mlx, data->opt->roof, data->opt->but_roof->but_x_min + 4, data->opt->but_roof->but_y_min + 15);
+	mlx_image_to_window(data->mlx, data->opt->mini, data->opt->but_fov->but_x_min + 4, data->opt->but_fov->but_y_min + 15);
 
 	mlx_image_to_window(data->mlx, data->opt->m_unvalid, data->opt->but_music->but_x_max - 75, data->opt->but_music->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->opt->f_unvalid, data->opt->but_fov->but_x_max - 75, data->opt->but_fov->but_y_max - 100);

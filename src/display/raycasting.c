@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 14:22:19 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 15:28:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	i = ray->draw_end;
 	while (i < WINDOWSH)
 	{
-		if (i <= 3 * (WINDOWSH / 4))
+		if (data->fog && i <= 3 * (WINDOWSH / 4))
 			mlx_put_pixel(data->rayc, x, i, color_fog_2(data->down, i - WINDOWSH / 4));
 		else
 			mlx_put_pixel(data->rayc, x, i, data->down);

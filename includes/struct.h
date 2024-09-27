@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 14:23:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 15:04:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,11 @@ typedef struct s_option
 	TXT			*music_txt;
 	IMG			*music;
 
-	TXT			*fov_txt;
-	IMG			*fov;
+	TXT			*mini_txt;
+	IMG			*mini;
 
-	TXT			*floor_txt;
-	IMG			*floor;
+	TXT			*fps_txt;
+	IMG			*fps;
 
 	TXT			*roof_txt;
 	IMG			*roof;
