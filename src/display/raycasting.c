@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 13:11:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 14:22:19 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,30 @@ uint32_t	color_fog(int32_t a, t_ray *ray)
 	return (color);
 }
 
+uint32_t	color_fog_2(int32_t a, int h)
+{
+	uint32_t	ra;
+	uint32_t	ga;
+	uint32_t	ba;
+	uint32_t color;
+	uint32_t aa;
+	float	t;
+
+	aa = ((a >> 24) & 0xFF);
+	ba = ((a >> 16) & 0xFF);
+	ga = ((a >> 8) & 0xFF);
+	ra = (a & 0xFF);
+	t = (4 * h / (float)WINDOWSH) - 2.0f;
+	if (t < 0)
+		t = -t;
+	aa = ft_lerp(aa, 0x00, t);
+	ga = ft_lerp(ga, 0x00, t);
+	ba = ft_lerp(ba, 0x00, t);
+	color = ((aa << 24) | ((ba) << 16) | ((ga << 8)) | ra);
+	//printf("%X || %X\n", color, ra);
+	return (color);
+}
+
 void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
 	int y;
@@ -256,7 +280,10 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	i = ray->draw_end;
 	while (i < WINDOWSH)
 	{
-		mlx_put_pixel(data->rayc, x, i, data->down);
+		if (i <= 3 * (WINDOWSH / 4))
+			mlx_put_pixel(data->rayc, x, i, color_fog_2(data->down, i - WINDOWSH / 4));
+		else
+			mlx_put_pixel(data->rayc, x, i, data->down);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 13:10:19 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 14:22:58 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,34 @@ void	check_but_roof(t_map *data)
 	}
 }
 
+void	check_music(t_map *data)
+{
+	static int is_play = 0;
+
+	if ((!is_play || is_play == 1) && data->opt->play_music && data->pause)
+	{
+		if (is_play)
+			system("killall paplay");
+		system("paplay Music/Menu.wav &");
+		printf("2\n");
+		is_play = 2;
+	}
+	else if ((!is_play || is_play == 2) && data->opt->play_music && !data->pause)
+	{
+		if (is_play)
+			system("killall paplay");
+		system("paplay ./Music/InGame.wav &");
+		printf("1\n");
+		is_play = 1;
+	}
+	else if (is_play && !data->opt->play_music)
+	{
+		system("killall paplay &");
+		printf("%d 0\n", is_play);
+		is_play = 0;
+	}
+}
+
 void	loop(void *param)
 {
 	t_map	*data;
@@ -295,7 +323,8 @@ void	loop(void *param)
 	data = (t_map *)param;
 	if (data->pause != true)
 		raycasting(data);
-	time_fps(data);
+//	mlx_resize_hook()
+	//time_fps(data);
 	//mini(data);
 	if (data->game->move_w)
 		move_w(data);
@@ -327,6 +356,7 @@ void	loop(void *param)
 	button_fov(data->opt);
 	button_floor(data->opt);
 	button_roof(data->opt);
+	check_music(data);
 }
 
 void	move_w(t_map *data)
@@ -492,14 +522,14 @@ void	cursor(double xpos, double ypos, void* param)
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	if (data->game->cursor_x < WINDOWSW / 2 - 5 && data->pause == false)
+	if (xpos < WINDOWSW / 2 - 5 && data->pause == false)
 	{
 		data->game->rotate_left = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
 	}
 	else
 		data->game->rotate_left = false;
-	if (data->game->cursor_x > WINDOWSW / 2 + 5 && data->pause == false)
+	if (xpos > WINDOWSW / 2 + 5 && data->pause == false)
 	{
 		data->game->rotate_right = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
