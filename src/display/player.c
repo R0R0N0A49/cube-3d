@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 09:46:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:10:19 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	time_fps(t_map	*data)
 {
 	int save;
 	save = (int)(1 / data->mlx->delta_time);
-	mlx_put_string(data->mlx, ft_itoa(save), 0, 0);
-	//printf("%d\n", save);
+	//mlx_put_string(data->mlx, ft_itoa(save), 0, 0);
+	printf("%d\n", save);
 }
 
 void	pause_game(t_map *data)
@@ -295,7 +295,7 @@ void	loop(void *param)
 	data = (t_map *)param;
 	if (data->pause != true)
 		raycasting(data);
-	//time_fps(data);
+	time_fps(data);
 	//mini(data);
 	if (data->game->move_w)
 		move_w(data);
@@ -337,8 +337,8 @@ void	move_w(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx += data->game->dir_x * data->speed;
-	testy += data->game->dir_y * data->speed;
+	testx += data->game->dir_x * data->speed * data->mlx->delta_time;
+	testy += data->game->dir_y * data->speed * data->mlx->delta_time;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 	{
 		if (data->map[(int)data->game->player_y][(int)testx] == '1')
@@ -361,8 +361,8 @@ void	move_s(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx -= data->game->dir_x * data->speed;
-	testy -= data->game->dir_y * data->speed;
+	testx -= data->game->dir_x * data->speed * data->mlx->delta_time;
+	testy -= data->game->dir_y * data->speed * data->mlx->delta_time;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 	{
 		if (data->map[(int)data->game->player_y][(int)testx] == '1')
@@ -384,8 +384,8 @@ void	move_a(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx += data->game->dir_y * data->speed;
-	testy -= data->game->dir_x * data->speed;
+	testx += data->game->dir_y * data->speed * data->mlx->delta_time;
+	testy -= data->game->dir_x * data->speed * data->mlx->delta_time;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 	{
 		if (data->map[(int)data->game->player_y][(int)testx] == '1')
@@ -407,8 +407,8 @@ void	move_d(t_map *data)
 	testx = data->game->player_x;
 	testy = data->game->player_y;
 
-	testx -= data->game->dir_y * data->speed;
-	testy += data->game->dir_x * data->speed;
+	testx -= data->game->dir_y * data->speed * data->mlx->delta_time;
+	testy += data->game->dir_x * data->speed * data->mlx->delta_time;
 	if (data->map[(int)testy][(int)data->game->player_x] == '1')
 	{
 		if (data->map[(int)data->game->player_y][(int)testx] == '1')
@@ -426,26 +426,30 @@ void	rotate_left(t_map *map)
 {
 	double	olddri_x;
 	double	oldplane_x;
+	double	speed;
 
 	olddri_x = map->game->dir_x;
-	map->game->dir_x = map->game->dir_x * cos(-map->rotspeed) - map->game->dir_y * sin(-map->rotspeed);
-	map->game->dir_y = olddri_x * sin(-map->rotspeed) + map->game->dir_y* cos(-map->rotspeed);
+	speed = map->rotspeed * map->mlx->delta_time;
+	map->game->dir_x = map->game->dir_x * cos(-speed) - map->game->dir_y * sin(-speed);
+	map->game->dir_y = olddri_x * sin(-speed) + map->game->dir_y* cos(-speed);
 	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(-map->rotspeed) -  map->game->plane_y * sin(-map->rotspeed);
-	map->game->plane_y =  oldplane_x * sin(-map->rotspeed) +  map->game->plane_y * cos(-map->rotspeed);
+	map->game->plane_x =  map->game->plane_x * cos(-speed) -  map->game->plane_y * sin(-speed);
+	map->game->plane_y =  oldplane_x * sin(-speed) +  map->game->plane_y * cos(-speed);
 }
 
 void	rotate_right(t_map *map)
 {
 	double	olddri_x;
 	double	oldplane_x;
+	double	speed;
 
 	olddri_x = map->game->dir_x;
-	map->game->dir_x = map->game->dir_x * cos(map->rotspeed) - map->game->dir_y * sin(map->rotspeed);
-	map->game->dir_y = olddri_x * sin(map->rotspeed) + map->game->dir_y * cos(map->rotspeed);
+	speed = map->rotspeed * map->mlx->delta_time;
+	map->game->dir_x = map->game->dir_x * cos(speed) - map->game->dir_y * sin(speed);
+	map->game->dir_y = olddri_x * sin(speed) + map->game->dir_y * cos(speed);
 	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(map->rotspeed) -  map->game->plane_y * sin(map->rotspeed);
-	map->game->plane_y =  oldplane_x * sin(map->rotspeed) +  map->game->plane_y * cos(map->rotspeed);
+	map->game->plane_x =  map->game->plane_x * cos(speed) -  map->game->plane_y * sin(speed);
+	map->game->plane_y =  oldplane_x * sin(speed) +  map->game->plane_y * cos(speed);
 }
 
 void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
@@ -560,6 +564,8 @@ void	key_press(mlx_key_data_t keydata, void *param)
 		}
 		if (keydata.key == MLX_KEY_P && data->pause == false)
 				data->plafond = !data->plafond;
+		if (keydata.key == MLX_KEY_F && data->pause == false)
+				data->fog = !data->fog;
 	}
 	if (keydata.action == MLX_RELEASE)
 	{

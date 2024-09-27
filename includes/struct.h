@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/26 14:20:36 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:08:52 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ typedef struct s_map
 	TXT		*texedi;
 	TXT		*texexit;
 	TXT		*nuit;
-	TXT		*herbe;
+	TXT		*menufd;
+	TXT		*menufd2;
 	IMG		*cubd;
 	IMG		*img_play;
 	IMG		*img_option;
@@ -169,6 +170,7 @@ typedef struct s_map
 	IMG		*menu;
 	double	rotspeed;
 	double 	speed;
+	bool	fog;
 	bool	press;
 	bool	pause;
 	bool	plafond;

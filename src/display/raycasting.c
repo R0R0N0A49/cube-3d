@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/25 15:31:30 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 13:11:46 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 	uint32_t col;
 
 	y = ray->draw_start - 1;
-	if (ray->wall_dist >= FOG_MAX)
+	if (ray->wall_dist >= FOG_MAX && data->fog == true)
 	{
 		while(y < ray->draw_end) try_put_pixel(data->rayc, x, y++, FOG);
 		return;
@@ -220,8 +220,8 @@ void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 		ray->texture_y = (int)ray->texture_pos & (tex->height - 1);
 		ray->texture_pos += ray->step;
 		//printf("%d\n", ray->line_height);
-		col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * ray->texture_y - ray->texture_x)];
-		if (ray->wall_dist >= FOG_MIN)
+		col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * (ray->texture_y + 1) - (ray->texture_x + 1))];
+		if (ray->wall_dist >= FOG_MIN && data->fog == true)
 			ray->color = color_fog(col, ray);
 		else
 			ray->color = color_tex(col);

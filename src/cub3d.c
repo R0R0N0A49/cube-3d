@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 08:49:40 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:46:13 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	cub3d(t_map *data)
 	t_button roof;
 
 	(void)data;
-	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "cub3d", true);
+	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
@@ -153,7 +153,8 @@ void	cub3d(t_map *data)
 	data->texedi = mlx_load_png ("./tiles/edit.png");
 	data->texexit = mlx_load_png ("./tiles/exit.png");
 	data->nuit = mlx_load_png("./tiles/nuit.png");
-	data->herbe = mlx_load_png("./tiles/herbe.png");
+	data->menufd = mlx_load_png("./tiles/menufd1.png");
+	data->menufd2 = mlx_load_png("./tiles/menufd3.png");
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_icon(data->mlx, logo);
 
@@ -199,14 +200,14 @@ void	cub3d(t_map *data)
 	data->opt->but_floor = &floor;
 	data->opt->but_roof = &roof;
 	option(data);
-
+	data->fog = false;
 	data->pause = true;
 	data->opt->option = false;
 	data->mini_map = &map;
 	data->game = &game;
 	data->raycast = &raycast;
-	data->speed = 0.069;
-	data->rotspeed = 0.035;
+	data->speed = 2.0;
+	data->rotspeed = 1.69;
 	data->but_play = &play;
 	data->but_edit = &edit;
 	data->but_exit = &exi;
@@ -232,6 +233,8 @@ void	cub3d(t_map *data)
 	data->img_option = mlx_texture_to_image(data->mlx, data->texopt);
 	data->img_edit = mlx_texture_to_image(data->mlx, data->texedi);
 	data->img_exit = mlx_texture_to_image(data->mlx, data->texexit);
+	data->menu = mlx_texture_to_image(data->mlx, data->menufd);
+	data->opt->bottom = mlx_texture_to_image(data->mlx, data->menufd2);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu, 0, 0);
