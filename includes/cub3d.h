@@ -16,6 +16,7 @@
 # include "struct.h"
 # include "libft/libft.h"
 # include "parsing.h"
+# include "sys/syscall.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>

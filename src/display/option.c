@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 15:22:41 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/28 12:37:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	button_music(t_opt *option)
 		x = option->but_music->but_x_min;
 		while (x < option->but_music->but_x_max)
 		{
-			if (option->but_music->click && (y >= option->but_music->but_y_max - 10 || x >= option->but_music->but_x_max - 10))
+			if ((option->index == 1 || option->but_music->click) && (y >= option->but_music->but_y_max - 10 || x >= option->but_music->but_x_max - 10))
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
 			else if(y >= option->but_music->but_y_max - 10 || x >= option->but_music->but_x_max - 10)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
-			else if (option->but_music->click)
+			else if (option->but_music->click || option->index == 1)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
 			else
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
@@ -88,11 +88,11 @@ void	button_fov(t_opt *option)
 		x = option->but_fov->but_x_min;
 		while (x < option->but_fov->but_x_max)
 		{
-			if (option->but_fov->click && (y >= option->but_fov->but_y_max - 10 || x >= option->but_fov->but_x_max - 10))
+			if ((option->index == 2 || option->but_fov->click) && (y >= option->but_fov->but_y_max - 10 || x >= option->but_fov->but_x_max - 10))
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
 			else if(y >= option->but_fov->but_y_max - 10 || x >= option->but_fov->but_x_max - 10)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
-			else if (option->but_fov->click)
+			else if (option->but_fov->click || option->index == 2)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
 			else
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
@@ -118,11 +118,11 @@ void	button_floor(t_opt *option)
 		x = option->but_floor->but_x_min;
 		while (x < option->but_floor->but_x_max)
 		{
-			if (option->but_floor->click && (y >= option->but_floor->but_y_max - 10 || x >= option->but_floor->but_x_max - 10))
+			if ((option->index == 3 || option->but_floor->click) && (y >= option->but_floor->but_y_max - 10 || x >= option->but_floor->but_x_max - 10))
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
 			else if(y >= option->but_floor->but_y_max - 10 || x >= option->but_floor->but_x_max - 10)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
-			else if (option->but_floor->click)
+			else if (option->index == 3 || option->but_floor->click)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
 			else
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
@@ -148,11 +148,11 @@ void	button_roof(t_opt *option)
 		x = option->but_roof->but_x_min;
 		while (x < option->but_roof->but_x_max)
 		{
-			if (option->but_roof->click && (y >= option->but_roof->but_y_max - 10 || x >= option->but_roof->but_x_max - 10))
+			if ((option->index == 4 || option->but_roof->click) && (y >= option->but_roof->but_y_max - 10 || x >= option->but_roof->but_x_max - 10))
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
 			else if(y >= option->but_roof->but_y_max - 10 || x >= option->but_roof->but_x_max - 10)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
-			else if (option->but_roof->click)
+			else if (option->index == 4 || option->but_roof->click)
 				mlx_put_pixel(option->bottom, x, y, 0x850606FF);
 			else
 				mlx_put_pixel(option->bottom, x, y, 0xED0010FF);
@@ -165,21 +165,21 @@ void	button_roof(t_opt *option)
 
 void	option(t_map *data)
 {
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < WINDOWSW)
-	{
-		x = 0;
-		while (x < WINDOWSH)
-		{
-			mlx_put_pixel(data->opt->bottom, y, x, 0x000000ff);
-			x++;
-		}
-		y++;
-	}
+//	int	y;
+//	int	x;
+//
+//	y = 0;
+//	x = 0;
+//	while (y < WINDOWSW)
+//	{
+//		x = 0;
+//		while (x < WINDOWSH)
+//		{
+//			mlx_put_pixel(data->opt->bottom, y, x, 0x000000ff);
+//			x++;
+//		}
+//		y++;
+//	}
 	button_rtn(data->opt);
 	button_music(data->opt);
 	button_fov(data->opt);

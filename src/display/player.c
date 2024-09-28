@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 15:33:46 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:36:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	check_but_option(t_map *data)
 	{
 		data->pause = true;
 		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->but_option->press_enter = false;
 		data->but_option->good = false;
 		data->menu->enabled = false;
@@ -198,6 +199,7 @@ void	check_but_rtn(t_opt *option, t_map *data)
 	{
 		data->pause = true;
 		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->menu->enabled = true;
 		data->opt->option = false;
 		data->cubd->enabled = true;
@@ -229,14 +231,15 @@ void	check_but_music(t_map *data)
 {
 	if (data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max)
 	{
-		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->opt->but_music->click = true;
 	}
 	if (data->game->cursor_x < data->opt->but_music->but_x_min || data->game->cursor_x > data->opt->but_music->but_x_max || data->game->cursor_y < data->opt->but_music->but_y_min || data->game->cursor_y > data->opt->but_music->but_y_max)
 		data->opt->but_music->good = false;
-	if (data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max && data->opt->but_music->good)
+	if ((data->game->cursor_x > data->opt->but_music->but_x_min && data->game->cursor_x < data->opt->but_music->but_x_max && data->game->cursor_y > data->opt->but_music->but_y_min && data->game->cursor_y < data->opt->but_music->but_y_max && data->opt->but_music->good) || data->opt->but_music->press_enter)
 	{
 		data->opt->but_music->good = false;
+		data->opt->but_music->press_enter = false;
 		data->opt->play_music = !data->opt->play_music;
 		verif_option(data->opt);
 	}
@@ -246,14 +249,15 @@ void	check_but_fov(t_map *data)
 {
 	if (data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max)
 	{
-		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->opt->but_fov->click = true;
 	}
 	if (data->game->cursor_x < data->opt->but_fov->but_x_min || data->game->cursor_x > data->opt->but_fov->but_x_max || data->game->cursor_y < data->opt->but_fov->but_y_min || data->game->cursor_y > data->opt->but_fov->but_y_max)
 		data->opt->but_fov->good = false;
-	if (data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max && data->opt->but_fov->good)
+	if ((data->game->cursor_x > data->opt->but_fov->but_x_min && data->game->cursor_x < data->opt->but_fov->but_x_max && data->game->cursor_y > data->opt->but_fov->but_y_min && data->game->cursor_y < data->opt->but_fov->but_y_max && data->opt->but_fov->good) || data->opt->but_fov->press_enter)
 	{
 		data->opt->but_fov->good = false;
+		data->opt->but_fov->press_enter = false;
 		data->opt->show_fov = !data->opt->show_fov;
 		verif_option(data->opt);
 	}
@@ -263,14 +267,15 @@ void	check_but_floor(t_map *data)
 {
 	if (data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max)
 	{
-		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->opt->but_floor->click = true;
 	}
 	if (data->game->cursor_x < data->opt->but_floor->but_x_min || data->game->cursor_x > data->opt->but_floor->but_x_max || data->game->cursor_y < data->opt->but_floor->but_y_min || data->game->cursor_y > data->opt->but_floor->but_y_max)
 		data->opt->but_floor->good = false;
-	if (data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max && data->opt->but_floor->good)
+	if ((data->game->cursor_x > data->opt->but_floor->but_x_min && data->game->cursor_x < data->opt->but_floor->but_x_max && data->game->cursor_y > data->opt->but_floor->but_y_min && data->game->cursor_y < data->opt->but_floor->but_y_max && data->opt->but_floor->good) || data->opt->but_floor->press_enter)
 	{
 		data->opt->but_floor->good = false;
+		data->opt->but_floor->press_enter = false;
 		data->opt->txt_floor = !data->opt->txt_floor;
 		verif_option(data->opt);
 	}
@@ -280,14 +285,15 @@ void	check_but_roof(t_map *data)
 {
 	if (data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min - 43 && data->game->cursor_y < data->opt->but_roof->but_y_max - 49)
 	{
-		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->opt->but_roof->click = true;
 	}
 	if (data->game->cursor_x < data->opt->but_roof->but_x_min || data->game->cursor_x > data->opt->but_roof->but_x_max || data->game->cursor_y < data->opt->but_roof->but_y_min - 43 || data->game->cursor_y > data->opt->but_roof->but_y_max - 49)
 		data->opt->but_roof->good = false;
-	if (data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min - 43 && data->game->cursor_y < data->opt->but_roof->but_y_max - 49 && data->opt->but_roof->good)
+	if ((data->game->cursor_x > data->opt->but_roof->but_x_min && data->game->cursor_x < data->opt->but_roof->but_x_max && data->game->cursor_y > data->opt->but_roof->but_y_min - 43 && data->game->cursor_y < data->opt->but_roof->but_y_max - 49 && data->opt->but_roof->good) || data->opt->but_roof->press_enter)
 	{
 		data->opt->but_roof->good = false;
+		data->opt->but_roof->press_enter = false;
 		data->opt->txt_roof = !data->opt->txt_roof;
 		data->fog = !data->fog;
 		data->plafond = !data->plafond;
@@ -567,23 +573,69 @@ void	key_press(mlx_key_data_t keydata, void *param)
 			data->game->move_a = true;
 		if (keydata.key == MLX_KEY_D && data->pause == false)
 			data->game->move_d = true;
-		if (keydata.key == MLX_KEY_LEFT && data->pause == false)
-			data->game->rotate_left = true;
-		if (keydata.key == MLX_KEY_RIGHT && data->pause == false)
-			data->game->rotate_right = true;
-		if (keydata.key == MLX_KEY_DOWN && data->pause == true)
+		if (keydata.key == MLX_KEY_LEFT && (data->pause == false || data->opt->option))
 		{
-			if (data->idx_menu >= 4)
-				data->idx_menu = 1;
+			if (!data->pause)
+				data->game->rotate_left = true;
 			else
-				data->idx_menu++;
+			{
+				if (data->opt->index > 1)
+					data->opt->index = data->opt->index - 1;
+				else
+					data->opt->index = 4;
+			}
+		}
+		if (keydata.key == MLX_KEY_RIGHT && (data->pause == false || data->opt->option))
+		{
+			if (!data->opt->option)
+				data->game->rotate_right = true;
+			else
+			{
+				if (data->opt->index >= 4)
+					data->opt->index = 1;
+				else
+					data->opt->index++;
+			}
+		}
+		if (keydata.key == MLX_KEY_DOWN && (data->pause == true || data->opt->option))
+		{
+			if (!data->opt->option)
+			{
+				if (data->idx_menu >= 4)
+					data->idx_menu = 1;
+				else
+					data->idx_menu++;
+			}
+			else
+			{
+				if (data->opt->index == 3)
+					data->opt->index--;
+				else if (data->opt->index > 0)
+					data->opt->index = (data->opt->index + 2) % 5;
+				else
+					data->opt->index = 1;
+			}
 		}
 		if (keydata.key == MLX_KEY_UP && data->pause == true)
 		{
-			if (data->idx_menu > 1)
-				data->idx_menu--;
-			else
-				data->idx_menu = 4;
+			if (data->menu->enabled)
+			{
+				if (data->idx_menu > 1)
+					data->idx_menu--;
+				else
+					data->idx_menu = 4;
+			}
+			else if (data->opt->option)
+			{
+				if (data->opt->index == 1)
+					data->opt->index = 4;
+				else if (data->opt->index == 2)
+					data->opt->index = 3;
+				else if (data->opt->index > 0)
+					data->opt->index = (data->opt->index - 2) % 5;
+				else
+					data->opt->index = 1;
+			}
 		}
 		if (keydata.key == MLX_KEY_ENTER && data->pause == true)
 		{
@@ -595,6 +647,14 @@ void	key_press(mlx_key_data_t keydata, void *param)
 				data->but_edit->press_enter = true;
 			if (data->idx_menu == 4)
 				data->but_exit->press_enter = true;
+			if (data->opt->index == 1)
+				data->opt->but_music->press_enter = true;
+			if (data->opt->index == 2)
+				data->opt->but_fov->press_enter = true;
+			if (data->opt->index == 3)
+				data->opt->but_floor->press_enter = true;
+			if (data->opt->index == 4)
+				data->opt->but_roof->press_enter = true;
 		}
 		if (keydata.key == MLX_KEY_P && data->pause == false)
 		{

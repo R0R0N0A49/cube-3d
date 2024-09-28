@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 15:12:34 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/28 12:35:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,6 @@ void	cub3d(t_map *data)
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 
-	data->opt->bottom = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
-
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
 	logo = mlx_load_png("./tiles/logo.png");
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
@@ -157,7 +155,6 @@ void	cub3d(t_map *data)
 	data->menufd2 = mlx_load_png("./tiles/menufd3.png");
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_icon(data->mlx, logo);
-
 	data->opt->unvalid_txt = mlx_load_png("./tiles/checkB.png");
 	data->opt->valid_txt = mlx_load_png("./tiles/checkG.png");
 	data->opt->m_unvalid = mlx_texture_to_image(data->mlx, data->opt->unvalid_txt);
@@ -184,8 +181,6 @@ void	cub3d(t_map *data)
 	data->opt->mini->enabled = false;
 	data->opt->music->enabled = false;
 	data->opt->rtn->enabled = false;
-	data->opt->bottom->enabled = false;
-	data->opt->cub->enabled = false;
 	data->opt->m_unvalid->enabled = false;
 	data->opt->f_unvalid->enabled = false;
 	data->opt->fl_unvalid->enabled = false;
@@ -208,6 +203,13 @@ void	cub3d(t_map *data)
 	data->opt->but_fov = &fov;
 	data->opt->but_floor = &floor;
 	data->opt->but_roof = &roof;
+	data->opt->bottom = mlx_texture_to_image(data->mlx, data->menufd2);
+	data->opt->bottom->enabled = false;
+	data->opt->index = 0;
+	data->opt->but_roof->press_enter = false;
+	data->opt->but_fov->press_enter = false;
+	data->opt->but_floor->press_enter = false;
+	data->opt->but_music->press_enter = false;
 	option(data);
 	data->fog = false;
 	data->pause = true;
@@ -243,7 +245,6 @@ void	cub3d(t_map *data)
 	data->img_edit = mlx_texture_to_image(data->mlx, data->texedi);
 	data->img_exit = mlx_texture_to_image(data->mlx, data->texexit);
 	data->menu = mlx_texture_to_image(data->mlx, data->menufd);
-	data->opt->bottom = mlx_texture_to_image(data->mlx, data->menufd2);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu, 0, 0);

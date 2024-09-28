@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 15:04:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/28 12:12:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_option
 	t_button	*but_fov;
 	t_button	*but_floor;
 	t_button	*but_roof;
+	int			index;
 
 	bool		play_music;
 	bool		txt_floor;
