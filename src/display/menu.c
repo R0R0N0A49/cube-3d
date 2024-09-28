@@ -6,11 +6,32 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:16:04 by derey             #+#    #+#             */
-/*   Updated: 2024/09/27 11:12:35 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/28 16:31:55 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	init_button_len(t_map *data)
+{
+	data->but_play->but_y_min = 300;
+	data->but_play->but_x_min = 640;
+	data->but_play->but_y_max = 150 + 300;
+	data->but_play->but_x_max = 640 + 640;
+	data->but_option->but_y_min = 480;
+	data->but_option->but_x_min = 640;
+	data->but_option->but_y_max = 480 + 150;
+	data->but_option->but_x_max = 640 + 640;
+	
+	data->but_exit->but_y_min = 840;
+	data->but_exit->but_x_min = 640;
+	data->but_exit->but_y_max = 840 + 150;
+	data->but_exit->but_x_max = 640 + 640;
+	data->but_play->click = false;
+	data->but_option->click = false;
+	data->but_edit->click = false;
+	data->but_exit->click = false;
+}
 
 void	button_play(t_map *data)
 {
@@ -18,11 +39,6 @@ void	button_play(t_map *data)
 	int	x;
 
 	y = 0;
-	x = 0;
-	data->but_play->but_y_min = 300;
-	data->but_play->but_x_min = 640;
-	data->but_play->but_y_max = 150 + 300;
-	data->but_play->but_x_max = 640 + 640;
 	while (y < 640)
 	{
 		x = 0;
@@ -49,11 +65,6 @@ void	button_option(t_map *data)
 	int	x;
 
 	y = 0;
-	x = 0;
-	data->but_option->but_y_min = 480;
-	data->but_option->but_x_min = 640;
-	data->but_option->but_y_max = 480 + 150;
-	data->but_option->but_x_max = 640 + 640;
 	while (y < 640)
 	{
 		x = 0;
@@ -80,11 +91,6 @@ void	button_edit(t_map *data)
 	int	x;
 
 	y = 0;
-	x = 0;
-	data->but_edit->but_y_min = 660;
-	data->but_edit->but_x_min = 640;
-	data->but_edit->but_y_max = 660 + 150;
-	data->but_edit->but_x_max = 640 + 640;
 	while (y < 640)
 	{
 		x = 0;
@@ -111,11 +117,6 @@ void	button_exit(t_map *data)
 	int	x;
 
 	y = 0;
-	x = 0;
-	data->but_exit->but_y_min = 840;
-	data->but_exit->but_x_min = 640;
-	data->but_exit->but_y_max = 840 + 150;
-	data->but_exit->but_x_max = 640 + 640;
 	while (y < 640)
 	{
 		x = 0;

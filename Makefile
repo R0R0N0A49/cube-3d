@@ -1,6 +1,6 @@
 NAME=cub3d
 CC=cc
-CFLAGS= -Wall -Werror -Wextra -I./MLX42/include -g
+CFLAGS= -Wall -Werror -Wextra -I./MLX42/include -g -O2
 MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM=rm -rf
 

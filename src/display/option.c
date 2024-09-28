@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   option.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 08:52:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:32:44 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,12 @@ void	option(t_map *data)
 		}
 		y++;
 	}
-	button_rtn(data->opt);
-	button_music(data->opt);
-	button_fov(data->opt);
-	button_floor(data->opt);
-	button_roof(data->opt);
+	if (data->opt->bottom->enabled == true)
+	{
+		button_rtn(data->opt);
+		button_music(data->opt);
+		button_fov(data->opt);
+		button_floor(data->opt);
+		button_roof(data->opt);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/27 14:23:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/28 17:04:57 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,15 @@ typedef	struct s_button
 	bool	press_enter;
 } t_button;
 
+typedef struct s_edit
+{
+	TXT		*txt_edit;
+	bool	edit;
+	char	*name;
+	bool	good;
+} t_edit;
+
+
 typedef struct s_option
 {
 	bool		option;
@@ -140,6 +149,7 @@ typedef struct s_option
 
 typedef struct s_map
 {
+	t_edit	*editor;
 	t_opt	*opt;
 	int		file;
 	char	**map;
@@ -163,6 +173,7 @@ typedef struct s_map
 	IMG		*img_option;
 	IMG		*img_edit;
 	IMG		*img_exit;
+	IMG		*edit;
 	uint32_t	up;
 	uint32_t	down;
 	IMG		*rayc;
@@ -174,6 +185,7 @@ typedef struct s_map
 	bool	press;
 	bool	pause;
 	bool	plafond;
+	bool	editeur;
 	int		idx_menu;
 	t_ray	*raycast;
 	t_mini	*mini_map;
