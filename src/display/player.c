@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/28 16:47:47 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/28 17:50:00 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	check_but_rtn_edit(t_opt *option, t_map *data)
 	{
 		data->pause = true;
 		data->idx_menu = 0;
+		data->opt->index = 0;
 		data->menu->enabled = true;
 		data->edit->enabled = false;
 		data->cubd->enabled = true;
@@ -107,6 +108,9 @@ void	check_but_rtn_edit(t_opt *option, t_map *data)
 		data->opt->fl_valid->enabled = false;
 		data->opt->r_valid->enabled = false;
 		data->opt->music->enabled = false;
+		data->opt->fps->enabled = false;
+		data->opt->roof->enabled = false;
+		data->opt->mini->enabled = false;
 	}
 }
 
@@ -135,7 +139,6 @@ void	check_music(t_map *data)
 	else if (is_play && !data->opt->play_music)
 	{
 		system("killall paplay &");
-		printf("%d 0\n", is_play);
 		is_play = 0;
 	}
 }

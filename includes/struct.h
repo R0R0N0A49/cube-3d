@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/28 17:04:57 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/28 17:44:39 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_option
 	t_button	*but_fov;
 	t_button	*but_floor;
 	t_button	*but_roof;
+	int			index;
 
 	bool		play_music;
 	bool		txt_floor;
@@ -137,11 +138,11 @@ typedef struct s_option
 	TXT			*music_txt;
 	IMG			*music;
 
-	TXT			*fov_txt;
-	IMG			*fov;
+	TXT			*mini_txt;
+	IMG			*mini;
 
-	TXT			*floor_txt;
-	IMG			*floor;
+	TXT			*fps_txt;
+	IMG			*fps;
 
 	TXT			*roof_txt;
 	IMG			*roof;

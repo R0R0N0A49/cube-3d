@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:16:04 by derey             #+#    #+#             */
-/*   Updated: 2024/09/28 16:31:55 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/28 17:44:31 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ void	button_exit(t_map *data)
 
 void	menu(t_map *data)
 {
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
+//	int	y;
+//	int	x;
+//
+//	y = 0;
+//	x = 0;
 	/*while (y < WINDOWSW)
 	{
 		x = 0;
