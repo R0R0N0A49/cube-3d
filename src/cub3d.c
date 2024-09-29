@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:19:21 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:45:07 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ void	cub3d(t_map *data)
 	data->opt->but_floor->press_enter = false;
 	data->opt->but_music->press_enter = false;
 	option(data);
+	data->time_fps = time(NULL);
 	data->fog = false;
 	data->pause = true;
 	data->opt->option = false;

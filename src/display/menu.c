@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:16:04 by derey             #+#    #+#             */
-/*   Updated: 2024/09/29 17:07:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/29 19:03:48 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	button_play(t_map *data)
 		while (x < 150)
 		{
 			if ((x >= 140 || y >= 630) && ((data->but_play->click == true) || data->idx_menu == 1))
-				mlx_put_pixel(data->menu, y + 640, x + (300), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_play->but_y_min , 0xED0010FF);
 			else if ((data->but_play->click == true) || data->idx_menu == 1)
-				mlx_put_pixel(data->menu, y + 640, x + (300), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_play->but_y_min , 0x850606FF);
 			else if (x >= 140 || y >= 630)
-				mlx_put_pixel(data->menu, y + 640, x + (300), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_play->but_y_min , 0x850606FF);
 			else
-				mlx_put_pixel(data->menu, y + 640, x + (300), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_play->but_y_min , 0xED0010FF);
 			x++;
 		}
 		y++;
@@ -60,13 +60,13 @@ void	button_option(t_map *data)
 		while (x < 150)
 		{
 			if ((x >= 140 || y >= 630) && ((data->but_option->click == true) || data->idx_menu == 2))
-				mlx_put_pixel(data->menu, y + 640, x + (480), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_option->but_y_min, 0xED0010FF);
 			else if ((data->but_option->click == true) || data->idx_menu == 2)
-				mlx_put_pixel(data->menu, y + 640, x + (480), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_option->but_y_min, 0x850606FF);
 			else if (x >= 140 || y >= 630)
-				mlx_put_pixel(data->menu, y + 640, x + (480), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_option->but_y_min, 0x850606FF);
 			else
-				mlx_put_pixel(data->menu, y + 640, x + (480), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_option->but_y_min, 0xED0010FF);
 			x++;
 		}
 		y++;
@@ -91,13 +91,13 @@ void	button_edit(t_map *data)
 		while (x < 150)
 		{
 			if ((x >= 140 || y >= 630) && (((data->but_edit->click == true) || data->idx_menu == 3)))
-				mlx_put_pixel(data->menu, y + 640, x + (660), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_edit->but_y_min, 0xED0010FF);
 			else if ((data->but_edit->click == true) || data->idx_menu == 3)
-				mlx_put_pixel(data->menu, y + 640, x + (660), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_edit->but_y_min, 0x850606FF);
 			else if (x >= 140 || y >= 630)
-				mlx_put_pixel(data->menu, y + 640, x + (660), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_edit->but_y_min, 0x850606FF);
 			else
-				mlx_put_pixel(data->menu, y + 640, x + (660), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_edit->but_y_min, 0xED0010FF);
 			x++;
 		}
 		y++;
@@ -122,13 +122,13 @@ void	button_exit(t_map *data)
 		while (x < 150)
 		{
 			if ((x >= 140 || y >= 630) && ((data->but_exit->click == true) || data->idx_menu == 4))
-				mlx_put_pixel(data->menu, y + 640, x + (840), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_exit->but_y_min, 0xED0010FF);
 			else if ((data->but_exit->click == true) || data->idx_menu == 4)
-				mlx_put_pixel(data->menu, y + 640, x + (840), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_exit->but_y_min, 0x850606FF);
 			else if (x >= 140 || y >= 630)
-				mlx_put_pixel(data->menu, y + 640, x + (840), 0x850606FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_exit->but_y_min, 0x850606FF);
 			else
-				mlx_put_pixel(data->menu, y + 640, x + (840), 0xED0010FF);
+				mlx_put_pixel(data->menu, y + 640, x + data->but_exit->but_y_min, 0xED0010FF);
 			x++;
 		}
 		y++;

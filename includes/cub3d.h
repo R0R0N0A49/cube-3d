@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:22:26 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:43:28 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <time.h>
 # include <math.h>
 
 void	init_struct(char **src, t_map *data);

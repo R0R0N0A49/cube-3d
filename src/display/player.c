@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/29 18:25:22 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/29 19:12:16 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 void	time_fps(t_map	*data)
 {
-	data->fps =(int)(1 / data->mlx->delta_time);
+	double	time_dif;
+
+	time_dif = difftime(time(NULL), data->time_fps);
+	if (time_dif >= 1)
+	{
+		data->fps =(int)(1 / data->mlx->delta_time);
+		data->time_fps = time(NULL);
+	}
 }
 
 void	pause_game(t_map *data)
@@ -335,7 +342,8 @@ void	loop(void *param)
 		raycasting(data);
 //	mlx_resize_hook()
 	time_fps(data);
-	mini(data);
+	if (data->opt->show_fov)
+		mini(data);
 	if (data->game->move_w)
 		move_w(data);
 	if (data->game->move_s)
@@ -531,13 +539,19 @@ void	cursor(double xpos, double ypos, void* param)
 	t_map	*data;
 	
 	data = (t_map *)param;
+	if (WINDOWSW / 2 == data->game->cursor_x && WINDOWSH /2 == data->game->cursor_y)
+	{
+		data->game->rotate_left = false;
+		data->game->rotate_right = false;
+	}
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
 	if (xpos < WINDOWSW / 2 - 5 && data->pause == false)
 	{
 		data->game->rotate_left = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
-		data->game->rotate_left = false;
+		data->game->cursor_x = WINDOWSW / 2;
+		data->game->cursor_y = WINDOWSH / 2;
 	}
 	else
 		data->game->rotate_left = false;
@@ -545,7 +559,6 @@ void	cursor(double xpos, double ypos, void* param)
 	{
 		data->game->rotate_right = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
-		data->game->rotate_right = false;
 	}
 	else
 		data->game->rotate_right = false;

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 17:51:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:45:49 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define FOG 0xFF
 # define FOG_MIN 4
 # define FOG_MAX 16
+# include <time.h>
 
 typedef struct s_mini
 {
@@ -187,6 +188,7 @@ typedef struct s_map
 	int		idx_menu;
 	int		fps;
 	char	*ifps;
+	time_t	time_fps;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;
