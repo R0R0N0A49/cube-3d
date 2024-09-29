@@ -1,10 +1,10 @@
-NO ./tiles/stone.png
+NO ./tiles/textures/stone.png
 
-SO ./tiles/stone_eagle.png
+SO ./tiles/textures/stone_eagle.png
 
-WE ./tiles/brique.png
+WE ./tiles/textures/brique.png
 
-EA ./tiles/bricks.png
+EA ./tiles/textures/bricks.png
 
 F 158,158,158
 

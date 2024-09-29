@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/09/28 13:36:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:25:22 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 
 void	time_fps(t_map	*data)
 {
-	int save;
-	save = (int)(1 / data->mlx->delta_time);
-	//mlx_put_string(data->mlx, ft_itoa(save), 0, 0);
-	printf("%d\n", save);
+	data->fps =(int)(1 / data->mlx->delta_time);
 }
 
 void	pause_game(t_map *data)
@@ -44,6 +41,34 @@ void	exit_cub3d(t_map *data)
 	mlx_close_window(data->mlx);
 }
 
+void	play_game(t_map *data)
+{
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
+	data->pause = false;
+	data->idx_menu = 0;
+	data->but_play->press_enter = false;
+	data->but_play->good = false;
+	data->menu->enabled = false;
+	data->cubd->enabled = false;
+	data->img_play->enabled = false;
+	data->img_option->enabled = false;
+	data->img_edit->enabled = false;
+	data->img_exit->enabled = false;
+	data->game->move_w = false;
+	data->game->rotate_left = false;
+	data->game->rotate_right = false;
+	data->game->move_s = false;
+	data->game->move_a = false;
+	data->game->move_d = false;
+
+	data->but_play->good = false;
+	data->but_option->good = false;
+	data->but_edit->good = false;
+	data->but_exit->good = false;
+	data->opt->but_rtn->good = false;
+}
+
 void	check_but_play(t_map *data)
 {
 	if (data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max)
@@ -54,33 +79,7 @@ void	check_but_play(t_map *data)
 	if (data->game->cursor_x < data->but_play->but_x_min || data->game->cursor_x > data->but_play->but_x_max || data->game->cursor_y < data->but_play->but_y_min || data->game->cursor_y > data->but_play->but_y_max)
 		data->but_play->good = false;
 	if ((data->game->cursor_x > data->but_play->but_x_min && data->game->cursor_x < data->but_play->but_x_max && data->game->cursor_y > data->but_play->but_y_min && data->game->cursor_y < data->but_play->but_y_max && data->but_play->good == true ) || data->but_play->press_enter == true)
-	{
-		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
-		data->pause = false;
-		data->idx_menu = 0;
-		data->but_play->press_enter = false;
-		data->but_play->good = false;
-		data->menu->enabled = false;
-		data->cubd->enabled = false;
-		data->img_play->enabled = false;
-		data->img_option->enabled = false;
-		data->img_edit->enabled = false;
-		data->img_exit->enabled = false;
-		data->game->move_w = false;
-		data->game->rotate_left = false;
-		data->game->rotate_right = false;
-		data->game->move_s = false;
-		data->game->move_a = false;
-		data->game->move_d = false;
-
-		data->but_play->good = false;
-		data->but_option->good = false;
-		data->but_edit->good = false;
-		data->but_exit->good = false;
-		data->opt->but_rtn->good = false;
-
-	}
+		play_game(data);
 }
 
 void	verif_option(t_opt *opt)
@@ -277,6 +276,7 @@ void	check_but_floor(t_map *data)
 		data->opt->but_floor->good = false;
 		data->opt->but_floor->press_enter = false;
 		data->opt->txt_floor = !data->opt->txt_floor;
+		fonts_disabled(data);
 		verif_option(data->opt);
 	}
 }
@@ -334,8 +334,8 @@ void	loop(void *param)
 	if (data->pause != true)
 		raycasting(data);
 //	mlx_resize_hook()
-	//time_fps(data);
-	//mini(data);
+	time_fps(data);
+	mini(data);
 	if (data->game->move_w)
 		move_w(data);
 	if (data->game->move_s)
@@ -367,6 +367,7 @@ void	loop(void *param)
 	button_floor(data->opt);
 	button_roof(data->opt);
 	check_music(data);
+	fonts_update(data);
 }
 
 void	move_w(t_map *data)
@@ -536,6 +537,7 @@ void	cursor(double xpos, double ypos, void* param)
 	{
 		data->game->rotate_left = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
+		data->game->rotate_left = false;
 	}
 	else
 		data->game->rotate_left = false;
@@ -543,6 +545,7 @@ void	cursor(double xpos, double ypos, void* param)
 	{
 		data->game->rotate_right = true;
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
+		data->game->rotate_right = false;
 	}
 	else
 		data->game->rotate_right = false;
@@ -556,10 +559,11 @@ void	key_press(mlx_key_data_t keydata, void *param)
 	data = (t_map *)param;
 	if (keydata.action == MLX_PRESS)
 	{
+		fonts_update(data);
 		if (keydata.key == MLX_KEY_ESCAPE)
 		{
 			if (data->pause == true && !data->opt->option)
-				mlx_close_window(data->mlx);
+				play_game(data);
 			else if (data->opt->option)
 				data->opt->but_rtn->press_enter = true;
 			else
@@ -663,6 +667,8 @@ void	key_press(mlx_key_data_t keydata, void *param)
 		}
 		if (keydata.key == MLX_KEY_F && data->pause == false)
 				data->fog = !data->fog;
+		if (keydata.key == MLX_KEY_K)
+			mlx_close_window(data->mlx);
 	}
 	if (keydata.action == MLX_RELEASE)
 	{

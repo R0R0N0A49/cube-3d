@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/26 13:24:55 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:22:26 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	button_music(t_opt *option);
 void	button_fov(t_opt *option);
 void	button_floor(t_opt *option);
 void	button_roof(t_opt *option);
-
+void	set_textures_terrain(t_map	*data);
+void	fonts_init(t_map *data);
+void	fonts_update(t_map *data);
+void	fonts_disabled(t_map *data);
 
 #endif

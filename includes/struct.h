@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/28 12:12:43 by trebours         ###   ########.fr       */
+/*   Updated: 2024/09/29 17:51:38 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,15 @@ typedef	struct s_button
 	bool	press_enter;
 } t_button;
 
+typedef	struct s_textures
+{
+	char			**textures_name;
+	mlx_texture_t	**textures;
+	mlx_image_t		**image;
+	size_t			nb_textures;
+} t_textures;
+
+
 typedef struct s_option
 {
 	bool		option;
@@ -176,9 +185,12 @@ typedef struct s_map
 	bool	pause;
 	bool	plafond;
 	int		idx_menu;
+	int		fps;
+	char	*ifps;
 	t_ray	*raycast;
 	t_mini	*mini_map;
 	t_game	*game;
+	t_textures	font;
 	t_button	*but_play;
 	t_button	*but_option;
 	t_button	*but_edit;

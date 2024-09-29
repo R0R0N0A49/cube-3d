@@ -1,13 +1,14 @@
 NAME=display.a
 CC=cc
-CFLAGS= -Wall -Werror -Wextra -g
+CFLAGS= -Wall -Werror -Wextra -g -O2
 RM=rm -rf
 
 SRCS=	minimap.c \
 		player.c \
 		raycasting.c \
 		menu.c \
-		option.c
+		option.c \
+		fonts.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rcs
