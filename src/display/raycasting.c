@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/09/28 17:55:11 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/27 15:28:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ uint32_t	color_fog_2(int32_t a, int h)
 	ba = ((a >> 16) & 0xFF);
 	ga = ((a >> 8) & 0xFF);
 	ra = (a & 0xFF);
-	t = (4.8 * h / (float)WINDOWSH) - 2.0f;
+	t = (4 * h / (float)WINDOWSH) - 2.0f;
 	if (t < 0)
 		t = -t;
 	aa = ft_lerp(aa, 0x00, t);
@@ -280,8 +280,8 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	i = ray->draw_end;
 	while (i < WINDOWSH)
 	{
-		if (i <= 3 * (WINDOWSH / 4.8) && data->fog == true)
-			mlx_put_pixel(data->rayc, x, i, color_fog_2(data->down, i - WINDOWSH / 4.8));
+		if (data->fog && i <= 3 * (WINDOWSH / 4))
+			mlx_put_pixel(data->rayc, x, i, color_fog_2(data->down, i - WINDOWSH / 4));
 		else
 			mlx_put_pixel(data->rayc, x, i, data->down);
 		i++;
