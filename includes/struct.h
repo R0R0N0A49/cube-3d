@@ -113,9 +113,9 @@ typedef struct s_option
 	TXT			*rtn_txt;
 	t_button	*but_rtn;
 	t_button	*but_music;
-	t_button	*but_fov;
-	t_button	*but_floor;
-	t_button	*but_roof;
+	t_button	*but_map;
+	t_button	*but_fps;
+	t_button	*but_night;
 	int			index;
 
 	bool		play_music;

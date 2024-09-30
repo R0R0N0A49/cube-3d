@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:43:28 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/30 11:40:33 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	time_fps(t_map	*data);
 void	option(t_map *data);
 void	button_rtn(t_opt *option);
 void	button_music(t_opt *option);
-void	button_fov(t_opt *option);
-void	button_floor(t_opt *option);
-void	button_roof(t_opt *option);
+void	button_map(t_opt *option);
+void	button_fps(t_map *data);
+void	button_night(t_opt *option);
 void	set_textures_terrain(t_map	*data);
 void	fonts_init(t_map *data);
 void	fonts_update(t_map *data);
