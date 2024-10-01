@@ -108,29 +108,29 @@ void	button_fps(t_map *data)
 	int x;
 	int y;
 
-	data->opt->but_fps->but_x_min = ((WINDOWSW / 3) / 3) - 40;
-	data->opt->but_fps->but_y_min = (WINDOWSH / 3) * 2;
-	data->opt->but_fps->but_x_max = data->opt->but_fps->but_x_min + WINDOWSW / 3 + 40;
-	data->opt->but_fps->but_y_max = data->opt->but_fps->but_y_min + WINDOWSW / 13;
-	y = data->opt->but_fps->but_y_min;
-	while (y < data->opt->but_fps->but_y_max)
+	data->menu_option->but_fps->but_x_min = ((WINDOWSW / 3) / 3) - 40;
+	data->menu_option->but_fps->but_y_min = (WINDOWSH / 3) * 2;
+	data->menu_option->but_fps->but_x_max = data->menu_option->but_fps->but_x_min + WINDOWSW / 3 + 40;
+	data->menu_option->but_fps->but_y_max = data->menu_option->but_fps->but_y_min + WINDOWSW / 13;
+	y = data->menu_option->but_fps->but_y_min;
+	while (y < data->menu_option->but_fps->but_y_max)
 	{
-		x = data->opt->but_fps->but_x_min;
-		while (x < data->opt->but_fps->but_x_max)
+		x = data->menu_option->but_fps->but_x_min;
+		while (x < data->menu_option->but_fps->but_x_max)
 		{
-			if ((data->opt->index == 3 || data->opt->but_fps->click) && (y >= data->opt->but_fps->but_y_max - 10 || x >= data->opt->but_fps->but_x_max - 10))
-				mlx_put_pixel(data->opt->bottom, x, y, 0xED0010FF);
-			else if(y >= data->opt->but_fps->but_y_max - 10 || x >= data->opt->but_fps->but_x_max - 10)
-				mlx_put_pixel(data->opt->bottom, x, y, 0x850606FF);
-			else if (data->opt->index == 3 || data->opt->but_fps->click)
-				mlx_put_pixel(data->opt->bottom, x, y, 0x850606FF);
+			if ((data->menu_option->index == 3 || data->menu_option->but_fps->click) && (y >= data->menu_option->but_fps->but_y_max - 10 || x >= data->menu_option->but_fps->but_x_max - 10))
+				mlx_put_pixel(data->menu_option->bottom, x, y, 0xED0010FF);
+			else if(y >= data->menu_option->but_fps->but_y_max - 10 || x >= data->menu_option->but_fps->but_x_max - 10)
+				mlx_put_pixel(data->menu_option->bottom, x, y, 0x850606FF);
+			else if (data->menu_option->index == 3 || data->menu_option->but_fps->click)
+				mlx_put_pixel(data->menu_option->bottom, x, y, 0x850606FF);
 			else
-				mlx_put_pixel(data->opt->bottom, x, y, 0xED0010FF);
+				mlx_put_pixel(data->menu_option->bottom, x, y, 0xED0010FF);
 			x++;
 		}
 		y++;
 	}
-	data->opt->but_fps->click = false;
+	data->menu_option->but_fps->click = false;
 }
 
 void	button_night(t_opt *option)
@@ -175,14 +175,14 @@ void	option(t_map *data)
 //		x = 0;
 //		while (x < WINDOWSH)
 //		{
-//			mlx_put_pixel(data->opt->bottom, y, x, 0x000000ff);
+//			mlx_put_pixel(data->menu_option->bottom, y, x, 0x000000ff);
 //			x++;
 //		}
 //		y++;
 //	}
-	button_rtn(data->opt);
-	button_music(data->opt);
-	button_map(data->opt);
+	button_rtn(data->menu_option);
+	button_music(data->menu_option);
+	button_map(data->menu_option);
 	button_fps(data);
-	button_night(data->opt);
+	button_night(data->menu_option);
 }

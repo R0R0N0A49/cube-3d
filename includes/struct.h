@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:45:49 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/01 13:58:53 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef	struct s_textures
 
 typedef struct s_option
 {
-	bool		option;
+	bool		visible;
 	IMG			*bottom;
 	IMG			*cub;
 	IMG			*rtn;
@@ -117,41 +117,27 @@ typedef struct s_option
 	t_button	*but_fps;
 	t_button	*but_night;
 	int			index;
-
 	bool		play_music;
-	bool		txt_floor;
-	bool		txt_roof;
-	bool		show_fov;
-
+	bool		display_fps;
+	bool		night_mode;
+	bool		display_map;
 	TXT			*valid_txt;
 	TXT			*unvalid_txt;
-
-	IMG			*m_valid;
-	IMG			*f_valid;
-	IMG			*fl_valid;
-	IMG			*r_valid;
-
-	IMG			*m_unvalid;
-	IMG			*f_unvalid;
-	IMG			*fl_unvalid;
-	IMG			*r_unvalid;
-
+	IMG			*valid;
+	IMG			*unvalid;
 	TXT			*music_txt;
 	IMG			*music;
-
 	TXT			*mini_txt;
 	IMG			*mini;
-
 	TXT			*fps_txt;
 	IMG			*fps;
-
 	TXT			*roof_txt;
 	IMG			*roof;
 } t_opt;
 
 typedef struct s_map
 {
-	t_opt	*opt;
+	t_opt	*menu_option;
 	int		file;
 	char	**map;
 	int		len_map;

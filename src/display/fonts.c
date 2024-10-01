@@ -78,7 +78,7 @@ void	fonts_update(t_map *data)
 	int		pp;
 
 	pp = 0;
-	if (data->opt->txt_floor)
+	if (data->menu_option->display_fps)
 	{
 		data->ifps = ft_itoa(data->fps);
 		fonts_disabled(data);
