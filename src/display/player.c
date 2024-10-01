@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/01 13:58:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:02:08 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,8 +353,8 @@ void	loop(void *param)
 		rotate_left(data);
 	if (data->game->rotate_right)
 		rotate_right(data);
-	// if (data->menu->enabled)
-	// {
+	if (data->menu->enabled)
+	{
 		check_but_play(data);
 		check_but_option(data);
 		check_but_edit(data);
@@ -363,9 +363,9 @@ void	loop(void *param)
 		button_option(data);
 		button_edit(data);
 		button_exit(data);
-	// }
-	// if (data->menu_option->visible)
-	// {
+	}
+	if (data->menu_option->visible)
+	{
 		check_but_rtn(data);
 		check_but_music(data);
 		check_but_map(data);
@@ -376,7 +376,7 @@ void	loop(void *param)
 		button_map(data->menu_option);
 		button_fps(data);
 		button_night(data->menu_option);
-	// }
+	}
 	check_music(data);
 	fonts_update(data);
 }
