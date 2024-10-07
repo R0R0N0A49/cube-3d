@@ -6,8 +6,13 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:43:15 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/07 15:43:15 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:44:28 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	anime_knife(t_map *data)
+{
+	(void)data;
+}

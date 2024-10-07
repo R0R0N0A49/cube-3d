@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/07 16:39:31 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:43:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_name(t_map *data)
 
 static void init_txt(t_textures *knife)
 {
-	int	i;
+	long unsigned int	i;
 
 	i = 0;
 	while (i < knife->nb_textures)
@@ -41,7 +41,7 @@ static void init_txt(t_textures *knife)
 
 static void	init_img(t_map *data, t_textures *knife)
 {
-	int	i;
+	long unsigned int	i;
 
 	i = 0;
 	while (i < knife->nb_textures)
@@ -49,6 +49,7 @@ static void	init_img(t_map *data, t_textures *knife)
 		knife->image[i] = mlx_texture_to_image(data->mlx, knife->textures[i]);
 		if (!knife->image[i])
 			ft_error();
+		mlx_image_to_window(data->mlx, knife->image[i], 255, 255);
 		i++;
 	}
 }

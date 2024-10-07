@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/07 16:37:05 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:48:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	verif_option(t_opt *option)
 
 void	free_t_textures(t_textures *src, mlx_t *mlx)
 {
-	int i;
+	long unsigned int i;
 	i = 0;
 	while (i < src->nb_textures)
 	{
@@ -153,7 +153,7 @@ void	cub3d(t_map *data)
 	t_button edit;
 	t_button exi;
 	mlx_texture_t *logo;
-	int	i;
+	// int	i;
 	t_button rtn;
 	t_button music;
 	t_button fov;
@@ -229,6 +229,7 @@ void	cub3d(t_map *data)
 	data->menu_option->but_map->press_enter = false;
 	data->menu_option->but_fps->press_enter = false;
 	data->menu_option->but_music->press_enter = false;
+	data->menu_option->cub->enabled = false;
 	option(data);
 	data->time_fps = time(NULL);
 	data->fog = false;
@@ -293,6 +294,7 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_night->but_x_max - 75, data->menu_option->but_night->but_y_max - 100);
 	verif_option(data->menu_option);
+	init_anim(data);
 	set_textures_terrain(data);
 	fonts_init(data);
 	fonts_update(data);
