@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/30 11:40:33 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:06:42 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,10 @@ void	set_textures_terrain(t_map	*data);
 void	fonts_init(t_map *data);
 void	fonts_update(t_map *data);
 void	fonts_disabled(t_map *data);
+
+t_textures	init_txtr(size_t nb_textures);
+// animation
+void	init_anim(t_map *data);
+void	anime_knife(t_map *data);
 
 #endif

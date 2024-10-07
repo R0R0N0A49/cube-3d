@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/01 13:57:18 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:37:05 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,22 @@ void	verif_option(t_opt *option)
 	option->unvalid->instances[2].enabled = !option->display_fps;
 	option->valid->instances[3].enabled = option->night_mode;
 	option->unvalid->instances[3].enabled = !option->night_mode;
+}
+
+void	free_t_textures(t_textures *src, mlx_t *mlx)
+{
+	int i;
+	i = 0;
+	while (i < src->nb_textures)
+	{
+		mlx_delete_texture(src->textures[i]);
+		mlx_delete_image(mlx, src->image[i]); // a modif pour ne plus avoir de leak
+		free(src->textures_name[i]);
+		i++;
+	}
+	free(src->textures_name);
+	free(src->textures);
+	free(src->image);
 }
 
 void	cub3d(t_map *data)
@@ -286,14 +302,8 @@ void	cub3d(t_map *data)
 	mlx_mouse_hook(data->mlx, mouse, data);
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
-	i = 0;
-	while (i < 10)
-	{
-		mlx_delete_texture(data->font.textures[i]);
-		mlx_delete_image(data->mlx, data->font.image[i]);
-		free(data->font.textures_name[i]);
-		i++;
-	}
+	free_t_textures(&data->font, data->mlx);
+	free_t_textures(&data->weapone.knife, data->mlx);
 	mlx_terminate(data->mlx);
 }
 

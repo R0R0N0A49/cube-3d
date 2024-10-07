@@ -7,7 +7,8 @@ RM=rm -rf
 SRCS=	src/cub3d.c \
 		src/read_file.c \
 		src/t_tmp.c \
-		src/texture.c
+		src/texture.c \
+		src/init_anim.c
 OBJS=$(SRCS:.c=.o)
 
 PARS_DIR=src/parsing

@@ -103,6 +103,12 @@ typedef	struct s_textures
 	size_t			nb_textures;
 } t_textures;
 
+typedef struct	s_anim
+{
+	bool		enable_anim;
+	bool		enable_knife;
+	t_textures	knife;
+}	t_anim;
 
 typedef struct s_option
 {
@@ -184,6 +190,7 @@ typedef struct s_map
 	t_button	*but_edit;
 	t_button	*but_exit;
 	mlx_t	*mlx;
+	t_anim	weapone;
 }	t_map;
 
 char	**ft_tmp_to_tab(t_tmp *src);
