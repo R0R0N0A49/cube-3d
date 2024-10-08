@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/01 14:02:08 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:12:07 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
+	data->weapone.knife.image[0]->enabled = false;
 }
 
 void	exit_cub3d(t_map *data)
@@ -336,8 +337,11 @@ void	loop(void *param)
 
 	data = (t_map *)param;
 	if (data->pause != true)
+	{
 		raycasting(data);
-//	mlx_resize_hook()
+		ft_anim(data);
+	}
+	//	mlx_resize_hook()
 	time_fps(data);
 	if (data->menu_option->display_map)
 		mini(data);
@@ -685,6 +689,8 @@ void	key_press(mlx_key_data_t keydata, void *param)
 				data->fog = !data->fog;
 		if (keydata.key == MLX_KEY_K)
 			mlx_close_window(data->mlx);
+		if (keydata.key == MLX_KEY_Q)
+			data->weapone.enable_anim = !data->weapone.enable_anim;
 	}
 	if (keydata.action == MLX_RELEASE)
 	{

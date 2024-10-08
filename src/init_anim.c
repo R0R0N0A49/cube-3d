@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/07 16:43:59 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:40:30 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,18 @@ static void	init_img(t_map *data, t_textures *knife)
 		knife->image[i] = mlx_texture_to_image(data->mlx, knife->textures[i]);
 		if (!knife->image[i])
 			ft_error();
-		mlx_image_to_window(data->mlx, knife->image[i], 255, 255);
+		mlx_image_to_window(data->mlx, knife->image[i], (int32_t)((float)WINDOWSW / 1.5), WINDOWSH / 2);
+		knife->image[i]->enabled = false;
 		i++;
 	}
 }
 
 void	init_anim(t_map *data)
 {
-	data->weapone.enable_anim = false;
-	data->weapone.enable_knife = false;
+	data->weapone.enable_anim = true;
+	data->weapone.enable_knife = true;
+	data->weapone.time_anime = get_time();
+	data->weapone.index_knife = 0;
 	data->weapone.knife = init_txtr(3);
 	init_name(data);
 	init_txt(&data->weapone.knife);
