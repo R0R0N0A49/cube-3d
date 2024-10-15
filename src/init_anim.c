@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 13:15:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:10:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,61 +18,69 @@ static void	ft_error(void)
 	exit(EXIT_FAILURE); // ajouter tout les free avant de quitter
 }
 
-static void	init_name_barel_walk(t_map *data)
+static void	init_name_barel_walk_2(t_textures *barel)
 {
-	data->weapone.barel_walk.textures_name[0] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/01.png");
-	data->weapone.barel_walk.textures_name[1] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/02.png");
-	data->weapone.barel_walk.textures_name[2] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/03.png");
-	data->weapone.barel_walk.textures_name[3] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/04.png");
-	data->weapone.barel_walk.textures_name[4] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/05.png");
-	data->weapone.barel_walk.textures_name[5] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/06.png");
-	data->weapone.barel_walk.textures_name[6] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/07.png");
-	data->weapone.barel_walk.textures_name[7] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/08.png");
-	data->weapone.barel_walk.textures_name[8] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/09.png");
-	data->weapone.barel_walk.textures_name[9] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/10.png");
-	data->weapone.barel_walk.textures_name[10] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/11.png");
-	data->weapone.barel_walk.textures_name[11] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/12.png");
-	data->weapone.barel_walk.textures_name[12] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/13.png");
-	data->weapone.barel_walk.textures_name[13] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/14.png");
-	data->weapone.barel_walk.textures_name[14] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/15.png");
-	data->weapone.barel_walk.textures_name[15] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/16.png");
-	data->weapone.barel_walk.textures_name[16] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/17.png");
-	data->weapone.barel_walk.textures_name[17] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/18.png");
-	data->weapone.barel_walk.textures_name[18] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/19.png");
-	data->weapone.barel_walk.textures_name[19] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/20.png");
-	data->weapone.barel_walk.textures_name[20] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/21.png");
-	data->weapone.barel_walk.textures_name[21] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/22.png");
-	data->weapone.barel_walk.textures_name[22] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/23.png");
-	data->weapone.barel_walk.textures_name[23] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/24.png");
-	data->weapone.barel_walk.textures_name[24] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/25.png");
-	data->weapone.barel_walk.textures_name[25] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/26.png");
-	data->weapone.barel_walk.textures_name[26] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/27.png");
-	data->weapone.barel_walk.textures_name[27] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/28.png");
-	data->weapone.barel_walk.textures_name[28] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/29.png");
-	data->weapone.barel_walk.textures_name[29] = ft_strdup("tiles/animation/DOUBLE BARREL/WALKING/30.png");
+	barel->textures_name[23] = ft_strdup("24.png");
+	barel->textures_name[24] = ft_strdup("25.png");
+	barel->textures_name[25] = ft_strdup("26.png");
+	barel->textures_name[26] = ft_strdup("27.png");
+	barel->textures_name[27] = ft_strdup("28.png");
+	barel->textures_name[28] = ft_strdup("29.png");
+	barel->textures_name[29] = ft_strdup("30.png");
 }
 
-void init_name_barel_fire(t_map *data)
+static void	init_name_barel_walk(t_textures *barel)
 {
-	data->weapone.barel_fire.textures_name[0] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/1.png");
-	data->weapone.barel_fire.textures_name[1] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/2.png");
-	data->weapone.barel_fire.textures_name[2] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/3.png");
-	data->weapone.barel_fire.textures_name[3] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/4.png");
-	data->weapone.barel_fire.textures_name[4] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/5.png");
-	data->weapone.barel_fire.textures_name[5] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/6.png");
-	data->weapone.barel_fire.textures_name[6] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/7.png");
-	data->weapone.barel_fire.textures_name[7] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/8.png");
-	data->weapone.barel_fire.textures_name[8] = ft_strdup("tiles/animation/DOUBLE BARREL/FIREING/9.png");
+	barel->textures_name[0] = ft_strdup("01.png");
+	barel->textures_name[1] = ft_strdup("02.png");
+	barel->textures_name[2] = ft_strdup("03.png");
+	barel->textures_name[3] = ft_strdup("04.png");
+	barel->textures_name[4] = ft_strdup("05.png");
+	barel->textures_name[5] = ft_strdup("06.png");
+	barel->textures_name[6] = ft_strdup("07.png");
+	barel->textures_name[7] = ft_strdup("08.png");
+	barel->textures_name[8] = ft_strdup("09.png");
+	barel->textures_name[9] = ft_strdup("10.png");
+	barel->textures_name[10] = ft_strdup("11.png");
+	barel->textures_name[11] = ft_strdup("12.png");
+	barel->textures_name[12] = ft_strdup("13.png");
+	barel->textures_name[13] = ft_strdup("14.png");
+	barel->textures_name[14] = ft_strdup("15.png");
+	barel->textures_name[15] = ft_strdup("16.png");
+	barel->textures_name[16] = ft_strdup("17.png");
+	barel->textures_name[17] = ft_strdup("18.png");
+	barel->textures_name[18] = ft_strdup("19.png");
+	barel->textures_name[19] = ft_strdup("20.png");
+	barel->textures_name[20] = ft_strdup("21.png");
+	barel->textures_name[21] = ft_strdup("22.png");
+	barel->textures_name[22] = ft_strdup("23.png");
+	init_name_barel_walk_2(barel);
 }
 
-static void init_txt(t_textures *weapone)
+static void	init_name_barel_fire(t_textures *barel)
+{
+	barel->textures_name[0] = ft_strdup("1.png");
+	barel->textures_name[1] = ft_strdup("2.png");
+	barel->textures_name[2] = ft_strdup("3.png");
+	barel->textures_name[3] = ft_strdup("4.png");
+	barel->textures_name[4] = ft_strdup("5.png");
+	barel->textures_name[5] = ft_strdup("6.png");
+	barel->textures_name[6] = ft_strdup("7.png");
+	barel->textures_name[7] = ft_strdup("8.png");
+	barel->textures_name[8] = ft_strdup("9.png");
+}
+
+static void	init_txt(t_textures *weapone, char *path)
 {
 	long unsigned int	i;
+	char				*path_final;
 
 	i = 0;
 	while (i < weapone->nb_textures)
 	{
-		weapone->textures[i] = mlx_load_png(weapone->textures_name[i]);
+		path_final = ft_strjoin(path, weapone->textures_name[i]);
+		weapone->textures[i] = mlx_load_png(path_final);
+		free(path_final);
 		if (!weapone->textures[i])
 			ft_error();
 		i++;
@@ -86,11 +94,15 @@ static void	init_img(t_map *data, t_textures *weapone)
 	i = 0;
 	while (i < weapone->nb_textures)
 	{
-		weapone->image[i] = mlx_texture_to_image(data->mlx, weapone->textures[i]);
-		mlx_resize_image(weapone->image[i], weapone->image[i]->width * 1.7, weapone->image[i]->height * 1.7);
+		weapone->image[i] = mlx_texture_to_image(data->mlx,
+				weapone->textures[i]);
+		mlx_resize_image(weapone->image[i], weapone->image[i]->width * 1.7,
+			weapone->image[i]->height * 1.7);
 		if (!weapone->image[i])
 			ft_error();
-		mlx_image_to_window(data->mlx, weapone->image[i], (int32_t)((float)(WINDOWSW - weapone->image[0]->width) / 2), WINDOWSH - weapone->image[0]->height);
+		mlx_image_to_window(data->mlx, weapone->image[i], (int32_t)(
+				(float)(WINDOWSW - weapone->image[0]->width) / 2),
+			WINDOWSH - weapone->image[0]->height);
 		weapone->image[i]->enabled = false;
 		i++;
 	}
@@ -106,14 +118,18 @@ void	init_anim(t_map *data)
 	data->weapone.barel_walk = init_txtr(30);
 	data->weapone.barel_fire = init_txtr(9);
 	data->weapone.center_txt = mlx_load_png("tiles/animation/center.png");
-	data->weapone.center = mlx_texture_to_image(data->mlx, data->weapone.center_txt);
+	data->weapone.center = mlx_texture_to_image(data->mlx,
+			data->weapone.center_txt);
 	data->weapone.center->enabled = false;
-	mlx_image_to_window(data->mlx, data->weapone.center, (int)(WINDOWSW - data->weapone.center->width) / 2,(int)(WINDOWSH - data->weapone.center->height) / 2 );
-	init_name_barel_walk(data);
-	init_name_barel_fire(data);
-	init_txt(&data->weapone.barel_walk);
+	mlx_image_to_window(data->mlx, data->weapone.center,
+		(int)(WINDOWSW - data->weapone.center->width) / 2,
+		(int)(WINDOWSH - data->weapone.center->height) / 2);
+	init_name_barel_walk(&data->weapone.barel_walk);
+	init_name_barel_fire(&data->weapone.barel_fire);
+	init_txt(&data->weapone.barel_walk, "tiles/animation"
+		"/DOUBLE BARREL/WALKING/");
 	init_img(data, &data->weapone.barel_walk);
-	init_txt(&data->weapone.barel_fire);
+	init_txt(&data->weapone.barel_fire, "tiles/animation"
+		"/DOUBLE BARREL/FIREING/");
 	init_img(data, &data->weapone.barel_fire);
 }
-

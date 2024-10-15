@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 09:35:14 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 14:13:03 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	cub3d(t_map *data)
 	data->menu_option->but_fps->press_enter = false;
 	data->menu_option->but_music->press_enter = false;
 	data->menu_option->cub->enabled = false;
+	data->menu_option->but_rtn->click = false;
 	option(data);
 	data->time_fps = time(NULL);
 	data->fog = false;
@@ -252,10 +253,15 @@ void	cub3d(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
+	data->game->cursor_y = 0;
+	data->game->cursor_x = 0;
 	data->press = false;
 	data->game->rotate_left = false;
 	data->game->rotate_right = false;
 	data->but_play->click = false;
+	data->but_option->click = false;
+	data->but_edit->click = false;
+	data->but_exit->click = false;
 	data->but_play->press_enter = false;
 	data->but_option->press_enter = false;
 	data->but_edit->press_enter = false;
@@ -307,6 +313,9 @@ void	cub3d(t_map *data)
 	mlx_loop(data->mlx);
 	free_t_textures(&data->font, data->mlx);
 	free_t_textures(&data->weapone.barel_walk, data->mlx);
+	free_t_textures(&data->weapone.barel_fire, data->mlx);
+	mlx_delete_texture(data->weapone.center_txt);
+	mlx_delete_image(data->mlx, data->weapone.center);
 	mlx_terminate(data->mlx);
 }
 
