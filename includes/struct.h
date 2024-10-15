@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/30 16:19:56 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 09:34:43 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,55 +103,49 @@ typedef	struct s_textures
 	size_t			nb_textures;
 } t_textures;
 
+typedef struct	s_anim
+{
+	bool		enable_anim;
+	bool		enable_knife;
+	t_textures	knife;
+	long		time_anime;
+	int			index_knife;
+}	t_anim;
 
 typedef struct s_option
 {
-	bool		option;
+	bool		visible;
 	IMG			*bottom;
 	IMG			*cub;
 	IMG			*rtn;
 	TXT			*rtn_txt;
 	t_button	*but_rtn;
 	t_button	*but_music;
-	t_button	*but_fov;
-	t_button	*but_floor;
-	t_button	*but_roof;
+	t_button	*but_map;
+	t_button	*but_fps;
+	t_button	*but_night;
 	int			index;
-
 	bool		play_music;
-	bool		txt_floor;
-	bool		txt_roof;
-	bool		show_fov;
-
+	bool		display_fps;
+	bool		night_mode;
+	bool		display_map;
 	TXT			*valid_txt;
 	TXT			*unvalid_txt;
-
-	IMG			*m_valid;
-	IMG			*f_valid;
-	IMG			*fl_valid;
-	IMG			*r_valid;
-
-	IMG			*m_unvalid;
-	IMG			*f_unvalid;
-	IMG			*fl_unvalid;
-	IMG			*r_unvalid;
-
+	IMG			*valid;
+	IMG			*unvalid;
 	TXT			*music_txt;
 	IMG			*music;
-
 	TXT			*mini_txt;
 	IMG			*mini;
-
 	TXT			*fps_txt;
 	IMG			*fps;
-
 	TXT			*roof_txt;
 	IMG			*roof;
 } t_opt;
 
 typedef struct s_map
 {
-	t_opt	*opt;
+	t_opt	*menu_option;
 	int		file;
 	char	**map;
 	int		len_map;
@@ -199,6 +193,7 @@ typedef struct s_map
 	t_button	*but_edit;
 	t_button	*but_exit;
 	mlx_t	*mlx;
+	t_anim	weapone;
 }	t_map;
 
 char	**ft_tmp_to_tab(t_tmp *src);

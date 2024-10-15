@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:16:04 by derey             #+#    #+#             */
-/*   Updated: 2024/09/29 19:03:48 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/01 12:48:10 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	button_play(t_map *data)
 	y = 0;
 	x = 0;
 	data->but_play->but_y_min = 300;
-	data->but_play->but_x_min = data->mlx->width / 3;
+	data->but_play->but_x_min = WINDOWSW / 3;
 	data->but_play->but_y_max = 150 + 300;
-	data->but_play->but_x_max = data->mlx->width / 3 + data->mlx->width / 3;
+	data->but_play->but_x_max = WINDOWSW / 3 + WINDOWSW / 3;
 	while (y < 640)
 	{
 		x = 0;
