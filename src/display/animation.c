@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:43:15 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/08 15:03:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:34:53 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,45 +37,52 @@ int	is_move(t_game *game)
 
 void	ft_anim(t_map *data)
 {
-	if (!data->weapone.enable_anim)
-		return ;
-	if (data->weapone.enable_knife && is_move(data->game) && get_time() - data->weapone.time_anime >= 250)
-		anime_knife(&data->weapone);
-	if (!data->weapone.enable_knife || !is_move(data->game))
+	if (!data->weapone.enable_anim) {
+		data->weapone.barel_walk.image[0]->enabled = false;
+		return;
+	}
+	if (data->weapone.fire && data->weapone.enable_knife)
 	{
-		data->weapone.knife.image[0]->enabled = true;
-		data->weapone.knife.image[1]->enabled = false;
-		data->weapone.knife.image[2]->enabled = false;
-		data->weapone.index_knife = 1;
+		if (data->weapone.index_barel_walk != 0)
+			data->weapone.barel_walk.image[data->weapone.index_barel_walk - 1]->enabled = false;
+		else
+			data->weapone.barel_walk.image[29]->enabled = false;
+		if (data->weapone.index_barel_fire == (int)data->weapone.barel_fire.nb_textures - 1)
+			data->weapone.fire = false;
+		anime_txt(&data->weapone.barel_fire, &data->weapone.index_barel_fire);
+		data->weapone.barel_fire.image[8]->enabled = false;
+		if (!data->weapone.fire)
+		{
+			data->weapone.barel_walk.image[0]->enabled = true;
+			data->weapone.index_barel_walk = 0;
+		}
+	}
+	else if (data->weapone.enable_knife && is_move(data->game) && get_time() - data->weapone.time_anime >= 250)
+		anime_txt(&data->weapone.barel_walk, &data->weapone.index_barel_walk);
+	else if (!data->weapone.enable_knife || !is_move(data->game))
+	{
+		if (data->weapone.index_barel_walk != 0)
+			data->weapone.barel_walk.image[data->weapone.index_barel_walk - 1]->enabled = false;
+		else
+			data->weapone.barel_walk.image[29]->enabled = false;
+		data->weapone.barel_walk.image[0]->enabled = true;
+		data->weapone.index_barel_walk = 1;
 	}
 }
 
-void	anime_knife(t_anim *weapone)
+void	anime_txt(t_textures *weapone, int *index)
 {
-	if (!weapone->enable_anim || !weapone->enable_knife)
-		return ;
-	if (weapone->index_knife == 4)
-		weapone->index_knife = 0;
-	if (weapone->index_knife == 0)
+	if (*index == 0)
 	{
-		weapone->knife.image[2]->enabled = false;
-		weapone->knife.image[0]->enabled = true;
-	}
-	else if (weapone->index_knife == 2)
-	{
-		weapone->knife.image[1]->enabled = false;
-		weapone->knife.image[0]->enabled = true;
-	}
-	else if (weapone->index_knife == 3)
-	{
-		weapone->knife.image[0]->enabled = false;
-		weapone->knife.image[2]->enabled = true;
+		weapone->image[*index]->enabled = true;
+		weapone->image[weapone->nb_textures - 1]->enabled = false;
 	}
 	else
 	{
-		weapone->knife.image[0]->enabled = false;
-		weapone->knife.image[1]->enabled = true;
+		weapone->image[*index]->enabled = true;
+		weapone->image[*index - 1]->enabled = false;
 	}
-	weapone->index_knife++;
-	weapone->time_anime = get_time();
+	index[0]++;
+	if (*index == (int)weapone->nb_textures)
+		*index = 0;
 }

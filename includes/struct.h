@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 09:34:43 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 10:52:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,14 @@ typedef struct	s_anim
 {
 	bool		enable_anim;
 	bool		enable_knife;
-	t_textures	knife;
+	bool		fire;
+	t_textures	barel_walk;
+	t_textures	barel_fire;
 	long		time_anime;
-	int			index_knife;
+	int			index_barel_walk;
+	int			index_barel_fire;
+	IMG			*center;
+	TXT			*center_txt;
 }	t_anim;
 
 typedef struct s_option

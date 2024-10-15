@@ -306,7 +306,7 @@ void	cub3d(t_map *data)
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
 	free_t_textures(&data->font, data->mlx);
-	free_t_textures(&data->weapone.knife, data->mlx);
+	free_t_textures(&data->weapone.barel_walk, data->mlx);
 	mlx_terminate(data->mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/08 15:27:53 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:02:23 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	fonts_disabled(t_map *data);
 t_textures	init_txtr(size_t nb_textures);
 // animation
 void	init_anim(t_map *data);
-void	anime_knife(t_anim *weapone);
+void	anime_txt(t_textures *weapone, int *index);
 void	ft_anim(t_map *data);
 long	get_time(void);
 
