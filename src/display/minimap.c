@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/09/16 17:08:06 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 09:31:23 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,55 @@ void	draw_cube(t_map *data, int i, int j, uint32_t te)
 	//draw_grid(data, a, b, te);
 }
 
+void	draw_circle(t_map *data, int yc, int xc, int radius)
+{
+	int x = radius;
+    int y = 0;
+    int p = 1 - radius;
+
+    // Dessiner les points initiaux pour les 8 octants
+    mlx_put_pixel(data->minima, xc + radius, yc, 0xFFFF);  // A droite
+    mlx_put_pixel(data->minima, xc - radius, yc, 0xFFFF);  // A gauche
+    mlx_put_pixel(data->minima, xc, yc + radius, 0xFFFF);  // En haut
+    mlx_put_pixel(data->minima, xc, yc - radius, 0xFFFF);  // En bas
+
+    while (x > y) {
+        y++;
+
+        // Vérifier si on doit incrémenter ou décrémenter x
+        if (p <= 0) {
+            p = p + 2*y + 1;
+        } else {
+            x--;
+            p = p + 2*y - 2*x + 1;
+        }
+
+        // Dessiner les points symétriques dans les 8 octants
+        mlx_put_pixel(data->minima, xc + x, yc + y, 0xFFFF);
+        mlx_put_pixel(data->minima, xc - x, yc + y, 0xFFFF);
+        mlx_put_pixel(data->minima, xc + x, yc - y, 0xFFFF);
+        mlx_put_pixel(data->minima, xc - x, yc - y, 0xFFFF);
+        mlx_put_pixel(data->minima, xc + y, yc + x, 0xFFFF);
+        mlx_put_pixel(data->minima, xc - y, yc + x, 0xFFFF);
+        mlx_put_pixel(data->minima, xc + y, yc - x, 0xFFFF);
+        mlx_put_pixel(data->minima, xc - y, yc - x, 0xFFFF);
+    }
+	
+}
+
+void draw_circle_with_thickness(t_map *data, int xc, int yc, int radius, int thickness) {
+    for (int r = radius; r >= radius - thickness + 1; r--) {
+        draw_circle(data ,xc, yc, r);
+    }
+}
+
 void	loop_top(t_map *data, int j, int i)
 {
 	int	save;
 
 	save = i;
+	//(void)j;
+	//draw_circle_with_thickness(data, 150, 150, 100, 2);
 	while (data->map[j])
 	{
 		i = save;

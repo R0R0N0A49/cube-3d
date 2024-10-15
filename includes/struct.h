@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:45:49 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:19:56 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ typedef struct s_map
 	bool	press;
 	bool	pause;
 	bool	plafond;
+	bool	actualisation;
 	int		idx_menu;
 	int		fps;
 	char	*ifps;

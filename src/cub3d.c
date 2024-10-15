@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/29 18:45:07 by derey            ###   ########.fr       */
+/*   Updated: 2024/09/30 13:37:09 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void	cub3d(t_map *data)
 	data->game = &game;
 	data->raycast = &raycast;
 	data->speed = 2.0;
+	data->actualisation = false;
 	data->rotspeed = 1.69;
 	data->but_play = &play;
 	data->but_edit = &edit;
