@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 11:23:27 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/16 08:48:16 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-	data->weapone.knife.image[0]->enabled = false;
+	data->weapone.barel_walk.image[0]->enabled = false;
+	data->weapone.center->enabled = false;
 }
 
 void	exit_cub3d(t_map *data)
@@ -80,6 +81,7 @@ void	play_game(t_map *data)
 	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
+	data->weapone.center->enabled = true;
 }
 
 void	check_but_play(t_map *data)
@@ -517,8 +519,13 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
-		data->idx_menu = 0;
-		data->press = true;
+		if (data->pause)
+		{
+			data->idx_menu = 0;
+			data->press = true;
+		}
+		else
+			data->weapone.fire = true;
 	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{
