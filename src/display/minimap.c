@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 09:31:23 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 10:25:57 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	loop_top(t_map *data, int j, int i)
 
 	save = i;
 	//(void)j;
-	//draw_circle_with_thickness(data, 150, 150, 100, 2);
+	draw_circle_with_thickness(data, 150, 150, 100, 2);
 	while (data->map[j])
 	{
 		i = save;

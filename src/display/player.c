@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 09:34:33 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 11:23:27 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,24 +551,23 @@ void	cursor(double xpos, double ypos, void* param)
 		data->game->rotate_left = false;
 		data->game->rotate_right = false;
 	}
+	if (xpos == WINDOWSW / 2)
+	{
+		data->game->rotate_left = false;
+		data->game->rotate_right = false;
+	}
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
 	if (xpos < WINDOWSW / 2 - 5 && data->pause == false)
 	{
 		data->game->rotate_left = true;
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
-		data->game->cursor_x = WINDOWSW / 2;
-		data->game->cursor_y = WINDOWSH / 2;
 	}
-	else
-		data->game->rotate_left = false;
 	if (xpos > WINDOWSW / 2 + 5 && data->pause == false)
 	{
 		data->game->rotate_right = true;
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
 	}
-	else
-		data->game->rotate_right = false;
+	if (data->pause == false)
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
 }
 
 void	key_press(mlx_key_data_t keydata, void *param)

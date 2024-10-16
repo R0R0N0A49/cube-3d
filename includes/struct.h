@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 09:34:43 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/15 13:38:08 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define IMG mlx_image_t
 # define WINDOWSW 1920
 # define WINDOWSH 1080
+# define FONT_H 20
+# define FONT_W 10
 # define CUBE 20
 # define COLOR_GRID 0x646464
 # define FOG 0xFF
