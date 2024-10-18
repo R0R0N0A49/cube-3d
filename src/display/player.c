@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/16 08:48:16 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/18 10:02:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-	data->weapone.barel_walk.image[0]->enabled = false;
+	data->weapone.enable_anim = false;
+	choose_weapon(data);
 	data->weapone.center->enabled = false;
 }
 
@@ -75,12 +76,12 @@ void	play_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-
 	data->but_play->good = false;
 	data->but_option->good = false;
 	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
+	data->weapone.enable_anim = true;
 	data->weapone.center->enabled = true;
 }
 
@@ -341,7 +342,7 @@ void	loop(void *param)
 	if (data->pause != true)
 	{
 		raycasting(data);
-		ft_anim(data);
+//		choose_weapon(data)
 	}
 	//	mlx_resize_hook()
 	time_fps(data);
@@ -517,6 +518,11 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	data = (t_map *)param;
 	(void)mods;
 
+	if (button == MLX_MOUSE_BUTTON_MIDDLE)
+	{
+		if (data->weapone.nb_availed_weapon == 2 && action == MLX_PRESS)
+			data->weapone.index_weapon = !data->weapone.index_weapon;
+	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		if (data->pause)

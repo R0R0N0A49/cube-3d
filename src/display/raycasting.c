@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 09:31:18 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/18 12:53:09 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,17 @@ void	set_side_step(t_ray *ray, t_map *data)
 			break ;
 		else if (data->map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
+//		else if (ray->map_y == (int)data->weapone.item.posy && ray->map_x == (int)data->weapone.item.posx)
+//		{
+//			data->weapone.item.hit = true;
+//			data->weapone.item.side = ray->side;
+//			data->weapone.item.deltadist_x = ray->deltadist_x;
+//			data->weapone.item.deltadist_y = ray->deltadist_y;
+//			data->weapone.item.sidedist_x = ray->sidedist_x;
+//			data->weapone.item.sidedist_y = ray->sidedist_y;
+//			break ;
+//		}
 	}
-	
 }
 
 void	calcul_projected_cam(t_ray *ray, t_map *data)
@@ -288,6 +297,43 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	}
 }
 
+void	display_item(t_map *data, int x)
+{
+	int	line_height = 0;
+	int	wall_dist = 0;
+	int	draw_start = 0;
+	int	draw_end = 0;
+	double	wall_x = 0;
+	double	raydir_y = 0;
+	double	raydir_x = 0;
+
+	if (!data->weapone.item.hit)
+	{
+//		printf("test\n");
+		return ;
+	}
+	if (data->weapone.item.side == 0)
+		data->weapone.item.dist_item = data->weapone.item.sidedist_x - data->weapone.item.deltadist_x;
+	if (data->weapone.item.side == 1)
+		data->weapone.item.dist_item = data->weapone.item.sidedist_y - data->weapone.item.deltadist_y;
+	wall_dist = data->weapone.item.dist_item;
+	line_height = (int)(WINDOWSH / wall_dist);
+	draw_start = -(line_height) / 2 + WINDOWSH / 2;
+	if (draw_start < 0)
+		draw_start = 0;
+	draw_end = (line_height) / 2 + WINDOWSH / 2;
+	if (draw_end >= WINDOWSH)
+		draw_end = WINDOWSH - 1;
+	if (data->weapone.item.side == 0)
+		wall_x = data->game->player_y + wall_dist * raydir_y;
+	else
+		wall_x = data->game->player_x + wall_dist * raydir_x;
+	wall_x -= floor(wall_x);
+//	printf("x = %d, height = %d\n", x, (int)data->rayc->width);
+	for (int i = draw_start; i < draw_end && x < (int)data->rayc->width; i++)
+		try_put_pixel(data->rayc, x, i - 1, 0xFF00FFFF);
+}
+
 void	raycasting(t_map *data)
 {
 	t_ray	*ray;
@@ -302,6 +348,7 @@ void	raycasting(t_map *data)
 		set_side_step(ray, data);
 		calcul_projected_cam(ray, data);
 		draw_ray(x, ray, data);
+//		display_item(data, x);
 		x++;
 	}
 }

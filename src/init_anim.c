@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/16 15:20:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:54:46 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	init_txt(t_textures *weapone, char *path)
 	{
 		path_final = ft_strjoin(path, weapone->textures_name[i]);
 		weapone->textures[i] = mlx_load_png(path_final);
-
 		free(path_final);
 		if (!weapone->textures[i])
 			ft_error();
@@ -51,43 +50,49 @@ static void	init_txt(t_textures *weapone, char *path)
 	}
 }
 
-static void	init_img(t_map *data, t_textures *weapone)
+static void	init_img(t_map *data, t_textures *weapon)
 {
 	long unsigned int	i;
 
 	i = 0;
-	while (i < weapone->nb_textures)
+	while (i < weapon->nb_textures)
 	{
-		weapone->image[i] = mlx_texture_to_image(data->mlx,
-				weapone->textures[i]);
-		mlx_resize_image(weapone->image[i], weapone->image[i]->width * 1.7,
-			weapone->image[i]->height * 1.7);
-		if (!weapone->image[i])
+		weapon->image[i] = mlx_texture_to_image(data->mlx,
+												weapon->textures[i]);
+		mlx_resize_image(weapon->image[i], weapon->image[i]->width * 1.7,
+						 weapon->image[i]->height * 1.7);
+		if (!weapon->image[i])
 			ft_error();
-		mlx_image_to_window(data->mlx, weapone->image[i], (int32_t)(
-				(float)(WINDOWSW - weapone->image[0]->width) / 2),
-			WINDOWSH - weapone->image[0]->height);
-		weapone->image[i]->enabled = false;
+		mlx_image_to_window(data->mlx, weapon->image[i], (int32_t)(
+									(float)(WINDOWSW - weapon->image[0]->width) / 2),
+							WINDOWSH - weapon->image[0]->height);
+		weapon->image[i]->enabled = false;
 		i++;
 	}
 }
 
+void	init_item(t_item *item, t_map *data)
+{
+	item->enabled = true;
+	item->hit = false;
+	item->posx = 1;
+	item->posy = 1;
+	item->texture = data->weapone.e11.walk.textures[0];
+}
+
 void	init_anim(t_map *data)
 {
-	data->weapone.enable_anim = false;
-	data->weapone.barrel.enable = true;
-	data->weapone.nb_availed_weapon = 1;
-	data->weapone.index_weapon = 1;
-	data->weapone.fire = false;
 	data->weapone.time = get_time();
-	data->weapone.barrel.index_fire = 0;
+	data->weapone.enable_anim = true;
+	data->weapone.nb_availed_weapon = 1;
+	data->weapone.index_weapon = 0;
+	data->weapone.fire = false;
+	data->weapone.barrel.enable = true;
+	data->weapone.e11.enable = false;
 	data->weapone.barrel.index_walk = 0;
-	data->weapone.barrel.index_reload = 0;
-	data->weapone.barrel.ammo_max = 2;
-	data->weapone.barrel.ammo = 2;
+	data->weapone.e11.index_walk = 0;
 	data->weapone.barrel.walk = init_txtr(4);
-	data->weapone.barrel.fired = init_txtr(4);
-	data->weapone.barrel.reload = init_txtr(5);
+	data->weapone.e11.walk = init_txtr(4);
 	data->weapone.center_txt = mlx_load_png("tiles/animation/center.png");
 	data->weapone.center = mlx_texture_to_image(data->mlx,
 			data->weapone.center_txt);
@@ -96,15 +101,10 @@ void	init_anim(t_map *data)
 		(int)(WINDOWSW - data->weapone.center->width) / 2,
 		(int)(WINDOWSH - data->weapone.center->height) / 2);
 	init_name(&data->weapone.barrel.walk, 4);
-	init_name(&data->weapone.barrel.fired, 4);
-	init_name(&data->weapone.barrel.reload, 5);
-	init_txt(&data->weapone.barrel.walk, "tiles/animation"
-		"/DOUBLE BARREL/WALKING/");
+	init_name(&data->weapone.e11.walk, 4);
+	init_txt(&data->weapone.barrel.walk, "tiles/animation/DOUBLE BARREL/");
 	init_img(data, &data->weapone.barrel.walk);
-	init_txt(&data->weapone.barrel.fired, "tiles/animation"
-		"/DOUBLE BARREL/FIREING/");
-	init_img(data, &data->weapone.barrel.fired);
-	init_txt(&data->weapone.barrel.reload, "tiles/animation"
-		"/DOUBLE BARREL/RELOADING/");
-	init_img(data, &data->weapone.barrel.reload);
+	init_txt(&data->weapone.e11.walk, "tiles/animation/E11/");
+	init_img(data, &data->weapone.e11.walk);
+	init_item(&data->weapone.item, data);
 }
