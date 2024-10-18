@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 10:52:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:15:52 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,29 @@ typedef	struct s_textures
 	size_t			nb_textures;
 } t_textures;
 
+typedef struct s_weapon
+{
+	t_textures	walk;
+	t_textures	fired;
+	t_textures	reload;
+	bool		enable;
+	int			index_walk;
+	int			index_fire;
+	int			index_reload;
+	int 		ammo_max;
+	int 		ammo;
+} t_weapon;
+
 typedef struct	s_anim
 {
 	bool		enable_anim;
-	bool		enable_knife;
-	bool		fire;
-	t_textures	barel_walk;
-	t_textures	barel_fire;
-	long		time_anime;
-	int			index_barel_walk;
-	int			index_barel_fire;
+	int 		nb_availed_weapon;
+	int 		index_weapon;
+	t_weapon	barrel;
+	long		time;
 	IMG			*center;
 	TXT			*center_txt;
+	bool		fire;
 }	t_anim;
 
 typedef struct s_option

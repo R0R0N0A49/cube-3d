@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 14:13:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:52:41 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_night->but_x_max - 75, data->menu_option->but_night->but_y_max - 100);
 	verif_option(data->menu_option);
-	init_anim(data);
+//	init_anim(data);
 	set_textures_terrain(data);
 	fonts_init(data);
 	fonts_update(data);
@@ -312,10 +312,11 @@ void	cub3d(t_map *data)
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
 	free_t_textures(&data->font, data->mlx);
-	free_t_textures(&data->weapone.barel_walk, data->mlx);
-	free_t_textures(&data->weapone.barel_fire, data->mlx);
-	mlx_delete_texture(data->weapone.center_txt);
-	mlx_delete_image(data->mlx, data->weapone.center);
+//	free_t_textures(&data->weapone.barrel.walk, data->mlx);
+//	free_t_textures(&data->weapone.barrel.fired, data->mlx);
+//	free_t_textures(&data->weapone.barrel.reload, data->mlx);
+//	mlx_delete_texture(data->weapone.center_txt);
+//	mlx_delete_image(data->mlx, data->weapone.center);
 	mlx_terminate(data->mlx);
 }
 

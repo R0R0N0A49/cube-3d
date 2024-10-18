@@ -69,7 +69,7 @@ t_textures	init_txtr(size_t nb_textures);
 // animation
 void	init_anim(t_map *data);
 void	anime_txt(t_textures *weapone, int *index);
-void	ft_anim(t_map *data);
+void	ft_anim(t_map *data, t_weapon *current);
 long	get_time(void);
 
 #endif
