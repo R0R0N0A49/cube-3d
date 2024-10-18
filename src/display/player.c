@@ -6,20 +6,12 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/16 14:51:06 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/16 08:48:16 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #define COLOR_PLAYER 0xFF5000FF
-
-//void	choose_weapon(t_map *data)
-//{
-//	if (data->weapone.index_weapon == 1)
-//		ft_anim(data, &data->weapone.barrel);
-////	else if (data->weapone.index_weapon == 2)
-////		ft_anim(data, &data->weapone. )
-//}
 
 void	time_fps(t_map	*data)
 {
@@ -54,9 +46,8 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-//	data->weapone.enable_anim = false;
-//	choose_weapon(data);
-//	data->weapone.center->enabled = false;
+	data->weapone.barel_walk.image[0]->enabled = false;
+	data->weapone.center->enabled = false;
 }
 
 void	exit_cub3d(t_map *data)
@@ -90,8 +81,7 @@ void	play_game(t_map *data)
 	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
-//	data->weapone.center->enabled = true;
-//	data->weapone.enable_anim = true;
+	data->weapone.center->enabled = true;
 }
 
 void	check_but_play(t_map *data)
@@ -351,9 +341,7 @@ void	loop(void *param)
 	if (data->pause != true)
 	{
 		raycasting(data);
-//		ft_anim(data);
-//		if (data->weapone.enable_anim)
-//			choose_weapon(data);
+		ft_anim(data);
 	}
 	//	mlx_resize_hook()
 	time_fps(data);
@@ -536,8 +524,8 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 			data->idx_menu = 0;
 			data->press = true;
 		}
-//		else
-//			data->weapone.fire = true;
+		else
+			data->weapone.fire = true;
 	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{
@@ -570,24 +558,23 @@ void	cursor(double xpos, double ypos, void* param)
 		data->game->rotate_left = false;
 		data->game->rotate_right = false;
 	}
+	if (xpos == WINDOWSW / 2)
+	{
+		data->game->rotate_left = false;
+		data->game->rotate_right = false;
+	}
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
 	if (xpos < WINDOWSW / 2 - 5 && data->pause == false)
 	{
 		data->game->rotate_left = true;
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
-		data->game->cursor_x = WINDOWSW / 2;
-		data->game->cursor_y = WINDOWSH / 2;
 	}
-	else
-		data->game->rotate_left = false;
 	if (xpos > WINDOWSW / 2 + 5 && data->pause == false)
 	{
 		data->game->rotate_right = true;
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
 	}
-	else
-		data->game->rotate_right = false;
+	if (data->pause == false)
+		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
 }
 
 void	key_press(mlx_key_data_t keydata, void *param)
