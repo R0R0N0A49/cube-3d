@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/18 11:37:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:57:45 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,36 +167,36 @@ void	cub3d(t_map *data)
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
-	logo = mlx_load_png("./tiles/logo.png");
+	logo = mlx_load_png("./tiles/logo.png"); // a free
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
 	data->img_play = mlx_new_image(data->mlx, 400, 150);
 	data->img_option = mlx_new_image(data->mlx, 400, 150);
 	data->img_edit = mlx_new_image(data->mlx, 400, 150);
 	data->img_exit = mlx_new_image(data->mlx, 400, 150);
-	data->cub = mlx_load_png ("./tiles/menu/cub3d.png");
-	data->texplay = mlx_load_png ("./tiles/menu/play.png");
-	data->texopt = mlx_load_png ("./tiles/menu/option.png");
-	data->texedi = mlx_load_png ("./tiles/menu/edit.png");
-	data->texexit = mlx_load_png ("./tiles/menu/exit.png");
-	data->nuit = mlx_load_png("./tiles/textures/nuit.png");
-	data->menufd = mlx_load_png("./tiles/menu/menufd1.png");
-	data->menufd2 = mlx_load_png("./tiles/menu/menufd3.png");
+	data->cub = mlx_load_png ("./tiles/menu/cub3d.png"); // a free
+	data->texplay = mlx_load_png ("./tiles/menu/play.png"); // a free
+	data->texopt = mlx_load_png ("./tiles/menu/option.png"); // a free
+	data->texedi = mlx_load_png ("./tiles/menu/edit.png"); // a free
+	data->texexit = mlx_load_png ("./tiles/menu/exit.png"); // a free
+	data->nuit = mlx_load_png("./tiles/textures/nuit.png"); // a free
+	data->menufd = mlx_load_png("./tiles/menu/menufd1.png"); // a free
+	data->menufd2 = mlx_load_png("./tiles/menu/menufd3.png"); // a free
 	mlx_get_window_pos(data->mlx, &data->w, &data->h);
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_setting(MLX_DECORATED, false);
 	mlx_set_icon(data->mlx, logo);
-	data->menu_option->unvalid_txt = mlx_load_png("./tiles/menu/checkB.png");
-	data->menu_option->valid_txt = mlx_load_png("./tiles/menu/checkG.png");
+	data->menu_option->unvalid_txt = mlx_load_png("./tiles/menu/checkB.png"); // a free
+	data->menu_option->valid_txt = mlx_load_png("./tiles/menu/checkG.png"); // a free
 	data->menu_option->unvalid = mlx_texture_to_image(data->mlx, data->menu_option->unvalid_txt);
 	data->menu_option->valid = mlx_texture_to_image(data->mlx, data->menu_option->valid_txt);
 	data->menu_option->cub = mlx_texture_to_image(data->mlx, data->cub);
-	data->menu_option->rtn_txt = mlx_load_png("./tiles/menu/return.png");
+	data->menu_option->rtn_txt = mlx_load_png("./tiles/menu/return.png"); // a free
 	data->menu_option->rtn = mlx_texture_to_image(data->mlx, data->menu_option->rtn_txt);
-	data->menu_option->music_txt = mlx_load_png("./tiles/menu/music.png");
+	data->menu_option->music_txt = mlx_load_png("./tiles/menu/music.png"); // a free
 	data->menu_option->music = mlx_texture_to_image(data->mlx, data->menu_option->music_txt);
-	data->menu_option->fps_txt = mlx_load_png("./tiles/menu/FPS.png");
-	data->menu_option->roof_txt = mlx_load_png("./tiles/menu/roof.png");
-	data->menu_option->mini_txt = mlx_load_png("./tiles/menu/mini.png");
+	data->menu_option->fps_txt = mlx_load_png("./tiles/menu/FPS.png"); // a free
+	data->menu_option->roof_txt = mlx_load_png("./tiles/menu/roof.png"); // a free
+	data->menu_option->mini_txt = mlx_load_png("./tiles/menu/mini.png"); // a free
 	data->menu_option->fps = mlx_texture_to_image(data->mlx, data->menu_option->fps_txt);
 	data->menu_option->roof = mlx_texture_to_image(data->mlx, data->menu_option->roof_txt);
 	data->menu_option->mini = mlx_texture_to_image(data->mlx, data->menu_option->mini_txt);
