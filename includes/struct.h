@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/18 11:17:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:08:14 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,8 @@ typedef struct s_item
 	TXT		*texture;
 	bool	hit;
 	bool	enabled;
-	int 	side;
-	double	dist_item;
-	double	sidedist_x;
-	double	sidedist_y;
-	double	deltadist_x;
-	double	deltadist_y;
+	bool	isvisible;
+	int 	x;
 } t_item;
 
 typedef struct	s_anim

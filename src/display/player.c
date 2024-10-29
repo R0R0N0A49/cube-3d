@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/18 10:02:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:02:35 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ void	loop(void *param)
 	{
 		raycasting(data);
 //		choose_weapon(data)
+		choose_weapon(data);
 	}
 	//	mlx_resize_hook()
 	time_fps(data);
