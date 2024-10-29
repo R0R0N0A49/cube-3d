@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/28 10:13:40 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:23:21 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-	//data->weapon.barel_walk.image[0]->enabled = false;
-	//data->weapon.center->enabled = false;
+	data->weapon.enable_anim = false;
+	choose_weapon(data);
+	data->weapon.center->enabled = false;
 }
 
 void	exit_cub3d(t_map *data)
@@ -80,7 +81,8 @@ void	play_game(t_map *data)
 	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
-	//data->weapon.center->enabled = true;
+	data->weapon.enable_anim = true;
+	data->weapon.center->enabled = true;
 }
 
 void	check_but_play(t_map *data)
@@ -345,7 +347,8 @@ void	loop(void *param)
 	if (data->pause != true)
 	{
 		raycasting(data);
-		//ft_anim(data);
+//		choose_weapon(data)
+		choose_weapon(data);
 	}
 	//	mlx_resize_hook()
 	time_fps(data);
@@ -521,6 +524,11 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	data = (t_map *)param;
 	(void)mods;
 
+	if (button == MLX_MOUSE_BUTTON_MIDDLE)
+	{
+		if (data->weapon.nb_availed_weapon == 2 && action == MLX_PRESS)
+			data->weapon.index_weapon = !data->weapon.index_weapon;
+	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		if (data->pause)

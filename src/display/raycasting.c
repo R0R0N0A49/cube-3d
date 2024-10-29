@@ -6,11 +6,12 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/29 10:43:37 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:23:26 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
 
 void	init_struct_ray(t_ray *ray)
 {
@@ -73,7 +74,7 @@ void	init_step(t_ray *ray, t_map *data)
 	}
 }
 
-void	set_side_step(t_ray *ray, t_map *data)
+void	set_side_step(t_ray *ray, t_map *data, int x)
 {
 	int	hit;
 
@@ -97,6 +98,15 @@ void	set_side_step(t_ray *ray, t_map *data)
 			break ;
 		else if (data->map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
+		else if (ray->map_y == (int)(data->weapon.item.posy) && ray->map_x == (int)(data->weapon.item.posx))
+		{
+			data->weapon.item.isvisible = true;
+			if (data->weapon.item.x == -1)
+			{
+				data->weapon.item.x = x;
+			}
+//			break ;
+		}
 	}
 }
 
@@ -558,6 +568,68 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	ray->texture_pos = (ray->draw_start - WINDOWSH / 2
 			+ ray->line_height / 2) * ray->step;
 	draw_tex(ray, data, x, tex);
+	i = ray->draw_end;
+}
+
+uint32_t	get_color(TXT *tex, t_map *data, int item_dist, int x, int y)
+{
+	uint32_t col;
+	uint32_t color;
+
+	//printf("%d\n", ray->line_height);
+	col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * (y) - (x))];
+	if (item_dist >= FOG_MIN && data->fog == true)
+		color = color_fog(col, data->raycast);
+	else
+		color = color_tex(col);
+	return (color);
+}
+
+void	display_item(t_map *data, int x)
+{
+	(void)x;
+	double	item_dist = (data->game->player_x - data->weapon.item.posx) * (data->game->player_x - data->weapon.item.posx) - (data->game->player_y - data->weapon.item.posy) * (data->game->player_y - data->weapon.item.posy);
+	double	spriteX = data->weapon.item.posx - data->game->player_x;
+	double	spriteY = data->weapon.item.posy - data->game->player_y;
+	double invDet = 1.0 / (data->game->plane_x * data->game->dir_y - data->game->dir_x * data->game->plane_y);
+
+	double	transformX = invDet * (data->game->dir_y * spriteX - data->game->dir_x * spriteY);
+	double	transformY = invDet * (-data->game->plane_y * spriteX + data->game->plane_x * spriteY);
+
+	int		spriteScreenX = (int)((WINDOWSW / 2) * (1 + transformX / transformY));
+
+	int		spriteHeight = ft_abs((int)(WINDOWSH/ transformY));
+	int 	drawStartY = -spriteHeight / 2 + WINDOWSH / 2;
+	if (drawStartY < 0)
+		drawStartY = 0;
+	int 	drawEndY = spriteHeight / 2 + WINDOWSH / 2;
+	if (drawEndY >= WINDOWSH)
+		drawEndY = WINDOWSH - 1;
+	int		spriteWidth = ft_abs((int)(WINDOWSH / transformY));
+	int 	drawStartX = -spriteWidth / 2 + spriteScreenX;
+	int 	drawEndX = drawStartX + spriteWidth;
+	if (drawStartX < 0)
+		drawStartX = 0;
+	if (drawEndX >= WINDOWSW)
+		drawEndX = WINDOWSW - 1;
+	for (int px = drawStartX; px < drawEndX; px++)
+	{
+		int texX = -((px - (-spriteWidth / 2 + spriteScreenX)) * data->weapon.item.texture->width / spriteWidth);
+		if (texX && transformY > 0 && px > 0 && px < WINDOWSW)
+		{
+			for (int py = drawStartY; py < drawEndY; py++) {
+				int d = (py) * 256 - WINDOWSH * 128 + spriteHeight * 128;
+				int	texY = (int)((d * data->weapon.item.texture->height) / spriteHeight) / 256;
+				if (texY && py > 0 && py < WINDOWSH) {
+					uint32_t color = get_color(data->weapon.item.texture, data, item_dist, texX, texY);
+					if((color & 0xFFFFFFFF) != 0)
+						try_put_pixel(data->rayc, px, py, color);
+				}
+			}
+		}
+	}
+	data->weapon.item.isvisible = false;
+	data->weapon.item.x = -1;
 }
 
 void	raycasting(t_map *data)
@@ -571,7 +643,7 @@ void	raycasting(t_map *data)
 	{
 		init_raycast(x, ray, data->game);
 		init_step(ray, data);
-		set_side_step(ray, data);
+		set_side_step(ray, data, x);
 		calcul_projected_cam(ray, data);
 		draw_ray(x, ray, data);
 		draw_floor(ray, data, x);
@@ -581,4 +653,7 @@ void	raycasting(t_map *data)
 	}
 	if (data->plafond)
 		  draw_minimap(data);
+	if (data->weapon.item.isvisible == true)
+		display_item(data, x);
+
 }
