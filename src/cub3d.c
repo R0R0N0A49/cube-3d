@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 13:24:15 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:28:27 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,7 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_night->but_x_max - 75, data->menu_option->but_night->but_y_max - 100);
 	verif_option(data->menu_option);
-	//init_anim(data);
+	init_anim(data);
 	set_textures_terrain(data);
 	fonts_init(data);
 	fonts_update(data);
