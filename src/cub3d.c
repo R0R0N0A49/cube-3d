@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 14:13:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:45:37 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ void	cub3d(t_map *data)
 	data->img_option = mlx_new_image(data->mlx, 400, 150);
 	data->img_edit = mlx_new_image(data->mlx, 400, 150);
 	data->img_exit = mlx_new_image(data->mlx, 400, 150);
+	data->sol = mlx_load_png("./tiles/textures/floor.png");
+	data->plaf = mlx_load_png("./tiles/textures/cell.png");
 	data->cub = mlx_load_png ("./tiles/menu/cub3d.png");
 	data->texplay = mlx_load_png ("./tiles/menu/play.png");
 	data->texopt = mlx_load_png ("./tiles/menu/option.png");
@@ -246,6 +248,7 @@ void	cub3d(t_map *data)
 	data->but_edit = &edit;
 	data->but_exit = &exi;
 	data->idx_menu = 0;
+	data->press = false;
 	data->plafond = false;
 	data->game->player_x = 0;
 	data->game->player_y = 0;
@@ -267,6 +270,7 @@ void	cub3d(t_map *data)
 	data->but_edit->press_enter = false;
 	data->but_exit->press_enter = false;
 	data->minima->enabled = false;
+	data->game->moove_cur = false;
 	mini_map(data, data->mlx);
 	data->cubd = mlx_texture_to_image(data->mlx, data->cub);
 	data->img_play = mlx_texture_to_image(data->mlx, data->texplay);
@@ -301,7 +305,7 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_night->but_x_max - 75, data->menu_option->but_night->but_y_max - 100);
 	verif_option(data->menu_option);
-	init_anim(data);
+	//init_anim(data);
 	set_textures_terrain(data);
 	fonts_init(data);
 	fonts_update(data);
@@ -312,10 +316,10 @@ void	cub3d(t_map *data)
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
 	free_t_textures(&data->font, data->mlx);
-	free_t_textures(&data->weapone.barel_walk, data->mlx);
-	free_t_textures(&data->weapone.barel_fire, data->mlx);
-	mlx_delete_texture(data->weapone.center_txt);
-	mlx_delete_image(data->mlx, data->weapone.center);
+	//free_t_textures(&data->weapon.barel_walk, data->mlx);
+	//free_t_textures(&data->weapon.barel_fire, data->mlx);
+	//mlx_delete_texture(data->weapon.center_txt);
+	//mlx_delete_image(data->mlx, data->weapon.center);
 	mlx_terminate(data->mlx);
 }
 

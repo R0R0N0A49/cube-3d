@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:43:18 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 10:25:57 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/21 10:12:50 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,29 @@ void	draw_grid(t_map *data, int a, int b, uint32_t te)
 		while (b <= j)
 			mlx_put_pixel(data->minima, i, b++, COLOR_GRID);
 	}
+}
+
+void	draw_player(t_map *data, double i, double j, uint32_t te)
+{
+	double	a;
+	double	b;
+	double	c;
+
+	a = i + 4;
+	b = j + 4;
+	c = j;
+	(void) data;
+	while (i <= a)
+	{
+		j = c;
+		while (j <= b)
+		{
+			mlx_put_pixel(data->minima, i, j, te);
+			j++;
+		}
+		i++;
+	}
+	//draw_grid(data, a, b, te);
 }
 
 void	draw_cube(t_map *data, int i, int j, uint32_t te)
@@ -110,9 +133,10 @@ void	loop_top(t_map *data, int j, int i)
 	int	save;
 
 	save = i;
-	//(void)j;
+	(void)j;
 	draw_circle_with_thickness(data, 150, 150, 100, 2);
-	while (data->map[j])
+	draw_player(data, 150, 150, 0xFFFF);
+	/*while (data->map[j])
 	{
 		i = save;
 		while (data->map[j][i])
@@ -129,7 +153,7 @@ void	loop_top(t_map *data, int j, int i)
 			i++;
 		}
 		j++;
-	}
+	}*/
 }
 
 void	clean_minimap(t_map *data)
@@ -150,29 +174,6 @@ void	clean_minimap(t_map *data)
 	}
 }
 
-void	draw_player(t_map *data, double i, double j, uint32_t te)
-{
-	double	a;
-	double	b;
-	double	c;
-
-	a = i + 4;
-	b = j + 4;
-	c = j;
-	(void) data;
-	while (i <= a)
-	{
-		j = c;
-		while (j <= b)
-		{
-			mlx_put_pixel(data->minima, i, j, te);
-			j++;
-		}
-		i++;
-	}
-	//draw_grid(data, a, b, te);
-}
-
 void	mini(t_map *data)
 {
 	int	i;
@@ -182,5 +183,5 @@ void	mini(t_map *data)
 	j = 0;
 	i = 0;
 	loop_top(data, j, i);
-	draw_player(data, data->game->player_x * CUBE, data->game->player_y * CUBE, 0xFFFF);
+	//draw_player(data, data->game->player_x * CUBE, data->game->player_y * CUBE, 0xFFFF);
 }

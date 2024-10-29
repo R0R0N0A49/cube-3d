@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_anim.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 14:10:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:12:56 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,66 +70,65 @@ static void	init_name_barel_fire(t_textures *barel)
 	barel->textures_name[8] = ft_strdup("9.png");
 }
 
-static void	init_txt(t_textures *weapone, char *path)
+static void	init_txt(t_textures *weapon, char *path)
 {
 	long unsigned int	i;
 	char				*path_final;
 
 	i = 0;
-	while (i < weapone->nb_textures)
+	while (i < weapon->nb_textures)
 	{
-		path_final = ft_strjoin(path, weapone->textures_name[i]);
-		weapone->textures[i] = mlx_load_png(path_final);
+		path_final = ft_strjoin(path, weapon->textures_name[i]);
+		weapon->textures[i] = mlx_load_png(path_final);
 		free(path_final);
-		if (!weapone->textures[i])
+		if (!weapon->textures[i])
 			ft_error();
 		i++;
 	}
 }
 
-static void	init_img(t_map *data, t_textures *weapone)
+static void	init_img(t_map *data, t_textures *weapon)
 {
 	long unsigned int	i;
 
 	i = 0;
-	while (i < weapone->nb_textures)
+	while (i < weapon->nb_textures)
 	{
-		weapone->image[i] = mlx_texture_to_image(data->mlx,
-				weapone->textures[i]);
-		mlx_resize_image(weapone->image[i], weapone->image[i]->width * 1.7,
-			weapone->image[i]->height * 1.7);
-		if (!weapone->image[i])
+		weapon->image[i] = mlx_texture_to_image(data->mlx,
+				weapon->textures[i]);
+		mlx_resize_image(weapon->image[i], weapon->image[i]->width * 1.7,
+			weapon->image[i]->height * 1.7);
+		if (!weapon->image[i])
 			ft_error();
-		mlx_image_to_window(data->mlx, weapone->image[i], (int32_t)(
-				(float)(WINDOWSW - weapone->image[0]->width) / 2),
-			WINDOWSH - weapone->image[0]->height);
-		weapone->image[i]->enabled = false;
+		mlx_image_to_window(data->mlx, weapon->image[i],((WINDOWSW - weapon->image[0]->width) / 2),
+			WINDOWSH - weapon->image[0]->height);
+		weapon->image[i]->enabled = false;
 		i++;
 	}
 }
 
 void	init_anim(t_map *data)
 {
-	data->weapone.enable_anim = true;
-	data->weapone.enable_knife = true;
-	data->weapone.fire = false;
-	data->weapone.time_anime = get_time();
-	data->weapone.index_barel_walk = 0;
-	data->weapone.barel_walk = init_txtr(30);
-	data->weapone.barel_fire = init_txtr(9);
-	data->weapone.center_txt = mlx_load_png("tiles/animation/center.png");
-	data->weapone.center = mlx_texture_to_image(data->mlx,
-			data->weapone.center_txt);
-	data->weapone.center->enabled = false;
-	mlx_image_to_window(data->mlx, data->weapone.center,
-		(int)(WINDOWSW - data->weapone.center->width) / 2,
-		(int)(WINDOWSH - data->weapone.center->height) / 2);
-	init_name_barel_walk(&data->weapone.barel_walk);
-	init_name_barel_fire(&data->weapone.barel_fire);
-	init_txt(&data->weapone.barel_walk, "tiles/animation"
+	data->weapon.enable_anim = true;
+	data->weapon.enable_knife = true;
+	data->weapon.fire = false;
+	data->weapon.time_anime = get_time();
+	data->weapon.index_barel_walk = 0;
+	data->weapon.barel_walk = init_txtr(30);
+	data->weapon.barel_fire = init_txtr(9);
+	data->weapon.center_txt = mlx_load_png("tiles/animation/center.png");
+	data->weapon.center = mlx_texture_to_image(data->mlx,
+			data->weapon.center_txt);
+	data->weapon.center->enabled = false;
+	mlx_image_to_window(data->mlx, data->weapon.center,
+		(int)(WINDOWSW - data->weapon.center->width) / 2,
+		(int)(WINDOWSH - data->weapon.center->height) / 2);
+	init_name_barel_walk(&data->weapon.barel_walk);
+	init_name_barel_fire(&data->weapon.barel_fire);
+	init_txt(&data->weapon.barel_walk, "tiles/animation"
 		"/DOUBLE BARREL/WALKING/");
-	init_img(data, &data->weapone.barel_walk);
-	init_txt(&data->weapone.barel_fire, "tiles/animation"
+	init_img(data, &data->weapon.barel_walk);
+	init_txt(&data->weapon.barel_fire, "tiles/animation"
 		"/DOUBLE BARREL/FIREING/");
-	init_img(data, &data->weapone.barel_fire);
+	init_img(data, &data->weapon.barel_fire);
 }

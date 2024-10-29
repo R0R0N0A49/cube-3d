@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/16 08:48:16 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/28 10:13:40 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	time_fps(t_map	*data)
 	time_dif = difftime(time(NULL), data->time_fps);
 	if (time_dif >= 1)
 	{
-		data->fps =(int)(1 / data->mlx->delta_time);
+		data->fps = (int)(1 / data->mlx->delta_time);
 		data->time_fps = time(NULL);
 	}
 }
 
-int	get_pourcent(int value, int size, int max) // a renomer
+int	get_pourcent(int value, int size, int max)
 {
 	return ((size * value) / max);
 }
@@ -46,8 +46,8 @@ void	pause_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-	data->weapone.barel_walk.image[0]->enabled = false;
-	data->weapone.center->enabled = false;
+	//data->weapon.barel_walk.image[0]->enabled = false;
+	//data->weapon.center->enabled = false;
 }
 
 void	exit_cub3d(t_map *data)
@@ -75,21 +75,25 @@ void	play_game(t_map *data)
 	data->game->move_s = false;
 	data->game->move_a = false;
 	data->game->move_d = false;
-
 	data->but_play->good = false;
 	data->but_option->good = false;
 	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
-	data->weapone.center->enabled = true;
+	//data->weapon.center->enabled = true;
 }
 
 void	check_but_play(t_map *data)
 {
-	int x_min = get_pourcent(data->mlx->width, data->but_play->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->but_play->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->but_play->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->but_play->but_y_max, WINDOWSH);
+	int x_min;
+	int x_max;
+	int y_min;
+	int y_max;
+
+	x_min = get_pourcent(data->mlx->width, data->but_play->but_x_min, WINDOWSW);
+	x_max = get_pourcent(data->mlx->width, data->but_play->but_x_max, WINDOWSW);
+	y_min = get_pourcent(data->mlx->height, data->but_play->but_y_min, WINDOWSH);
+	y_max = get_pourcent(data->mlx->height, data->but_play->but_y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
 		data->idx_menu = 0;
@@ -315,14 +319,14 @@ void	check_music(t_map *data)
 	{
 		if (is_play)
 			i = system("killall paplay");
-		i = system("paplay Music/Menu.wav &");
+		//i = system("paplay Music/Menu.wav &");
 		is_play = 2;
 	}
 	else if ((!is_play || is_play == 2) && data->menu_option->play_music && !data->pause)
 	{
 		if (is_play)
 			i = system("killall paplay");
-		i = system("paplay ./Music/InGame.wav &");
+		//i = system("paplay ./Music/InGame.wav &");
 		is_play = 1;
 	}
 	else if (is_play && !data->menu_option->play_music)
@@ -341,7 +345,7 @@ void	loop(void *param)
 	if (data->pause != true)
 	{
 		raycasting(data);
-		ft_anim(data);
+		//ft_anim(data);
 	}
 	//	mlx_resize_hook()
 	time_fps(data);
@@ -525,7 +529,7 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 			data->press = true;
 		}
 		else
-			data->weapone.fire = true;
+			data->weapon.fire = true;
 	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{
@@ -551,30 +555,26 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 void	cursor(double xpos, double ypos, void* param)
 {
 	t_map	*data;
-	
+	double test;
+
+	test = 0;
 	data = (t_map *)param;
-	if (WINDOWSW / 2 == data->game->cursor_x && WINDOWSH /2 == data->game->cursor_y)
-	{
-		data->game->rotate_left = false;
-		data->game->rotate_right = false;
-	}
-	if (xpos == WINDOWSW / 2)
-	{
-		data->game->rotate_left = false;
-		data->game->rotate_right = false;
-	}
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	if (xpos < WINDOWSW / 2 - 5 && data->pause == false)
-	{
+	test += (xpos - WINDOWSW / 2) * data->speed;
+	
+	if (test < 0 && data->pause == false)
 		data->game->rotate_left = true;
-	}
-	if (xpos > WINDOWSW / 2 + 5 && data->pause == false)
-	{
+	if (test > 0 && data->pause == false)
 		data->game->rotate_right = true;
-	}
-	if (data->pause == false)
+	if (data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
 		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
+	if (test == 0 && data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
+	{
+		data->game->rotate_right = false;
+		data->game->rotate_left = false;
+	}
+		
 }
 
 void	key_press(mlx_key_data_t keydata, void *param)
@@ -696,7 +696,7 @@ void	key_press(mlx_key_data_t keydata, void *param)
 		if (keydata.key == MLX_KEY_K)
 			mlx_close_window(data->mlx);
 		if (keydata.key == MLX_KEY_Q)
-			data->weapone.enable_anim = !data->weapone.enable_anim;
+			data->weapon.enable_anim = !data->weapon.enable_anim;
 	}
 	if (keydata.action == MLX_RELEASE)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:43:15 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/15 14:24:06 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:20:32 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,57 +37,57 @@ int	is_move(t_game *game)
 
 void	ft_anim(t_map *data)
 {
-	if (!data->weapone.enable_anim)
+	if (!data->weapon.enable_anim)
 	{
-		data->weapone.barel_walk.image[0]->enabled = false;
+		data->weapon.barel_walk.image[0]->enabled = false;
 		return ;
 	}
-	if (data->weapone.fire && data->weapone.enable_knife) // une fonction par if
+	if (data->weapon.fire && data->weapon.enable_knife) // une fonction par if
 	{
-		if (data->weapone.index_barel_walk != 0)
-			data->weapone.barel_walk.image[
-				data->weapone.index_barel_walk - 1]->enabled = false;
+		if (data->weapon.index_barel_walk != 0)
+			data->weapon.barel_walk.image[
+				data->weapon.index_barel_walk - 1]->enabled = false;
 		else
-			data->weapone.barel_walk.image[29]->enabled = false;
-		if (data->weapone.index_barel_fire == (int)
-			data->weapone.barel_fire.nb_textures - 1)
-			data->weapone.fire = false;
-		anime_txt(&data->weapone.barel_fire, &data->weapone.index_barel_fire);
-		data->weapone.barel_fire.image[8]->enabled = false;
-		if (!data->weapone.fire)
+			data->weapon.barel_walk.image[29]->enabled = false;
+		if (data->weapon.index_barel_fire == (int)
+			data->weapon.barel_fire.nb_textures - 1)
+			data->weapon.fire = false;
+		anime_txt(&data->weapon.barel_fire, &data->weapon.index_barel_fire);
+		data->weapon.barel_fire.image[8]->enabled = false;
+		if (!data->weapon.fire)
 		{
-			data->weapone.barel_walk.image[0]->enabled = true;
-			data->weapone.index_barel_walk = 0;
+			data->weapon.barel_walk.image[0]->enabled = true;
+			data->weapon.index_barel_walk = 0;
 		}
 	}
-	else if (data->weapone.enable_knife && is_move(data->game) && get_time()
-		- data->weapone.time_anime >= 250)
-		anime_txt(&data->weapone.barel_walk, &data->weapone.index_barel_walk);
-	else if (!data->weapone.enable_knife || !is_move(data->game))
+	else if (data->weapon.enable_knife && is_move(data->game) && get_time()
+		- data->weapon.time_anime >= 250)
+		anime_txt(&data->weapon.barel_walk, &data->weapon.index_barel_walk);
+	else if (!data->weapon.enable_knife || !is_move(data->game))
 	{
-		if (data->weapone.index_barel_walk != 0)
-			data->weapone.barel_walk.image[data->weapone.index_barel_walk
+		if (data->weapon.index_barel_walk != 0)
+			data->weapon.barel_walk.image[data->weapon.index_barel_walk
 				- 1]->enabled = false;
 		else
-			data->weapone.barel_walk.image[29]->enabled = false;
-		data->weapone.barel_walk.image[0]->enabled = true;
-		data->weapone.index_barel_walk = 1;
+			data->weapon.barel_walk.image[29]->enabled = false;
+		data->weapon.barel_walk.image[0]->enabled = true;
+		data->weapon.index_barel_walk = 1;
 	}
 }
 
-void	anime_txt(t_textures *weapone, int *index)
+void	anime_txt(t_textures *weapon, int *index)
 {
 	if (*index == 0)
 	{
-		weapone->image[*index]->enabled = true;
-		weapone->image[weapone->nb_textures - 1]->enabled = false;
+		weapon->image[*index]->enabled = true;
+		weapon->image[weapon->nb_textures - 1]->enabled = false;
 	}
 	else
 	{
-		weapone->image[*index]->enabled = true;
-		weapone->image[*index - 1]->enabled = false;
+		weapon->image[*index]->enabled = true;
+		weapon->image[*index - 1]->enabled = false;
 	}
 	index[0]++;
-	if (*index == (int)weapone->nb_textures)
+	if (*index == (int)weapon->nb_textures)
 		*index = 0;
 }

@@ -1,6 +1,6 @@
 NAME=display.a
 CC=cc
-CFLAGS= -Wall -Werror -Wextra -g -O2
+CFLAGS= -O3 -Wall -Werror -Wextra -g
 RM=rm -rf
 
 SRCS=	minimap.c \

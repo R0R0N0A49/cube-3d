@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/15 09:31:18 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:43:37 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,26 @@ void	init_step(t_ray *ray, t_map *data)
 	if (ray->raydir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->sidedist_x = (data->game->player_x - ray->map_x) * ray->deltadist_x;
+		ray->sidedist_x = (data->game->player_x - ray->map_x)
+			* ray->deltadist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->sidedist_x = (ray->map_x + 1.0 - data->game->player_x) * ray->deltadist_x;
+		ray->sidedist_x = (ray->map_x + 1.0 - data->game->player_x)
+			* ray->deltadist_x;
 	}
 	if (ray->raydir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->sidedist_y = (data->game->player_y - ray->map_y) * ray->deltadist_y;
+		ray->sidedist_y = (data->game->player_y - ray->map_y)
+			* ray->deltadist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->sidedist_y = (ray->map_y + 1.0 - data->game->player_y) * ray->deltadist_y;
+		ray->sidedist_y = (ray->map_y + 1.0 - data->game->player_y)
+			* ray->deltadist_y;
 	}
 }
 
@@ -88,12 +92,12 @@ void	set_side_step(t_ray *ray, t_map *data)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_y < 0.25 || ray->map_x < 0.25 || ray->map_y > WINDOWSH - 0.25 || ray->map_x > WINDOWSW - 1.25)
+		if (ray->map_y < 0.25 || ray->map_x < 0.25
+			|| ray->map_y > WINDOWSH - 0.25 || ray->map_x > WINDOWSW - 1.25)
 			break ;
 		else if (data->map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
 	}
-	
 }
 
 void	calcul_projected_cam(t_ray *ray, t_map *data)
@@ -116,7 +120,7 @@ void	calcul_projected_cam(t_ray *ray, t_map *data)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-mlx_texture_t *get_texture(t_ray *ray, t_map *data)
+mlx_texture_t	*get_texture(t_ray *ray, t_map *data)
 {
 	if (ray->side == 0 && ray->raydir_x > 0)
 		return (data->we);
@@ -148,8 +152,8 @@ uint32_t	color_tex(int32_t r)
 	uint32_t	ra;
 	uint32_t	ga;
 	uint32_t	ba;
-	uint32_t aa;
-	uint32_t color;
+	uint32_t	aa;
+	uint32_t	color;
 
 	ra = ((r >> 24) & 0xFF);
 	ga = ((r >> 16) & 0xFF);
@@ -169,9 +173,8 @@ uint32_t	color_fog(int32_t a, t_ray *ray)
 	uint32_t	ra;
 	uint32_t	ga;
 	uint32_t	ba;
-	uint32_t color;
-	uint32_t aa;
-	float	t;
+	uint32_t	aa;
+	float		t;
 
 	ra = ((a >> 24) & 0xFF);
 	ga = ((a >> 16) & 0xFF);
@@ -181,39 +184,13 @@ uint32_t	color_fog(int32_t a, t_ray *ray)
 	aa = ft_lerp(aa, 0x00, t);
 	ga = ft_lerp(ga, 0x00, t);
 	ba = ft_lerp(ba, 0x00, t);
-	color = ((aa << 24) | ((ba) << 16) | ((ga << 8)) | ra);
-	//printf("%X || %X\n", color, ra);
-	return (color);
-}
-
-uint32_t	color_fog_2(int32_t a, int h)
-{
-	uint32_t	ra;
-	uint32_t	ga;
-	uint32_t	ba;
-	uint32_t color;
-	uint32_t aa;
-	float	t;
-
-	aa = ((a >> 24) & 0xFF);
-	ba = ((a >> 16) & 0xFF);
-	ga = ((a >> 8) & 0xFF);
-	ra = (a & 0xFF);
-	t = (4.8 * h / (float)WINDOWSH) - 2.0f;
-	if (t < 0)
-		t = -t;
-	aa = ft_lerp(aa, 0x00, t);
-	ga = ft_lerp(ga, 0x00, t);
-	ba = ft_lerp(ba, 0x00, t);
-	color = ((aa << 24) | ((ba) << 16) | ((ga << 8)) | ra);
-	//printf("%X || %X\n", color, ra);
-	return (color);
+	return ((aa << 24) | ((ba) << 16) | ((ga << 8)) | ra);
 }
 
 void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
-	int y;
-	uint32_t col;
+	int			y;
+	uint32_t	cl;
 
 	y = 0;
 	ray->texture_y = 0;
@@ -221,8 +198,8 @@ void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 	while (y < ray->draw_start)
 	{
 		ray->texture_y = y * ray->step;
-		col = ((uint32_t *)tex->pixels)[ft_abs(tex->width * ray->texture_y + x)];
-		ray->color = color_tex(col);
+		cl = ((uint32_t *)tex->pixels)[ft_abs(tex->width * ray->texture_y + x)];
+		ray->color = color_tex(cl);
 		try_put_pixel(data->rayc, x, y, ray->color);
 		y++;
 	}
@@ -230,21 +207,22 @@ void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 
 void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
-	int y;
-	uint32_t col;
+	int			y;
+	uint32_t	col;
 
 	y = ray->draw_start - 1;
 	if (ray->wall_dist >= FOG_MAX && data->fog == true)
 	{
-		while(y < ray->draw_end) try_put_pixel(data->rayc, x, y++, FOG);
-		return;
+		while (y < ray->draw_end)
+			try_put_pixel(data->rayc, x, y++, FOG);
+		return ;
 	}
 	while (y < ray->draw_end)
 	{
 		ray->texture_y = (int)ray->texture_pos & (tex->height - 1);
 		ray->texture_pos += ray->step;
-		//printf("%d\n", ray->line_height);
-		col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * (ray->texture_y + 1) - (ray->texture_x + 1))];
+		col = ((uint32_t *)tex->pixels)[ft_abs(tex->height
+				* (ray->texture_y + 1) - (ray->texture_x + 1))];
 		if (ray->wall_dist >= FOG_MIN && data->fog == true)
 			ray->color = color_fog(col, ray);
 		else
@@ -254,12 +232,313 @@ void	draw_tex(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 	}
 }
 
+uint32_t	apply_fog(uint32_t color, double current_dist)
+{
+	float		fog_factor;
+	uint32_t	ra;
+	uint32_t	ga;
+	uint32_t	ba;
+	uint32_t	aa;
+
+	fog_factor = (current_dist - FOG_MIN) / (FOG_MAX - FOG_MIN);
+	if (fog_factor > 1.0f)
+		fog_factor = 1.0f;
+	if (fog_factor < 0.0f)
+		fog_factor = 0.0f;
+	ra = (color >> 24) & 0xFF;
+	ga = (color >> 16) & 0xFF;
+	ba = (color >> 8) & 0xFF;
+	aa = (color) & 0xFF;
+	ra = (uint32_t)ft_lerp(ra, 0x00, fog_factor);
+	ga = (uint32_t)ft_lerp(ga, 0x00, fog_factor);
+	ba = (uint32_t)ft_lerp(ba, 0x00, fog_factor);
+	return ((ra << 24) | (ga << 16) | (ba << 8) | aa);
+}
+
+void	init_floorcelling(t_ray *ray)
+{
+	if (ray->side == 0 && ray->raydir_x > 0)
+	{
+		ray->fl_x = ray->map_x;
+		ray->fl_y = ray->map_y + ray->wall_x;
+	}
+	else if (ray->side == 0 && ray->raydir_x < 0)
+	{
+		ray->fl_x = ray->map_x + 1.0;
+		ray->fl_y = ray->map_y + ray->wall_x;
+	}
+	else if (ray->side == 1 && ray->raydir_y > 0)
+	{
+		ray->fl_x = ray->map_x + ray->wall_x;
+		ray->fl_y = ray->map_y;
+	}
+	else
+	{
+		ray->fl_x = ray->map_x + ray->wall_x;
+		ray->fl_y = ray->map_y + 1.0;
+	}
+}
+
+void	draw_ceiling(t_ray *ray, t_map *data, int x)
+{
+	int			y;
+	double		current_dist;
+	double		w;
+	uint32_t	color;
+
+	y = ray->draw_start;
+	init_floorcelling(ray);
+	while (y >= 0)
+	{
+		current_dist = -(WINDOWSH / (2.0 * y - WINDOWSH));
+		w = current_dist / ray->wall_dist;
+		ray->current_fc_x = w * ray->fl_x + (1.0 - w) * data->game->player_x;
+		ray->current_fc_y = w * ray->fl_y + (1.0 - w) * data->game->player_y;
+		ray->texture_x = (int)(ray->current_fc_x * data->plaf->width)
+			% data->plaf->width;
+		ray->texture_y = (int)(ray->current_fc_y * data->plaf->height)
+			% data->plaf->height;
+		color = color_tex(((uint32_t *)data->plaf->pixels)
+			[ray->texture_y * data->plaf->width + ray->texture_x]);
+		if (current_dist >= FOG_MIN && current_dist < FOG_MAX && data->fog == true)
+			color = apply_fog(color, current_dist);
+		if (current_dist >= FOG_MAX && data->fog == true)
+			try_put_pixel(data->rayc, x, y, FOG);
+		else
+			try_put_pixel(data->rayc, x, y, color);
+		y--;
+	}
+}
+
+void	draw_floor(t_ray *ray, t_map *data, int x)
+{
+	int			y;
+	double		current_dist;
+	double		w;
+	uint32_t	color;
+
+	y = ray->draw_end;
+	init_floorcelling(ray);
+	while (y < WINDOWSH)
+	{
+		current_dist = WINDOWSH / (2.0 * y - WINDOWSH);
+		w = current_dist / ray->wall_dist;
+		ray->current_fc_x = w * ray->fl_x + (1.0 - w) * data->game->player_x;
+		ray->current_fc_y = w * ray->fl_y + (1.0 - w) * data->game->player_y;
+		ray->texture_x = (int)(ray->current_fc_x * data->sol->width)
+			% data->sol->width;
+		ray->texture_y = (int)(ray->current_fc_y * data->sol->height)
+			% data->sol->height;
+		color = color_tex(((uint32_t *)data->sol->pixels)
+			[ray->texture_y * data->sol->width + ray->texture_x]);
+		if (current_dist >= FOG_MIN && current_dist < FOG_MAX && data->fog == true)
+			color = apply_fog(color, current_dist);
+		if (current_dist >= FOG_MAX && data->fog == true)
+			try_put_pixel(data->rayc, x, y, FOG);
+		else
+			try_put_pixel(data->rayc, x, y, color);
+		y++;
+	}
+}
+
+void iso_transform(double x, double y, double *iso_x, double *iso_y)
+{
+    double angle = M_PI / 6;  // Angle de 30 degrés pour une vue isométrique
+    *iso_x = (x - y) * cos(angle);
+    *iso_y = (x + y) * sin(angle);
+}
+
+size_t	ft_strlen_w(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != NULL)
+		i++;
+	return (i);
+}
+
+void draw_circles(int center_x, int center_y, int radius, int color, t_map *data)
+{
+    for (int y = -radius; y <= radius; y++)
+    {
+        for (int x = -radius; x <= radius; x++)
+        {
+            if (x * x + y * y <= radius * radius) // Vérifie si le point est dans le cercle
+            {
+                try_put_pixel(data->rayc, center_x + x, center_y + y, color);
+            }
+        }
+    }
+}
+
+void draw_lines(t_map *data, int x0, int y0, int x1, int y1, uint32_t color)
+{
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+
+    while (x0 != x1 || y0 != y1)
+    {
+        try_put_pixel(data->rayc, x0, y0, color_tex(color));
+        int e2 = err * 2;
+        if (e2 > -dy)
+        {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dx)
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+
+uint32_t ft_lerp_color(uint32_t color1, uint32_t color2, double t)
+{
+    uint32_t r1 = (color1 >> 24) & 0xFF;
+    uint32_t g1 = (color1 >> 16) & 0xFF;
+    uint32_t b1 = (color1 >> 8) & 0xFF;
+    uint32_t a1 = color1 & 0xFF;
+
+    uint32_t r2 = (color2 >> 24) & 0xFF;
+    uint32_t g2 = (color2 >> 16) & 0xFF;
+    uint32_t b2 = (color2 >> 8) & 0xFF;
+    uint32_t a2 = color2 & 0xFF;
+
+    uint32_t ra = (uint32_t)(ft_lerp(r1, r2, t));
+    uint32_t ga = (uint32_t)(ft_lerp(g1, g2, t));
+    uint32_t ba = (uint32_t)(ft_lerp(b1, b2, t));
+    uint32_t aa = (uint32_t)(ft_lerp(a1, a2, t));
+
+    return ((ra << 24) | (ga << 16) | (ba << 8) | aa);
+}
+
+// Fonction pour dessiner un losange isométrique avec des côtés inclinés à 30°
+void draw_isometric_rhombus(int center_x, int center_y, int width, int height, int color, t_map *data)
+{
+    int corners[4][2];
+
+    // Calculer les positions des quatre coins du losange
+    corners[0][0] = center_x;                             // Haut
+    corners[0][1] = center_y - height / 2;
+    corners[1][0] = center_x + (width / 2);               // Droite
+    corners[1][1] = center_y;
+    corners[2][0] = center_x;                             // Bas
+    corners[2][1] = center_y + height / 2;
+    corners[3][0] = center_x - (width / 2);               // Gauche
+    corners[3][1] = center_y;
+
+    // Tracer les lignes reliant les coins pour former un losange
+    for (int y = corners[0][1]; y <= corners[2][1]; y++)
+    {
+        for (int x = corners[3][0]; x <= corners[1][0]; x++)
+        {
+            // Vérifier si le point (x, y) est à l'intérieur du losange
+            double dx = fabs((x - center_x) / (double)width);
+            double dy = fabs((y - center_y) / (double)height);
+            if (dx + dy <= 0.5)
+            {
+                try_put_pixel(data->rayc, x, y, color);
+            }
+        }
+    }
+}
+
+void draw_isome(int center_x, int center_y, int width, int height, int color, t_map *data)
+{
+	int corners[4][2];
+
+
+	corners[0][0] = center_x;
+	corners[0][1] = center_y - height / 2;
+	corners[1][0] = center_x + (width / 2);
+	corners[1][1] = center_y;
+	corners[2][0] = center_x;
+	corners[2][1] = center_y + height / 2;
+	corners[3][0] = center_x - (width / 2);
+	corners[3][1] = center_y;
+
+	 double slope = (double)(corners[2][1] - corners[0][1]) / (corners[1][0] - corners[3][0]);
+
+    // Tracer les lignes reliant les coins pour former un losange
+    for (int y = corners[0][1]; y <= corners[2][1]; y++)
+    {
+        for (int x = corners[3][0]; x <= corners[1][0]; x++)
+        {
+            // Vérifier si le point (x, y) est à l'intérieur du losange
+            double dx = fabs((x - center_x) / (double)width);
+            double dy = fabs((y - center_y) / (double)height);
+            if (dx + dy <= 0.5)
+            {
+                int adjusted_color = color;
+
+                // Vérifier si le point est dans la moitié supérieure droite de la diagonale
+                if (y < corners[0][1] + slope * (x - corners[3][0]))
+                {
+                    // Assombrir la couleur (ex. réduire la valeur RGB de moitié)
+                    adjusted_color = color / 2;
+                }
+
+                try_put_pixel(data->rayc, x, y, adjusted_color);
+            }
+        }
+    }
+}
+
+void draw_minimap(t_map *data)
+{
+    int map_x, map_y;
+    double iso_x, iso_y;
+    int losange_width = 59;   // Largeur du losange (horizontal)
+    int losange_height = 35;  // Hauteur du losange (vertical)
+
+    for (map_y = 0; map_y < (int)ft_strlen_w(data->map); map_y++)
+    {
+        for (map_x = 0; map_x < (int)ft_strlen(data->map[map_y]); map_x++)
+        {
+            iso_transform(map_x, map_y, &iso_x, &iso_y);
+            int minimap_x = (int)(iso_x * MINIMAP_SCALE) + MINIMAP_OFFSET_X;
+            int minimap_y = (int)(iso_y * MINIMAP_SCALE) + MINIMAP_OFFSET_Y;
+
+            // Dessiner les losanges isométriques pour les murs
+            if (data->map[map_y][map_x] == '1')
+            {
+                draw_isometric_rhombus(minimap_x, minimap_y, losange_width, losange_height, WALL_COLOR, data);
+            }
+			else if (map_y != 0 && data->map[map_y][map_x] == '0' && data->map[map_y - 1][map_x] == '1')
+            {
+                draw_isome(minimap_x, minimap_y, losange_width, losange_height, 0xFFFF, data);
+            }
+            else if (data->map[map_y][map_x] == '0')
+            {
+                draw_isometric_rhombus(minimap_x, minimap_y, losange_width, losange_height, 0xFFFF, data);
+            }
+        }
+    }
+
+    // Dessiner le joueur sous forme de losange isométrique plus petit
+    iso_transform(data->game->player_x, data->game->player_y, &iso_x, &iso_y);
+    int player_minimap_x = (int)(iso_x * MINIMAP_SCALE) + MINIMAP_OFFSET_X;
+    int player_minimap_y = (int)(iso_y * MINIMAP_SCALE) + MINIMAP_OFFSET_Y;
+    draw_isometric_rhombus(player_minimap_x, player_minimap_y, 10, 5, PLAYER_COLOR, data);
+}
+
+
+
+
 void	draw_ray(int x, t_ray *ray, t_map *data)
 {
-	mlx_texture_t *tex;
-	int	i;
+	mlx_texture_t	*tex;
+	int				i;
 
-	i= 0;
+	i = 0;
 	tex = get_texture(ray, data);
 	if (data->plafond == true)
 		draw_nuit(ray, data, x, data->nuit);
@@ -272,20 +551,13 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 		}
 	}
 	ray->texture_x = (int)(ray->wall_x * (double)tex->height);
-	if ((ray->side == 0 && ray->raydir_x > 0) || (ray->side == 1 && ray->raydir_y < 0))
+	if ((ray->side == 0 && ray->raydir_x > 0)
+		|| (ray->side == 1 && ray->raydir_y < 0))
 		ray->texture_x = tex->width - ray->texture_x - 1;
 	ray->step = 1.0 * tex->height / ray->line_height;
-	ray->texture_pos = (ray->draw_start - WINDOWSH / 2 + ray->line_height / 2) * ray->step;
+	ray->texture_pos = (ray->draw_start - WINDOWSH / 2
+			+ ray->line_height / 2) * ray->step;
 	draw_tex(ray, data, x, tex);
-	i = ray->draw_end;
-	while (i < WINDOWSH)
-	{
-		if (data->fog && i <= 3 * (WINDOWSH / 4.8))
-			mlx_put_pixel(data->rayc, x, i, color_fog_2(data->down, i - WINDOWSH / 4.8));
-		else
-			mlx_put_pixel(data->rayc, x, i, data->down);
-		i++;
-	}
 }
 
 void	raycasting(t_map *data)
@@ -302,6 +574,11 @@ void	raycasting(t_map *data)
 		set_side_step(ray, data);
 		calcul_projected_cam(ray, data);
 		draw_ray(x, ray, data);
+		draw_floor(ray, data, x);
+		if (!data->plafond)
+			draw_ceiling(ray, data, x);
 		x++;
 	}
+	if (data->plafond)
+		  draw_minimap(data);
 }

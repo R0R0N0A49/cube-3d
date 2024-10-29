@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/16 08:48:08 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/28 09:45:16 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,23 @@
 # define CUBE 20
 # define COLOR_GRID 0x646464
 # define FOG 0xFF
-# define FOG_MIN 4
-# define FOG_MAX 16
+# define FOG_MIN 5
+# define FOG_MAX 10
+# define MINIMAP_SCALE 30   // Réduction de la taille de la carte pour la minimap
+# define PLAYER_COLOR 0xFF0000FF   // Couleur rouge pour le joueur (format RGBA)
+# define WALL_COLOR 0xFFFFFFFF     // Couleur blanche pour les murs
+# define EMPTY_COLOR 0x00000000 
+#define WALL_TOP_COLOR 0xFFFFFFFF  // Blanc
+#define WALL_BOTTOM_COLOR 0xFFAAAAAA  // Gris clair
+#define EMPTY_TOP_COLOR 0xFFCCCCCC  // Gris moyen
+#define EMPTY_BOTTOM_COLOR 0xFF888888  // Gris foncé
+#define BORDER_COLOR 0xFF000000  // Noir
+#define PLAYER_TOP_COLOR 0xFFFF0000  // Rouge
+#define PLAYER_BOTTOM_COLOR 0xFF880000  // Rouge foncé
+# define MINIMAP_OFFSET_X 700
+# define MINIMAP_OFFSET_Y 200
+# define DEG_TO_RAD(angleInDegrees) ((angleInDegrees) * M_PI / 180.0)
+
 # include <time.h>
 
 typedef struct s_mini
@@ -54,6 +69,7 @@ typedef struct s_game
 	bool	move_a;
 	bool	move_d;
 	bool	move_s;
+	bool	moove_cur;
 	bool	rotate_left;
 	bool	rotate_right;
 }	t_game;
@@ -81,6 +97,10 @@ typedef struct s_ray
 	int draw_end;
 	int	texture_x;
 	int	texture_y;
+	double	current_fc_x;
+	double	current_fc_y;
+	double	fl_x;
+	double	fl_y;
 	uint32_t	color;
 	double step;
 	double texture_pos;
@@ -168,6 +188,8 @@ typedef struct s_map
 	TXT		*texedi;
 	TXT		*texexit;
 	TXT		*nuit;
+	TXT		*sol;
+	TXT		*plaf;
 	TXT		*menufd;
 	TXT		*menufd2;
 	IMG		*cubd;
@@ -200,7 +222,7 @@ typedef struct s_map
 	t_button	*but_edit;
 	t_button	*but_exit;
 	mlx_t	*mlx;
-	t_anim	weapone;
+	t_anim	weapon;
 }	t_map;
 
 char	**ft_tmp_to_tab(t_tmp *src);
