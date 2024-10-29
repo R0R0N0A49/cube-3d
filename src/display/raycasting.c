@@ -6,11 +6,12 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/28 16:04:41 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:34:58 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
 
 void	init_struct_ray(t_ray *ray)
 {
@@ -92,11 +93,13 @@ void	set_side_step(t_ray *ray, t_map *data, int x)
 			break ;
 		else if (data->map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
-		else if (ray->map_y == (int)data->weapone.item.posy && ray->map_x == (int)data->weapone.item.posx)
+		else if (ray->map_y == (int)(data->weapone.item.posy) && ray->map_x == (int)(data->weapone.item.posx))
 		{
 			data->weapone.item.isvisible = true;
 			if (data->weapone.item.x == -1)
+			{
 				data->weapone.item.x = x;
+			}
 //			break ;
 		}
 	}
@@ -300,7 +303,7 @@ uint32_t	get_color(TXT *tex, t_map *data, int item_dist, int x, int y)
 	uint32_t color;
 
 	//printf("%d\n", ray->line_height);
-	col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * (y + 1) - (x + 1))];
+	col = ((uint32_t *)tex->pixels)[ft_abs(tex->height * (y) - (x))];
 	if (item_dist >= FOG_MIN && data->fog == true)
 		color = color_fog(col, data->raycast);
 	else
@@ -311,42 +314,33 @@ uint32_t	get_color(TXT *tex, t_map *data, int item_dist, int x, int y)
 void	display_item(t_map *data, int x)
 {
 	(void)x;
-	int	item_dist = (data->game->player_x - data->weapone.item.posx) * (data->game->player_x - data->weapone.item.posx) - (data->game->player_y - data->weapone.item.posy) * (data->game->player_y - data->weapone.item.posy);
+	double	item_dist = (data->game->player_x - data->weapone.item.posx) * (data->game->player_x - data->weapone.item.posx) - (data->game->player_y - data->weapone.item.posy) * (data->game->player_y - data->weapone.item.posy);
 	double	spriteX = data->weapone.item.posx - data->game->player_x;
 	double	spriteY = data->weapone.item.posy - data->game->player_y;
-//	double	invDet = 1.0 / (data->game->plane_x * data->game->dir_y - data->game->dir_x * data->game->plane_y);
 	double invDet = 1.0 / (data->game->plane_x * data->game->dir_y - data->game->dir_x * data->game->plane_y);
 
 	double	transformX = invDet * (data->game->dir_y * spriteX - data->game->dir_x * spriteY);
 	double	transformY = invDet * (-data->game->plane_y * spriteX + data->game->plane_x * spriteY);
-	// pb avec transform X et Y. peut venir de dir_y et dir_x
 
 	int		spriteScreenX = (int)((WINDOWSW / 2) * (1 + transformX / transformY));
-//	printf("spriteX = %f\nspriteY = %f\n", spriteX, spriteY);
 
-	int		spriteHeight = abs((int)(WINDOWSH / transformY));
-	int 	drawStartY = -spriteHeight / 4 + WINDOWSH / 2;
+	int		spriteHeight = ft_abs((int)(WINDOWSH/ transformY));
+	int 	drawStartY = -spriteHeight / 2 + WINDOWSH / 2;
 	if (drawStartY < 0)
 		drawStartY = 0;
 	int 	drawEndY = spriteHeight / 2 + WINDOWSH / 2;
 	if (drawEndY >= WINDOWSH)
 		drawEndY = WINDOWSH - 1;
-	int		spriteWidth = abs((int)(WINDOWSH / transformY));
-
-	int 	drawStartX = -spriteWidth + spriteScreenX;
+	int		spriteWidth = ft_abs((int)(WINDOWSH / transformY));
+	int 	drawStartX = -spriteWidth / 2 + spriteScreenX;
+	int 	drawEndX = drawStartX + spriteWidth;
 	if (drawStartX < 0)
 		drawStartX = 0;
-
-	int 	drawEndX = drawStartX + spriteWidth;
-
 	if (drawEndX >= WINDOWSW)
 		drawEndX = WINDOWSW - 1;
-	if (drawStartX < data->weapone.item.x)
-		drawStartX = data->weapone.item.x;
-//	printf("transformY = %f\n", transformY);
 	for (int px = drawStartX; px < drawEndX; px++)
 	{
-		int texX = (int)-((px - (-spriteWidth + spriteScreenX)) * data->weapone.item.texture->width / spriteWidth);
+		int texX = -((px - (-spriteWidth / 2 + spriteScreenX)) * data->weapone.item.texture->width / spriteWidth);
 		if (texX && transformY > 0 && px > 0 && px < WINDOWSW)
 		{
 			for (int py = drawStartY; py < drawEndY; py++) {
@@ -354,7 +348,7 @@ void	display_item(t_map *data, int x)
 				int	texY = (int)((d * data->weapone.item.texture->height) / spriteHeight) / 256;
 				if (texY && py > 0 && py < WINDOWSH) {
 					uint32_t color = get_color(data->weapone.item.texture, data, item_dist, texX, texY);
-					if((color & 0x00FFFFFF) != 0)
+					if((color & 0xFFFFFFFF) != 0)
 						try_put_pixel(data->rayc, px, py, color);
 				}
 			}
@@ -362,38 +356,6 @@ void	display_item(t_map *data, int x)
 	}
 	data->weapone.item.isvisible = false;
 	data->weapone.item.x = -1;
-//	int	line_height = 0;
-//	int	draw_start = 0;
-//	int	draw_end = 0;
-//	double	wall_x = 0;
-//	double	raydir_y = 0;
-//	double	raydir_x = 0;
-//
-//	if (!data->weapone.item.hit)
-//	{
-////		printf("test\n");
-//		return ;
-//	}
-////	if (data->weapone.item.side == 0)
-////		data->weapone.item.dist_item = data->weapone.item.sidedist_x - data->weapone.item.deltadist_x;
-////	if (data->weapone.item.side == 1)
-////		data->weapone.item.dist_item = data->weapone.item.sidedist_y - data->weapone.item.deltadist_y;
-////	item_dist = data->weapone.item.dist_item;
-//	line_height = (int)(WINDOWSH / item_dist);
-//	draw_start = -(line_height) / 2 + WINDOWSH / 2;
-//	if (draw_start < 0)
-//		draw_start = 0;
-//	draw_end = (line_height) / 2 + WINDOWSH / 2;
-//	if (draw_end >= WINDOWSH)
-//		draw_end = WINDOWSH - 1;
-//	if (data->weapone.item.side == 0)
-//		wall_x = data->game->player_y + item_dist * raydir_y;
-//	else
-//		wall_x = data->game->player_x + item_dist * raydir_x;
-//	wall_x -= floor(wall_x);
-////	printf("x = %d, height = %d\n", x, (int)data->rayc->width);
-//	for (int i = draw_start; i < draw_end && x < (int)data->rayc->width; i++)
-//		try_put_pixel(data->rayc, x, i - 1, 0xFF00FFFF);
 }
 
 void	raycasting(t_map *data)
@@ -414,4 +376,5 @@ void	raycasting(t_map *data)
 	}
 	if (data->weapone.item.isvisible == true)
 		display_item(data, x);
+
 }

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/28 15:10:07 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:33:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void	init_item(t_item *item, t_map *data)
 {
 	item->enabled = true;
 	item->hit = false;
-	item->posx = 3;
-//	item->posx = 1;
-	item->posy = 11;
+	item->posx = 5.5;
+//	item->posx = 3;
+	item->posy = 10.5;
 //	item->posy = 1;
 	data->weapone.item.x = -1;
 	item->isvisible = false;
-	item->texture = mlx_load_png("tiles/animation/barrel.png");
+	item->texture = mlx_load_png("tiles/animation/pm_2.png");
 }
 
 void	init_anim(t_map *data)
