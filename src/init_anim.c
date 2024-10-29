@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 13:30:08 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 16:01:20 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ static void	init_img(t_map *data, t_textures *weapon)
 void	init_item(t_item *item, t_map *data)
 {
 	item->enabled = true;
-	item->hit = false;
-	item->posx = 5.5;
-	//item->posx = 3.5;
-	item->posy = 10.5;
-//	item->posy = 1.5;
+//	item->posx = 5.5;
+	item->posx = 3.5;
+//	item->posy = 10.5;
+	item->posy = 1.5;
 	data->weapon.item.x = -1;
 	item->isvisible = false;
-	item->texture = mlx_load_png("tiles/animation/pm.png"); // a free
+	item->index = 0;
+	item->textures = calloc(2, sizeof(TXT *));
+	item->textures[0] = mlx_load_png("tiles/animation/pm.png"); // a free
+	item->textures[1] = mlx_load_png("tiles/animation/pm_2.png"); // a free
 }
 
 void	init_anim(t_map *data)

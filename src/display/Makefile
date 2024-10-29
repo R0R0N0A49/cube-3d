@@ -9,7 +9,8 @@ SRCS=	minimap.c \
 		menu.c \
 		option.c \
 		fonts.c \
-		animation.c
+		animation.c \
+		raycast_item.c
 OBJS=$(SRCS:.c=.o)
 
 ARRC=ar -rcs

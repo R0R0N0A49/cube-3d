@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 13:15:06 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/29 14:36:45 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,30 @@ typedef struct s_item
 {
 	double	posy;
 	double	posx;
-	TXT		*texture;
-	bool	hit;
+	int	index;
+	TXT		**textures; // a remplacer
 	bool	enabled;
 	bool	isvisible;
 	int 	x;
+	double	item_dist;
+	double	sprite_x;
+	double	sprite_y;
+	double	invdet;
+	double	transform_x;
+	double	transform_y;
+	int 	screen_x;
+	int 	height;
+	int 	width;
+	int 	drawstart_y;
+	int 	drawstart_x;
+	int 	drawend_y;
+	int 	drawend_x;
+	int			px;
+	int			py;
+	int			tex_x;
+	int			tex_y;
+	int			d;
+	uint32_t	color;
 } t_item;
 
 typedef struct	s_anim

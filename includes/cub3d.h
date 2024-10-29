@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/18 10:01:22 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:00:41 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,11 @@ void	anime_txt(t_textures *weapone, int *index);
 void	ft_anim(t_map *data, t_weapon *current, t_weapon *nodisplay);
 long	get_time(void);
 void	choose_weapon(t_map *data);
+
+void		display_item(t_map *data, t_item *item);
+uint32_t	color_fog(int32_t a, t_ray *ray);
+uint32_t	color_tex(int32_t r);
+void		try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
+int			ft_abs(int nb);
 
 #endif
