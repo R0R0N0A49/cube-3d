@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/29 16:07:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:32:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	set_side_step(t_ray *ray, t_map *data, int x)
 			data->weapon.item.isvisible = true;
 			if (data->weapon.item.x == -1)
 				data->weapon.item.x = x;
+			data->weapon.item.x_max = x;
 		}
 	}
 }

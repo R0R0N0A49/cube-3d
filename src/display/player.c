@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/29 13:23:21 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/30 11:37:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	get_pourcent(int value, int size, int max)
 void	pause_game(t_map *data)
 {
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
+	data->weapon.selected[2]->enabled = false;
+	data->weapon.selected[data->weapon.index_weapon]->enabled = false;
 	data->pause = true;
 	data->menu->enabled = true;
 	data->cubd->enabled = true;
@@ -60,6 +62,8 @@ void	play_game(t_map *data)
 {
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
+	data->weapon.selected[2]->enabled = true;
+	data->weapon.selected[data->weapon.index_weapon]->enabled = true;
 	data->pause = false;
 	data->idx_menu = 0;
 	data->but_play->press_enter = false;
@@ -524,11 +528,6 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	data = (t_map *)param;
 	(void)mods;
 
-	if (button == MLX_MOUSE_BUTTON_MIDDLE)
-	{
-		if (data->weapon.nb_availed_weapon == 2 && action == MLX_PRESS)
-			data->weapon.index_weapon = !data->weapon.index_weapon;
-	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		if (data->pause)
@@ -703,8 +702,12 @@ void	key_press(mlx_key_data_t keydata, void *param)
 				data->fog = !data->fog;
 		if (keydata.key == MLX_KEY_K)
 			mlx_close_window(data->mlx);
-		if (keydata.key == MLX_KEY_Q)
+		if (keydata.key == MLX_KEY_Q) {
 			data->weapon.enable_anim = !data->weapon.enable_anim;
+			data->weapon.center->enabled = !data->weapon.center->enabled;
+			data->weapon.selected[2]->enabled = !data->weapon.selected[2]->enabled;
+			data->weapon.selected[data->weapon.index_weapon]->enabled = !data->weapon.selected[data->weapon.index_weapon]->enabled;
+		}
 	}
 	if (keydata.action == MLX_RELEASE)
 	{
@@ -720,5 +723,20 @@ void	key_press(mlx_key_data_t keydata, void *param)
 			data->game->move_a = false;
 		if (keydata.key == MLX_KEY_D)
 			data->game->move_d = false;
+	}
+}
+
+void	scroll(double i, double y, void *param)
+{
+	t_map *data;
+
+	(void)i;
+	(void)y;
+	data = (t_map *)param;
+	if (!data->pause && data->weapon.nb_availed_weapon == 2)
+	{
+		data->weapon.selected[data->weapon.index_weapon]->enabled = false;
+		data->weapon.index_weapon = !data->weapon.index_weapon;
+		data->weapon.selected[data->weapon.index_weapon]->enabled = true;
 	}
 }
