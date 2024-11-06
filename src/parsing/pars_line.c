@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:58:12 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/24 14:24:49 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:03:12 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_stringtab_len(char **src)
 	return (i);
 }
 
-void	loop_hexa(char **tmp, int *r, int *g, int *b)
+int	loop_hexa(char **tmp, int *r, int *g, int *b)
 {
 	if (stringisdigit(tmp[0]))
 		*r = ft_atoi(tmp[0]);
@@ -45,8 +45,11 @@ void	loop_hexa(char **tmp, int *r, int *g, int *b)
 		*g = ft_atoi(tmp[1]);
 	if (stringisdigit(tmp[2]))
 		*b = ft_atoi(tmp[2]);
-	if (!r || !g || !b)
-		exit (0);
+	if (*r == -1 || *g == -1 || *b == -1)
+		return (1);
+	if (*r > 255 || *g > 255 || *b > 255)
+		return (1);
+	return (0);
 }
 
 uint32_t	pasthexa(char *line, t_map *data, t_tmp *map)
@@ -66,10 +69,11 @@ uint32_t	pasthexa(char *line, t_map *data, t_tmp *map)
 		ft_free_stringtab(tmp);
 		error_colors(line, 5, data, map);
 	}
-	r = 0;
-	g = 0;
-	b = 0;
-	loop_hexa(tmp, &r, &g, &b);
+	r = -1;
+	g = -1;
+	b = -1;
+	if (loop_hexa(tmp, &r, &g, &b))
+		error_colors(line, 0, data, map);
 	ft_free_stringtab(tmp);
 	return ((r << 24) + ((g) << 16) + ((b << 8)) + 255);
 }

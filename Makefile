@@ -1,82 +1,138 @@
-NAME=cub3d
-CC=cc
-CFLAGS= -O3 -Wall -Werror -Wextra -I./MLX42/include -g 
-MLXFLAGS= -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
-RM=rm -rf
+NAME = cub3d
+CC = cc
+MAKEFLAGS += --no-print-directory
+CFLAGS = -O3 -Wall -Werror -Wextra -I./MLX42/include -g
+MLXFLAGS = -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
+RM = rm -rf
 
-SRCS=	src/cub3d.c \
-		src/read_file.c \
-		src/t_tmp.c \
-		src/texture.c \
-		src/init_anim.c
-OBJS=$(SRCS:.c=.o)
+SRCS_DIR = src
+PARS_DIR = src/parsing
+DISP_DIR = src/display
+OBJS_DIR = OBJS
 
-PARS_DIR=src/parsing
-PARS=$(PARS_DIR)/parsing.a
+SRCS = cub3d.c \
+       read_file.c \
+       t_tmp.c \
+       texture.c \
+       init_anim.c
 
-DISP_DIR=src/display
-DISP=$(DISP_DIR)/display.a
+PARS_SRCS = parsing.c \
+            pars_line.c \
+            pars_map.c \
+            check_line.c \
+            printerrorpars.c \
+            print_error.c
 
-LIBFT_DIR= includes/libft
-LIBFT=$(LIBFT_DIR)/libft.a
+DISP_SRCS = minimap.c \
+            player.c \
+            raycasting.c \
+            menu.c \
+            option.c \
+            fonts.c \
+            animation.c \
+            raycast_item.c
 
-CYAN='\033[1;36m'
-BLUE='\033[1;34m'
-GREEN='\033[1;32m'
-WHITE='\033[1;37m'
+ALL_SRCS = $(SRCS) $(PARS_SRCS) $(DISP_SRCS)
 
-all : $(NAME)
+OBJS = $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
 
-$(NAME) : MLX $(LIBFT) $(PARS) $(DISP) $(OBJS)
-	$(MLX)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARS) $(DISP) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
-	@mv src/*.o OBJS
-	@clear
-	@echo ${GREEN}">-Compilation successful-<"${WHITE};
+LIBFT_DIR = includes/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-%.o : %.c includes/cub3d.h
+CYAN = \033[1;36m
+BLUE = \033[1;34m
+GREEN = \033[1;32m
+GC = \033[6;32m
+WHITE = \033[1;37m
+BAR_LENGTH = 20
+
+all: $(NAME)
+
+$(NAME): MLX $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
+	clear
+	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+$(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅"
+	@echo "$(GC)Compilation Finish$(WHITE)"
+
+TOTAL := $(words $(SRCS))
+COUNT = 0
+
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT)/$(TOTAL))"
 
-MLX :
-	@if ls | grep -q "MLX42"; then \
-		clear; \
-		echo "MLX42 already exist"; \
+TOTAL_P := $(words $(PARS_SRCS))
+COUNT_P = 0
+
+$(OBJS_DIR)/%.o: $(PARS_DIR)/%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT_P=$(shell echo $$(($(COUNT_P)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT_P) * $(BAR_LENGTH) / $(TOTAL_P) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT_P)/$(TOTAL_P))"
+
+TOTAL_D := $(words $(DISP_SRCS))
+COUNT_D = 0
+
+$(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT_D=$(shell echo $$(($(COUNT_D)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	$(GREEN) ✅\n$(BLUE)Compiling Display :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT_D) * $(BAR_LENGTH) / $(TOTAL_D) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT_D)/$(TOTAL_D))"
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
+MLX:
+	@clear
+	@if [ -d "MLX42" ]; then \
+		echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅"; \
 	else \
 		git clone https://github.com/codam-coding-college/MLX42.git; \
 		cmake ./MLX42 -B ./MLX42/build; \
-		make -C ./MLX42/build --no-print-directory -j4; \
-		make --directory ./MLX42/build; \
+		make -s -C ./MLX42/build -j4; \
+		echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅"; \
 	fi
 
-$(LIBFT) :
-	@mkdir OBJS
+$(LIBFT):
 	@make --directory $(LIBFT_DIR)
 
-$(PARS) :
-	@make --directory $(PARS_DIR)
+clean:
+	@$(RM) $(OBJS_DIR)
+	clear
+	@echo "$(BLUE)OBJS clear     : ✅$(WHITE)"
 
-$(DISP) :
-	@make --directory $(DISP_DIR)
+fclean: clean
+	@$(RM) $(NAME)
+	@echo "$(BLUE)$(NAME) clear    : ✅$(WHITE)"
 
-clean :
-	@$(RM) OBJS
-	@clear
-	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
-
-fclean : clean
-	@$(RM) $(PARS) $(DISP) $(LIBFT) $(NAME)
-	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
-
-end :
+end: fclean
 	@$(RM) MLX42
-	@echo ${BLUE}"\n>------MLX42 clean-------<\n"${WHITE}
+	@echo "$(BLUE)Removing MLX42 : ✅$(WHITE)"
 
-re : fclean all
-	@clear
-	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
-	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
-	@echo ${GREEN}">-Compilation successful-<"${WHITE};
+re: fclean all
 
-bonus : all
+bonus: all
 
-.PHONY: all clean fclean re bonus MLX end
+.PHONY: all clean fclean re bonus MLX

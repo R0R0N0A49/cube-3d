@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 14:55:44 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:28:06 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ void	init_item(t_item *item, t_map *data)
 	TXT *tmp;
 
 	item->enabled = true;
-//	item->posy = 6.5;
+	item->posy = data->game->player_y - 5;
 //	item->posx = 3.5;
-//	item->posx = 14.5;
+	item->posx = data->game->player_x;
 //	item->posy = 1.5;
-	creat_pos_item(item, data);
+//	creat_pos_item(item, data);
 //	data->weapon.index_weapon = 1;
 	data->weapon.index_weapon = rand() % 2;
 	printf("pos_x = %f / pos_y = %f\n", item->posx, item->posy);

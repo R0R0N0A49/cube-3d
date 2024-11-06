@@ -344,6 +344,6 @@ int	main(int argc, char **argv)
 	}
 	cub3d(&data);
 	free_struct(&data);
-	system("killall paplay");
+	// system("killall paplay");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:14:37 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/24 13:27:36 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:09:48 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int	print_charerror(char **line, int posline, int pos, t_map *data)
 {
 	int	k;
 
+	ft_putstr_fd(RED, STDERR_FILENO);
 	ft_putstr_fd("Error\nwrong char at line ", STDERR_FILENO);
 	ft_putnbr_fd(posline + 1, STDERR_FILENO);
 	ft_putstr_fd(" at position ", STDERR_FILENO);
 	ft_putnbr_fd(pos + 1, STDERR_FILENO);
 	ft_putstr_fd("\n\n", STDERR_FILENO);
+	ft_putstr_fd(WHITE, STDERR_FILENO);
 	k = -1;
 	while (k++ < posline)
 		error_pline(line[k], posline, pos, k);
@@ -77,20 +79,19 @@ void	print_error(char *line, t_map *data, t_tmp *map)
 	int	index;
 
 	ft_putstr_fd(RED, STDERR_FILENO);
-	write(STDERR_FILENO, "Error\n", 6);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	if (verif_start_line(line))
 	{
 		ft_putstr_fd("repetition of the texture for ", STDERR_FILENO);
-		write(STDERR_FILENO, line, 2);
+		ft_putstr_fd(line, STDERR_FILENO);
 		index = 7;
 	}
 	else if (line[0] == '\n')
 		index = write(STDERR_FILENO, "the map must not contain an"
-				" empty line", 38) - 30;
+				" empty line/n", 39) - 31;
 	else
 		index = write(STDERR_FILENO, "the first lines must be tex"
-				"ture or color", 40) - 31;
-	write(STDERR_FILENO, "\n", 1);
+				"ture or color/n", 41) - 32;
 	ft_putstr_fd(WHITE, STDERR_FILENO);
 	free(line);
 	free_struct(data);

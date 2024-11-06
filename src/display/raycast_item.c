@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 13:04:43 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:29:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void    print_color(t_item *item, t_map *data, int x, int y)
 	col = ((uint32_t *)item->textures[item->index]->pixels)[ft_abs(
 			item->textures[item->index]->height * (y) - (x))];
 	color = color_tex(col);
-	if (item->item_dist >= FOG_MIN && data->fog == true)
-		color = apply_fog(color, item->item_dist);
-	else if (item->item_dist >= FOG_MAX)
+	if (item->item_dist / 5 >= 5 && data->fog == true)
+		color = apply_fog(color, item->item_dist / 5);
+	else if (item->item_dist / 5 >= FOG_MAX && data->fog == true)
 		color = FOG;
 	else
 		color = color_tex(col);
@@ -74,6 +74,7 @@ void	display_item(t_map *data, t_item *item)
 {
 	anim_item(item);
 	item->item_dist = (data->game->player_x - item->posx) * (data->game->player_x - item->posx) + (data->game->player_y - item->posy) * (data->game->player_y - item->posy);
+//	printf("dist = %f\n", item->item_dist);
 	if (item->item_dist < 0.5)
 	{
 		item->enabled = false;
