@@ -15,12 +15,12 @@
 void	error_file(char *file, int index)
 {
 	ft_putstr_fd(RED, 2);
-	write(2, "Error\n", 6);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	if (index == 1)
 	{
-		write(STDERR_FILENO, "the file \"", 10);
-		write(STDERR_FILENO, file, ft_strlen(file));
-		write(STDERR_FILENO, "\" have a wrong format\n", 22);
+		ft_putstr_fd("the file \"", STDERR_FILENO);
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd("\" have a wrong format\n", STDERR_FILENO);
 	}
 	if (index == 2)
 		ft_putstr_fd("CUB3D must have file as argument\n", 2);
@@ -31,7 +31,7 @@ void	error_file(char *file, int index)
 void	error_player(int player, t_map *data)
 {
 	ft_putstr_fd(RED, 2);
-	write(2, "Error\n", 6);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd("There are ", 2);
 	ft_putnbr_fd(player, 2);
 	if (player > 1)

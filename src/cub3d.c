@@ -311,6 +311,7 @@ void	cub3d(t_map *data)
 	fonts_update(data);
 	menu(data);
 	mlx_loop_hook(data->mlx, loop, data);
+	mlx_scroll_hook(data->mlx, scroll, data);
 	mlx_cursor_hook(data->mlx, cursor, data);
 	mlx_mouse_hook(data->mlx, mouse, data);
 	mlx_key_hook(data->mlx, key_press, data);
@@ -343,6 +344,6 @@ int	main(int argc, char **argv)
 	}
 	cub3d(&data);
 	free_struct(&data);
-	system("killall paplay");
+	// system("killall paplay");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 14:36:45 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:32:27 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_item
 	bool	enabled;
 	bool	isvisible;
 	int 	x;
+	int 	x_max;
 	double	item_dist;
 	double	sprite_x;
 	double	sprite_y;
@@ -174,6 +175,7 @@ typedef struct	s_anim
 	IMG			*center;
 	TXT			*center_txt;
 	bool		fire;
+	IMG			**selected;
 }	t_anim;
 
 typedef struct s_option

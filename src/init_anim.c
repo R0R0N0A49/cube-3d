@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 10:36:22 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 08:51:15 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,76 @@ static void	init_img(t_map *data, t_textures *weapon)
 	}
 }
 
+void	creat_pos_item(t_item *item, t_map *data)
+{
+	int y;
+	int x;
+
+	srand(time(NULL));
+	y = 0;
+	while (data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			if (data->map[y][x] == '0')
+			{
+				if (rand() % 101 == 99)
+				{
+					item->posx = x + 0.5;
+					item->posy = y + 0.5;
+					return ;
+				}
+			}
+			x++;
+		}
+		y++;
+	}
+	creat_pos_item(item, data);
+}
+
 void	init_item(t_item *item, t_map *data)
 {
+	TXT *tmp;
+
 	item->enabled = true;
-	item->posx = 5.5;
+	item->posy = data->game->player_y - 5;
 //	item->posx = 3.5;
-	item->posy = 10.5;
+	item->posx = data->game->player_x;
 //	item->posy = 1.5;
+//	creat_pos_item(item, data);
+//	data->weapon.index_weapon = 1;
+	data->weapon.index_weapon = rand() % 2;
+	printf("pos_x = %f / pos_y = %f\n", item->posx, item->posy);
 	data->weapon.item.x = -1;
 	item->isvisible = false;
 	item->index = 0;
 	item->textures = calloc(2, sizeof(TXT *));
-	item->textures[0] = mlx_load_png("tiles/animation/pm.png"); // a free
-	item->textures[1] = mlx_load_png("tiles/animation/pm_2.png"); // a free
+	if (data->weapon.index_weapon == 0) {
+		item->textures[0] = mlx_load_png("tiles/animation/pm.png"); // a free
+		item->textures[1] = mlx_load_png("tiles/animation/pm_2.png"); // a free
+	}
+	else
+	{
+		item->textures[0] = mlx_load_png("tiles/animation/db.png"); // a free
+		item->textures[1] = mlx_load_png("tiles/animation/db_1.png"); // a free
+	}
+	data->weapon.selected = calloc(3, sizeof(IMG *));
+	tmp = mlx_load_png("tiles/animation/db_item.png");
+	data->weapon.selected[0] = mlx_texture_to_image(data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	tmp = mlx_load_png("tiles/animation/pm_item.png");
+	data->weapon.selected[1] = mlx_texture_to_image(data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	tmp = mlx_load_png("tiles/animation/ammo.png");
+	data->weapon.selected[2] = mlx_texture_to_image(data->mlx, tmp);
+	mlx_delete_texture(tmp);
+	data->weapon.selected[0]->enabled = false;
+	data->weapon.selected[1]->enabled = false;
+	data->weapon.selected[2]->enabled = false;
+	mlx_image_to_window(data->mlx, data->weapon.selected[0], WINDOWSW - 256, WINDOWSH - 256);
+	mlx_image_to_window(data->mlx, data->weapon.selected[1], WINDOWSW - 256, WINDOWSH - 256);
+	mlx_image_to_window(data->mlx, data->weapon.selected[2], WINDOWSW - 175, WINDOWSH - 128);
 }
 
 void	init_anim(t_map *data)
@@ -91,7 +148,6 @@ void	init_anim(t_map *data)
 	data->weapon.time = get_time();
 	data->weapon.enable_anim = true;
 	data->weapon.nb_availed_weapon = 1;
-	data->weapon.index_weapon = 0;
 	data->weapon.fire = false;
 	data->weapon.barrel.enable = true;
 	data->weapon.e11.enable = false;

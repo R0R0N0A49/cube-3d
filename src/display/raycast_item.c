@@ -6,23 +6,23 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 12:44:14 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 08:51:32 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	print_color(t_item *item, t_map *data, int x, int y)
+void    print_color(t_item *item, t_map *data, int x, int y)
 {
-	uint32_t	col;
-	uint32_t	color;
+	uint32_t    col;
+	uint32_t    color;
 
 	col = ((uint32_t *)item->textures[item->index]->pixels)[ft_abs(
 			item->textures[item->index]->height * (y) - (x))];
 	color = color_tex(col);
-	if (item->item_dist >= FOG_MIN && data->fog == true)
-		color = apply_fog(color, item->item_dist);
-	else if (item->item_dist >= FOG_MAX)
+	if (item->item_dist / 5 >= 5 && data->fog == true)
+		color = apply_fog(color, item->item_dist / 5);
+	else if (item->item_dist / 5 >= FOG_MAX && data->fog == true)
 		color = FOG;
 	else
 		color = color_tex(col);
@@ -73,12 +73,15 @@ static void	anim_item(t_item *item)
 void	display_item(t_map *data, t_item *item)
 {
 	anim_item(item);
-	item->item_dist = (data->game->player_x - item->posx) * (data->game->player_x - item->posx) - (data->game->player_y - item->posy) * (data->game->player_y - item->posy);
+	item->item_dist = (data->game->player_x - item->posx) * (data->game->player_x - item->posx) + (data->game->player_y - item->posy) * (data->game->player_y - item->posy);
+//	printf("dist = %f\n", item->item_dist);
 	if (item->item_dist < 0.5)
 	{
 		item->enabled = false;
 		data->weapon.nb_availed_weapon = 2;
-		data->weapon.index_weapon = 1;
+		data->weapon.selected[data->weapon.index_weapon]->enabled = false;
+		data->weapon.index_weapon = !data->weapon.index_weapon;
+		data->weapon.selected[data->weapon.index_weapon]->enabled = true;
 	}
 	item->sprite_x = item->posx - data->game->player_x;
 	item->sprite_y = item->posy - data->game->player_y;
@@ -100,6 +103,10 @@ void	display_item(t_map *data, t_item *item)
 		item->drawstart_x = 0;
 	if (item->drawend_x >= WINDOWSW)
 		item->drawend_x = WINDOWSW - 1;
+	if (item->drawstart_x < item->x)
+		item->drawstart_x = item->x;
+	if (item->drawend_x > item->x_max)
+		item->drawend_x = item->x_max;
 	print_item(data, item);
 	data->weapon.item.isvisible = false;
 	data->weapon.item.x = -1;

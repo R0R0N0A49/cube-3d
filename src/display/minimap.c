@@ -130,10 +130,11 @@ void draw_circle_with_thickness(t_map *data, int xc, int yc, int radius, int thi
 
 void	loop_top(t_map *data, int j, int i)
 {
-	int	save;
+//	int	save;
 
-	save = i;
+//	save = i;
 	(void)j;
+	(void)i;
 	draw_circle_with_thickness(data, 150, 150, 100, 2);
 	draw_player(data, 150, 150, 0xFFFF);
 	/*while (data->map[j])
