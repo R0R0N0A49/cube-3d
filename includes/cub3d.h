@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 12:48:47 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:26:46 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,15 @@ long	get_time(void);
 void	choose_weapon(t_map *data);
 
 void		display_item(t_map *data, t_item *item);
-uint32_t	color_fog(int32_t a, t_ray *ray);
-uint32_t	color_tex(int32_t r);
 void		try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
 int			ft_abs(int nb);
 void	scroll(double i, double y, void *param);
+void draw_minimap(t_map *data);
+size_t	ft_strlen_w(char **s);
+
 uint32_t	apply_fog(uint32_t color, double current_dist);
+uint32_t 	ft_lerp_color(uint32_t color1, uint32_t color2, double t);
+uint32_t	color_fog(int32_t a, t_ray *ray);
+uint32_t	color_tex(int32_t r);
 
 #endif

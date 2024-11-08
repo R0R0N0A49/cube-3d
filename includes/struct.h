@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 12:32:27 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:22:26 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ typedef struct s_mini
 {
 	int	pos_x;
 	int	pos_y;
+	int	map_x;
+	int	map_y;
+	double	iso_x;
+	double	iso_y;
+	int	losange_width;
+	int	losange_height;
+	int mini_x;
+	int mini_y;
+	int player_minimap_x;
+	int player_minimap_y;
+	int corners[4][2];
+	double slope;
+	int adj_color;
+	double	dx;
+	double	dy;
 }	t_mini;
 
 typedef struct s_tmp
@@ -240,6 +255,7 @@ typedef struct s_map
 	uint32_t	down;
 	IMG		*rayc;
 	IMG		*minima;
+	IMG		*mini_iso;
 	IMG		*menu;
 	double	rotspeed;
 	double 	speed;
@@ -253,7 +269,7 @@ typedef struct s_map
 	char	*ifps;
 	time_t	time_fps;
 	t_ray	*raycast;
-	t_mini	*mini_map;
+	t_mini	*m_map;
 	t_game	*game;
 	t_textures	font;
 	t_button	*but_play;
