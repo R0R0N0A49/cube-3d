@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/30 12:46:33 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 10:19:38 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	mini_map(t_map *data, mlx_t *mlx)
 			{
 				data->game->player_x = (double)i + 0.5;
 				data->game->player_y = (double)j + 0.5;
-				data->mini_map->pos_x = i;
-				data->mini_map->pos_y = j;
+				data->m_map->pos_x = i;
+				data->m_map->pos_y = j;
 				if (data->map[j][i] == 'N')
 				{
 					data->game->plane_x = 0.66;
@@ -164,6 +164,7 @@ void	cub3d(t_map *data)
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
+	data->mini_iso = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 
 	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
@@ -218,7 +219,7 @@ void	cub3d(t_map *data)
 	data->fps = 0;
 	data->menu_option->play_music = false; // a changer
 	data->menu_option->display_map = false;
-	data->menu_option->display_fps = false;
+	data->menu_option->display_fps = true;
 	data->menu_option->night_mode = false;
 	data->menu_option->but_music = &music;
 	data->menu_option->but_map = &fov;
@@ -238,7 +239,7 @@ void	cub3d(t_map *data)
 	data->fog = true;
 	data->pause = true;
 	data->menu_option->visible = false;
-	data->mini_map = &map;
+	data->m_map = &map;
 	data->game = &game;
 	data->raycast = &raycast;
 	data->speed = 2.0;
@@ -270,6 +271,7 @@ void	cub3d(t_map *data)
 	data->but_edit->press_enter = false;
 	data->but_exit->press_enter = false;
 	data->minima->enabled = false;
+	data->mini_iso->enabled = false;
 	data->game->moove_cur = false;
 	mini_map(data, data->mlx);
 	data->cubd = mlx_texture_to_image(data->mlx, data->cub);
@@ -280,6 +282,7 @@ void	cub3d(t_map *data)
 	data->menu = mlx_texture_to_image(data->mlx, data->menufd);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
+	mlx_image_to_window(data->mlx, data->mini_iso, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu, 0, 0);
 	mlx_image_to_window(data->mlx, data->cubd, (WINDOWSW / 2 - WINDOWSW / 9), 50);
 	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 310);

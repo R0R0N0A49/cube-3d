@@ -1,7 +1,7 @@
-NAME = cub3d
+NAME = cub3D
 CC = cc
 MAKEFLAGS += --no-print-directory
-CFLAGS = -O3 -Wall -Werror -Wextra -I./MLX42/include -g
+CFLAGS = -O2 -Wall -Werror -Wextra -I./MLX42/include -g
 MLXFLAGS = -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM = rm -rf
 
@@ -30,7 +30,9 @@ DISP_SRCS = minimap.c \
             option.c \
             fonts.c \
             animation.c \
-            raycast_item.c
+            raycast_item.c \
+			mini_iso.c \
+			color_raycast.c
 
 ALL_SRCS = $(SRCS) $(PARS_SRCS) $(DISP_SRCS)
 
