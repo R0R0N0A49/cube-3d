@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/05 11:28:06 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:03:29 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ static void	init_img(t_map *data, t_textures *weapon)
 	while (i < weapon->nb_textures)
 	{
 		weapon->image[i] = mlx_texture_to_image(data->mlx,
-												weapon->textures[i]);
+				weapon->textures[i]);
 		mlx_resize_image(weapon->image[i], weapon->image[i]->width * 1.7,
-						 weapon->image[i]->height * 1.7);
+			weapon->image[i]->height * 1.7);
 		if (!weapon->image[i])
 			ft_error();
 		mlx_image_to_window(data->mlx, weapon->image[i], (int32_t)(
-									(float)(WINDOWSW - weapon->image[0]->width) / 2),
-							WINDOWSH - weapon->image[0]->height);
+				(float)(WINDOWSW - weapon->image[0]->width) / 2),
+			WINDOWSH - weapon->image[0]->height);
 		weapon->image[i]->enabled = false;
 		i++;
 	}
@@ -73,8 +73,8 @@ static void	init_img(t_map *data, t_textures *weapon)
 
 void	creat_pos_item(t_item *item, t_map *data)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	srand(time(NULL));
 	y = 0;
@@ -99,48 +99,65 @@ void	creat_pos_item(t_item *item, t_map *data)
 	creat_pos_item(item, data);
 }
 
+void	info_item(TXT *tmp, t_map *data, int i)
+{
+	data->weapon.selected[i] = mlx_texture_to_image(data->mlx, tmp);
+	data->weapon.selected[i]->enabled = false;
+	if (i < 2)
+		mlx_image_to_window(data->mlx, data->weapon.selected[i],
+			WINDOWSW - 256, WINDOWSH - 256);
+	else
+		mlx_image_to_window(data->mlx, data->weapon.selected[i],
+			WINDOWSW - 175, WINDOWSH - 128);
+}
+
+void	txt_item(char *src, t_item *item)
+{
+	int		i;
+	char	*tmp;
+	char	*link;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (i == 0)
+			tmp = ft_strjoin(src, ".png");
+		else
+			tmp = ft_strjoin(src, "_1.png");
+		link = ft_strjoin("tiles/animation/item/", tmp);
+		free(tmp);
+		item->textures[i] = mlx_load_png(link);
+		free(link);
+		i++;
+	}
+}
+
 void	init_item(t_item *item, t_map *data)
 {
-	TXT *tmp;
+	TXT	*tmp;
 
 	item->enabled = true;
-	item->posy = data->game->player_y - 5;
-//	item->posx = 3.5;
-	item->posx = data->game->player_x;
-//	item->posy = 1.5;
-//	creat_pos_item(item, data);
-//	data->weapon.index_weapon = 1;
+	creat_pos_item(item, data);
 	data->weapon.index_weapon = rand() % 2;
 	printf("pos_x = %f / pos_y = %f\n", item->posx, item->posy);
 	data->weapon.item.x = -1;
 	item->isvisible = false;
 	item->index = 0;
 	item->textures = calloc(2, sizeof(TXT *));
-	if (data->weapon.index_weapon == 0) {
-		item->textures[0] = mlx_load_png("tiles/animation/pm.png"); // a free
-		item->textures[1] = mlx_load_png("tiles/animation/pm_2.png"); // a free
-	}
+	if (data->weapon.index_weapon == 0)
+		txt_item("pm", item);
 	else
-	{
-		item->textures[0] = mlx_load_png("tiles/animation/db.png"); // a free
-		item->textures[1] = mlx_load_png("tiles/animation/db_1.png"); // a free
-	}
+		txt_item("db", item);
 	data->weapon.selected = calloc(3, sizeof(IMG *));
-	tmp = mlx_load_png("tiles/animation/db_item.png");
-	data->weapon.selected[0] = mlx_texture_to_image(data->mlx, tmp);
+	tmp = mlx_load_png("tiles/animation/item/db_item.png");
+	info_item(tmp, data, 0);
 	mlx_delete_texture(tmp);
-	tmp = mlx_load_png("tiles/animation/pm_item.png");
-	data->weapon.selected[1] = mlx_texture_to_image(data->mlx, tmp);
+	tmp = mlx_load_png("tiles/animation/item/pm_item.png");
+	info_item(tmp, data, 1);
 	mlx_delete_texture(tmp);
-	tmp = mlx_load_png("tiles/animation/ammo.png");
-	data->weapon.selected[2] = mlx_texture_to_image(data->mlx, tmp);
+	tmp = mlx_load_png("tiles/animation/item/ammo.png");
+	info_item(tmp, data, 2);
 	mlx_delete_texture(tmp);
-	data->weapon.selected[0]->enabled = false;
-	data->weapon.selected[1]->enabled = false;
-	data->weapon.selected[2]->enabled = false;
-	mlx_image_to_window(data->mlx, data->weapon.selected[0], WINDOWSW - 256, WINDOWSH - 256);
-	mlx_image_to_window(data->mlx, data->weapon.selected[1], WINDOWSW - 256, WINDOWSH - 256);
-	mlx_image_to_window(data->mlx, data->weapon.selected[2], WINDOWSW - 175, WINDOWSH - 128);
 }
 
 void	init_anim(t_map *data)

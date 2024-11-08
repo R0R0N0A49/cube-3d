@@ -48,7 +48,7 @@ static void	print_item(t_map *data, t_item *item)
 				item->d = item->py * 256 - WINDOWSH * 128 + item->height * 128;
 				item->tex_y = (int)((item->d * item->textures[item->index]->height)
 						/ item->height) / 256;
-				if (item->tex_y && item->py > 0 && item->py < WINDOWSH)
+					if (item->tex_y && item->py > 0 && item->py < WINDOWSH)
 					print_color(item, data, item->tex_x, item->tex_y);
 				item->py++;
 			}
