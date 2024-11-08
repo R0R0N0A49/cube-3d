@@ -23,10 +23,12 @@ CC=cc
 CFLAGS=-Wextra -Werror -Wall
 ARRC=ar -rcs
 
-CYAN='\033[1;46m'
-BLUE='\033[1;44m'
-GREEN='\033[1;42m'
-WHITE='\033[0;37m'
+CYAN = \033[1;36m
+BLUE = \033[1;34m
+GREEN = \033[1;32m
+GC = \033[6;32m
+WHITE = \033[1;37m
+BAR_LENGTH = 20
 
 all: $(NAME)
 
@@ -34,8 +36,21 @@ $(NAME): $(OBJS)
 	@$(ARRC) $(NAME) $(OBJS)
 	@mv *.o ../../OBJS
 
+TOTAL := $(words $(SRC))
+COUNT = 0
+
 %.o: %.c libft.h
 	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT)/$(TOTAL))"
+
 clean:
 	@$(RM) $(OBJS)
 

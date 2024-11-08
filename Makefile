@@ -53,7 +53,7 @@ all: $(NAME)
 $(NAME): CREATE_DIR MLX $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 	clear
-	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
 $(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅"
 	@echo "$(GC)Compilation Finish$(WHITE)"
 
@@ -67,7 +67,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
@@ -82,7 +82,7 @@ $(OBJS_DIR)/%.o: $(PARS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT_P=$(shell echo $$(($(COUNT_P)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT_P) * $(BAR_LENGTH) / $(TOTAL_P) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
@@ -97,7 +97,7 @@ $(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT_D=$(shell echo $$(($(COUNT_D)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
 	$(GREEN) ✅\n$(BLUE)Compiling Display :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT_D) * $(BAR_LENGTH) / $(TOTAL_D) )); \
