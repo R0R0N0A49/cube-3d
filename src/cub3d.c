@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 13:28:27 by derey            ###   ########.fr       */
+/*   Updated: 2024/10/30 12:46:33 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ void	cub3d(t_map *data)
 	data->menu_option->but_rtn->click = false;
 	option(data);
 	data->time_fps = time(NULL);
-	data->fog = false;
+	data->fog = true;
 	data->pause = true;
 	data->menu_option->visible = false;
 	data->mini_map = &map;

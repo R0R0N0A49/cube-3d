@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/10/29 16:01:20 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:36:22 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static void	init_img(t_map *data, t_textures *weapon)
 void	init_item(t_item *item, t_map *data)
 {
 	item->enabled = true;
-//	item->posx = 5.5;
-	item->posx = 3.5;
-//	item->posy = 10.5;
-	item->posy = 1.5;
+	item->posx = 5.5;
+//	item->posx = 3.5;
+	item->posy = 10.5;
+//	item->posy = 1.5;
 	data->weapon.item.x = -1;
 	item->isvisible = false;
 	item->index = 0;

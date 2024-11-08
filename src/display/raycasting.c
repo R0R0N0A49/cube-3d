@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/10/29 16:07:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:23:53 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,20 +367,6 @@ size_t	ft_strlen_w(char **s)
 	return (i);
 }
 
-void draw_circles(int center_x, int center_y, int radius, int color, t_map *data)
-{
-    for (int y = -radius; y <= radius; y++)
-    {
-        for (int x = -radius; x <= radius; x++)
-        {
-            if (x * x + y * y <= radius * radius) // Vérifie si le point est dans le cercle
-            {
-                try_put_pixel(data->rayc, center_x + x, center_y + y, color);
-            }
-        }
-    }
-}
-
 void draw_lines(t_map *data, int x0, int y0, int x1, int y1, uint32_t color)
 {
     int dx = abs(x1 - x0);
@@ -534,7 +520,7 @@ void draw_minimap(t_map *data)
     iso_transform(data->game->player_x, data->game->player_y, &iso_x, &iso_y);
     int player_minimap_x = (int)(iso_x * MINIMAP_SCALE) + MINIMAP_OFFSET_X;
     int player_minimap_y = (int)(iso_y * MINIMAP_SCALE) + MINIMAP_OFFSET_Y;
-    draw_isometric_rhombus(player_minimap_x, player_minimap_y, 10, 5, PLAYER_COLOR, data);
+    draw_isometric_rhombus(player_minimap_x, player_minimap_y, 10, 10, PLAYER_COLOR, data);
 }
 
 void	draw_ray(int x, t_ray *ray, t_map *data)
@@ -585,7 +571,7 @@ void	raycasting(t_map *data)
 		x++;
 	}
 	if (data->plafond)
-		  draw_minimap(data);
+		draw_minimap(data);
 	if (data->weapon.item.isvisible == true)
 		display_item(data, &data->weapon.item);
 }
