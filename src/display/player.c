@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/10/30 11:37:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:29:19 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	exit_cub3d(t_map *data)
 void	play_game(t_map *data)
 {
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
-	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
+	mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);
 	data->weapon.selected[2]->enabled = true;
 	data->weapon.selected[data->weapon.index_weapon]->enabled = true;
 	data->pause = false;
@@ -568,14 +568,14 @@ void	cursor(double xpos, double ypos, void* param)
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	test += (xpos - WINDOWSW / 2) * data->speed;
+	test += (xpos - WINDOWSW * 0.5) * data->speed;
 	
 	if (test < 0 && data->pause == false)
 		data->game->rotate_left = true;
 	if (test > 0 && data->pause == false)
 		data->game->rotate_right = true;
 	if (data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
-		mlx_set_mouse_pos(data->mlx, WINDOWSW / 2,  WINDOWSH /2);
+		mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5,  WINDOWSH * 0.5);
 	if (test == 0 && data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
 	{
 		data->game->rotate_right = false;
@@ -693,6 +693,12 @@ void	key_press(mlx_key_data_t keydata, void *param)
 			if (data->menu_option->index == 4)
 				data->menu_option->but_night->press_enter = true;
 		}
+		if (keydata.key == MLX_KEY_TAB && data->pause == false)
+			{
+				data->mini_iso->enabled = !data->mini_iso->enabled;
+				data->weapon.center->enabled = !data->weapon.center->enabled;
+				data->weapon.enable_anim = !data->weapon.enable_anim;
+			}
 		if (keydata.key == MLX_KEY_P && data->pause == false)
 		{
 			data->menu_option->night_mode = !data->menu_option->night_mode;

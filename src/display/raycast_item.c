@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 08:51:32 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 14:34:10 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	print_item(t_map *data, t_item *item)
 	while (item->px < item->drawend_x)
 	{
 		item->py = item->drawstart_y;
-		item->tex_x = (int)-((item->px - (-item->width / 2 + item
+		item->tex_x = (int)-((item->px - (-item->width * 0.5 + item
 						->screen_x)) * item->textures[item->index]->width
 				/ item->width);
 		if (item->tex_x && item->transform_y > 0
@@ -88,16 +88,16 @@ void	display_item(t_map *data, t_item *item)
 	item->invdet = 1.0 / (data->game->plane_x * data->game->dir_y - data->game->dir_x * data->game->plane_y);
 	item->transform_x = item->invdet * (data->game->dir_y * item->sprite_x - data->game->dir_x * item->sprite_y);
 	item->transform_y = item->invdet * (-data->game->plane_y * item->sprite_x + data->game->plane_x * item->sprite_y);
-	item->screen_x = (int)((WINDOWSW / 2) * (1 + item->transform_x / item->transform_y));
+	item->screen_x = (int)((WINDOWSW * 0.5) * (1 + item->transform_x / item->transform_y));
 	item->height = ft_abs((int)(WINDOWSH/ item->transform_y));
-	item->drawstart_y = -item->height / 2 + WINDOWSH / 2;
+	item->drawstart_y = -item->height * 0.5 + WINDOWSH * 0.5;
 	if (item->drawstart_y < 0)
 		item->drawstart_y = 0;
-	item->drawend_y = item->height / 2 + WINDOWSH / 2;
+	item->drawend_y = item->height * 0.5 + WINDOWSH * 0.5;
 	if (item->drawend_y >= WINDOWSH)
 		item->drawend_y = WINDOWSH - 1;
 	item->width = ft_abs((int)(WINDOWSH / item->transform_y));
-	item->drawstart_x = -item->width / 2 + item->screen_x;
+	item->drawstart_x = -item->width * 0.5 + item->screen_x;
 	item->drawend_x = item->drawstart_x + item->width;
 	if (item->drawstart_x < 0)
 		item->drawstart_x = 0;

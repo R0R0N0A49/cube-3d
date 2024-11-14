@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/11/08 10:27:23 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:25:13 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ void	calcul_projected_cam(t_ray *ray, t_map *data)
 	else
 		ray->wall_dist = (ray->sidedist_y - ray->deltadist_y);
 	ray->line_height = (int)(WINDOWSH / ray->wall_dist);
-	ray->draw_start = -(ray->line_height) / 2 + WINDOWSH / 2;
+	ray->draw_start = -(ray->line_height) * 0.5 + WINDOWSH * 0.5;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = (ray->line_height) / 2 + WINDOWSH / 2;
+	ray->draw_end = (ray->line_height) * 0.5 + WINDOWSH * 0.5;
 	if (ray->draw_end >= WINDOWSH)
 		ray->draw_end = WINDOWSH - 1;
 	if (ray->side == 0)
@@ -153,8 +153,6 @@ void	try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
 		return ;
 	mlx_put_pixel(img, x, y, color);
 }
-
-
 
 void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
@@ -333,21 +331,21 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	tex = get_texture(ray, data);
 	if (data->plafond == true)
 		draw_nuit(ray, data, x, data->nuit);
-	else
+	/*else
 	{
 		while (i < ray->draw_start)
 		{
 			mlx_put_pixel(data->rayc, x, i, data->up);
 			i++;
 		}
-	}
+	}*/
 	ray->texture_x = (int)(ray->wall_x * (double)tex->height);
 	if ((ray->side == 0 && ray->raydir_x > 0)
 		|| (ray->side == 1 && ray->raydir_y < 0))
 		ray->texture_x = tex->width - ray->texture_x - 1;
 	ray->step = 1.0 * tex->height / ray->line_height;
-	ray->texture_pos = (ray->draw_start - WINDOWSH / 2
-			+ ray->line_height / 2) * ray->step;
+	ray->texture_pos = (ray->draw_start - WINDOWSH * 0.5
+			+ ray->line_height * 0.5) * ray->step;
 	draw_tex(ray, data, x, tex);
 	i = ray->draw_end;
 }
@@ -371,7 +369,7 @@ void	raycasting(t_map *data)
 			draw_ceiling(ray, data, x);
 		x++;
 	}
-	if (data->plafond)
+	if (data->mini_iso->enabled)
 		draw_minimap(data);
 	if (data->weapon.item.isvisible == true)
 		display_item(data, &data->weapon.item);

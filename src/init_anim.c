@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:07:53 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 08:51:15 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 14:34:17 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	init_img(t_map *data, t_textures *weapon)
 		if (!weapon->image[i])
 			ft_error();
 		mlx_image_to_window(data->mlx, weapon->image[i], (int32_t)(
-									(float)(WINDOWSW - weapon->image[0]->width) / 2),
+									(float)(WINDOWSW - weapon->image[0]->width) * 0.5),
 							WINDOWSH - weapon->image[0]->height);
 		weapon->image[i]->enabled = false;
 		i++;
@@ -160,8 +160,8 @@ void	init_anim(t_map *data)
 			data->weapon.center_txt);
 	data->weapon.center->enabled = false;
 	mlx_image_to_window(data->mlx, data->weapon.center,
-		(int)(WINDOWSW - data->weapon.center->width) / 2,
-		(int)(WINDOWSH - data->weapon.center->height) / 2);
+		(int)(WINDOWSW - data->weapon.center->width) * 0.5,
+		(int)(WINDOWSH - data->weapon.center->height) * 0.5);
 	init_name(&data->weapon.barrel.walk, 4);
 	init_name(&data->weapon.e11.walk, 4);
 	init_txt(&data->weapon.barrel.walk, "tiles/animation/DOUBLE BARREL/");

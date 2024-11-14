@@ -60,6 +60,12 @@ $(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅"
 TOTAL := $(words $(SRCS))
 COUNT = 0
 
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
+$(LIBFT):
+	@make --directory $(LIBFT_DIR)
+
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
@@ -103,9 +109,6 @@ $(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
 	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
 	@echo "] ($(COUNT_D)/$(TOTAL_D))"
 
-$(OBJS_DIR):
-	@mkdir -p $(OBJS_DIR)
-
 MLX:
 	@clear
 	@if [ -d "MLX42" ]; then \
@@ -116,9 +119,6 @@ MLX:
 		make -s -C ./MLX42/build -j4; \
 		echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅"; \
 	fi
-
-$(LIBFT):
-	@make --directory $(LIBFT_DIR)
 
 clean:
 	@$(RM) $(OBJS_DIR)

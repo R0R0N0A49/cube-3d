@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 10:19:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 14:32:32 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	cub3d(t_map *data)
 	data->mini_iso = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 
-	mlx_set_mouse_pos(data->mlx, WINDOWSW / 2, WINDOWSH / 2);
+	mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);
 	logo = mlx_load_png("./tiles/logo.png"); // a free
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
 	data->img_play = mlx_new_image(data->mlx, 400, 150);
