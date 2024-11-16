@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc
 MAKEFLAGS += --no-print-directory
-CFLAGS = -O2 -Wall -Werror -Wextra -I./MLX42/include -g
+CFLAGS = -Ofast -Wall -Werror -Wextra -I./MLX42/include -g
 MLXFLAGS = -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM = rm -rf
 
@@ -50,12 +50,15 @@ BAR_LENGTH = 20
 
 all: $(NAME)
 
-$(NAME): MLX $(LIBFT) $(OBJS)
+$(NAME): CREATE_DIR MLX $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 	clear
-	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
 $(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅"
 	@echo "$(GC)Compilation Finish$(WHITE)"
+
+CREATE_DIR :
+	@[ -d $(OBJS_DIR) ] || mkdir -p $(OBJS_DIR)
 
 TOTAL := $(words $(SRCS))
 COUNT = 0
@@ -70,7 +73,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
@@ -85,7 +88,7 @@ $(OBJS_DIR)/%.o: $(PARS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT_P=$(shell echo $$(($(COUNT_P)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT_P) * $(BAR_LENGTH) / $(TOTAL_P) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
@@ -100,7 +103,7 @@ $(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
 	@$(eval COUNT_D=$(shell echo $$(($(COUNT_D)+1))))
-	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
 	$(GREEN) ✅\n$(BLUE)Compiling Display :$(CYAN)"
 	@echo -n "["
 	@completed=$$(( $(COUNT_D) * $(BAR_LENGTH) / $(TOTAL_D) )); \
@@ -121,11 +124,13 @@ MLX:
 	fi
 
 clean:
+	@make clean --directory $(LIBFT_DIR)
 	@$(RM) $(OBJS_DIR)
 	clear
 	@echo "$(BLUE)OBJS clear     : ✅$(WHITE)"
 
 fclean: clean
+	@make fclean --directory $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(BLUE)$(NAME) clear    : ✅$(WHITE)"
 

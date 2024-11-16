@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 14:32:32 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/14 13:33:01 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	cub3d(t_map *data)
 	roof.click = false;
 	data->fps = 0;
 	data->menu_option->play_music = false; // a changer
-	data->menu_option->display_map = false;
+	data->menu_option->display_map = true;
 	data->menu_option->display_fps = true;
 	data->menu_option->night_mode = false;
 	data->menu_option->but_music = &music;
@@ -270,7 +270,7 @@ void	cub3d(t_map *data)
 	data->but_option->press_enter = false;
 	data->but_edit->press_enter = false;
 	data->but_exit->press_enter = false;
-	data->minima->enabled = false;
+	data->minima->enabled = true;
 	data->mini_iso->enabled = false;
 	data->game->moove_cur = false;
 	mini_map(data, data->mlx);
@@ -284,15 +284,15 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->minima, 0, 0);
 	mlx_image_to_window(data->mlx, data->mini_iso, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu, 0, 0);
-	mlx_image_to_window(data->mlx, data->cubd, (WINDOWSW / 2 - WINDOWSW / 9), 50);
-	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 310);
-	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 480);
-	mlx_image_to_window(data->mlx, data->img_edit, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 660);
-	mlx_image_to_window(data->mlx, data->img_exit, (WINDOWSW / 2 - WINDOWSW / 6 + 10), 840);
+	mlx_image_to_window(data->mlx, data->cubd, (WINDOWSW * 0.5 - WINDOWSW / 9), 50);
+	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 310);
+	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 480);
+	mlx_image_to_window(data->mlx, data->img_edit, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 660);
+	mlx_image_to_window(data->mlx, data->img_exit, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 840);
 
 	mlx_image_to_window(data->mlx, data->menu_option->bottom, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu_option->rtn, data->menu_option->but_rtn->but_x_min, data->menu_option->but_rtn->but_y_min + 5);
-	mlx_image_to_window(data->mlx, data->menu_option->cub, (WINDOWSW / 2 - WINDOWSW / 9), 50);
+	mlx_image_to_window(data->mlx, data->menu_option->cub, (WINDOWSW * 0.5 - WINDOWSW / 9), 50);
 	mlx_image_to_window(data->mlx, data->menu_option->music, data->menu_option->but_music->but_x_min + 4, data->menu_option->but_music->but_y_min + 15);
 	mlx_image_to_window(data->mlx, data->menu_option->fps, data->menu_option->but_fps->but_x_min + 4, data->menu_option->but_fps->but_y_min + 10);
 	mlx_image_to_window(data->mlx, data->menu_option->roof, data->menu_option->but_night->but_x_min + 4, data->menu_option->but_night->but_y_min + 15);

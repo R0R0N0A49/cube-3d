@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 14:34:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/16 14:13:32 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define WINDOWSH 1080
 # define FONT_H 20
 # define FONT_W 10
-# define CUBE 20
+# define CUBE 30
 # define COLOR_GRID 0x646464
 # define FOG 0xFF
 # define FOG_MIN 5
@@ -39,6 +39,9 @@
 #define PLAYER_BOTTOM_COLOR 0xFF880000  // Rouge foncé
 # define MINIMAP_OFFSET_X 700
 # define MINIMAP_OFFSET_Y 200
+# define X_MINI 1720
+# define Y_MINI 200
+# define R_MINI 150
 # define DEG_TO_RAD(angleInDegrees) ((angleInDegrees) * M_PI / 180.0)
 
 # include <time.h>
