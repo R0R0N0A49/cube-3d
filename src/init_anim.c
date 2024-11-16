@@ -137,7 +137,10 @@ void	init_item(t_item *item, t_map *data)
 	TXT	*tmp;
 
 	item->enabled = true;
-	creat_pos_item(item, data);
+	item->dist = 0.0;
+	item->posx = 31.5;
+	item->posy = 2.5;
+//	creat_pos_item(item, data);
 	data->weapon.index_weapon = rand() % 2;
 	printf("pos_x = %f / pos_y = %f\n", item->posx, item->posy);
 	data->weapon.item.x = -1;
@@ -148,7 +151,7 @@ void	init_item(t_item *item, t_map *data)
 		txt_item("pm", item);
 	else
 		txt_item("db", item);
-	data->weapon.selected = calloc(3, sizeof(IMG *));
+	data->weapon.selected = ft_calloc(3, sizeof(IMG *));
 	tmp = mlx_load_png("tiles/animation/item/db_item.png");
 	info_item(tmp, data, 0);
 	mlx_delete_texture(tmp);
@@ -165,9 +168,6 @@ void	init_anim(t_map *data)
 	data->weapon.time = get_time();
 	data->weapon.enable_anim = true;
 	data->weapon.nb_availed_weapon = 1;
-	data->weapon.fire = false;
-	data->weapon.barrel.enable = true;
-	data->weapon.e11.enable = false;
 	data->weapon.barrel.index_walk = 0;
 	data->weapon.e11.index_walk = 0;
 	data->weapon.barrel.walk = init_txtr(4);

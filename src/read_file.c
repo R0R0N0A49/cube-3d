@@ -56,6 +56,7 @@ void	init_struct(char **src, t_map *data)
 	data->file = -1;
 	if (ft_verif_first(data))
 	{
+		ft_putstr_fd(RED, 2);
 		ft_putstr_fd("error\nfile empty\n", 2);
 		ft_tmpclear(&map, free);
 		exit (free_struct(data));

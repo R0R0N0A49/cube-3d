@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:24:45 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 10:22:26 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/12 13:41:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_ray
 	uint32_t	color;
 	double step;
 	double texture_pos;
+	bool	isdoor;
 }	t_ray;
 
 typedef	struct s_button
@@ -143,15 +144,15 @@ typedef	struct s_textures
 typedef struct s_weapon
 {
 	t_textures	walk;
-	bool		enable;
 	int			index_walk;
 } t_weapon;
 
 typedef struct s_item
 {
+	double	dist;
 	double	posy;
 	double	posx;
-	int	index;
+	int		index;
 	TXT		**textures; // a remplacer
 	bool	enabled;
 	bool	isvisible;
@@ -170,12 +171,11 @@ typedef struct s_item
 	int 	drawstart_x;
 	int 	drawend_y;
 	int 	drawend_x;
-	int			px;
-	int			py;
-	int			tex_x;
-	int			tex_y;
-	int			d;
-	uint32_t	color;
+	int		px;
+	int		py;
+	int		tex_x;
+	int		tex_y;
+	int		d;
 } t_item;
 
 typedef struct	s_anim
@@ -189,7 +189,6 @@ typedef struct	s_anim
 	long		time;
 	IMG			*center;
 	TXT			*center_txt;
-	bool		fire;
 	IMG			**selected;
 }	t_anim;
 
@@ -223,6 +222,43 @@ typedef struct s_option
 	TXT			*roof_txt;
 	IMG			*roof;
 } t_opt;
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}t_vector;
+
+typedef struct s_door
+{
+	TXT		**door;
+	bool	isvisible;
+	bool	isopen;
+	double	i;
+	double	j;
+	int		x;
+	int 	side;
+	double	sidedist_x;
+	double	sidedist_y;
+	int		map_x;
+	int		map_y;
+	double	dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		texture_x;
+	int		texture_y;
+	double	door_x;
+	double	door_y;
+	double	raydir_x;
+	double	raydir_y;
+	double	step;
+	double	texture_pos;
+	double	dist_center;
+	bool	isanime;
+	int		index;
+	long	time;
+}t_door;
 
 typedef struct s_map
 {
@@ -278,6 +314,8 @@ typedef struct s_map
 	t_button	*but_exit;
 	mlx_t	*mlx;
 	t_anim	weapon;
+	t_door	*door;
+	int 	nmb_door;
 }	t_map;
 
 char	**ft_tmp_to_tab(t_tmp *src);

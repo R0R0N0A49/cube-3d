@@ -422,6 +422,17 @@ void	move_w(t_map *data)
 	
 }
 
+int check_open(t_map *data, int x, int y)
+{
+	if (data->map[y][x] == 'D')
+	{
+		if (data->door[index_door(data->door, data->nmb_door, x, y)].isopen)
+			return (0);
+		return (1);
+	}
+	return (0);
+}
+
 void	move_s(t_map *data)
 {
 	double testx;
@@ -432,15 +443,18 @@ void	move_s(t_map *data)
 
 	testx -= data->game->dir_x * data->speed * data->mlx->delta_time;
 	testy -= data->game->dir_y * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1' \
+		|| check_open(data, (int)data->game->player_x, testy))
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+			|| check_open(data, (int)testx, (int)data->game->player_y))
 			return;
 		data->game->player_x = testx;
 		return ;
 	}
 	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+	if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+			|| check_open(data, (int)testx, (int)data->game->player_y))
 		return;
 	data->game->player_x = testx;
 }
@@ -455,15 +469,18 @@ void	move_a(t_map *data)
 
 	testx += data->game->dir_y * data->speed * data->mlx->delta_time;
 	testy -= data->game->dir_x * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1' \
+		|| check_open(data, (int)data->game->player_x, testy))
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+			|| check_open(data, (int)testx, (int)data->game->player_y))
 			return;
 		data->game->player_x = testx;
 		return ;
 	}
 	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+	if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+		|| check_open(data, (int)testx, (int)data->game->player_y))
 		return;
 	data->game->player_x = testx;
 }
@@ -478,15 +495,18 @@ void	move_d(t_map *data)
 
 	testx -= data->game->dir_y * data->speed * data->mlx->delta_time;
 	testy += data->game->dir_x * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	if (data->map[(int)testy][(int)data->game->player_x] == '1' \
+		|| check_open(data, (int)data->game->player_x, testy))
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
+		if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+			|| check_open(data, (int)testx, (int)data->game->player_y))
 			return;
 		data->game->player_x = testx;
 		return ;
 	}
 	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
+	if (data->map[(int)data->game->player_y][(int)testx] == '1' \
+		|| check_open(data, (int)testx, (int)data->game->player_y))
 		return;
 	data->game->player_x = testx;
 }
@@ -535,8 +555,6 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 			data->idx_menu = 0;
 			data->press = true;
 		}
-		else
-			data->weapon.fire = true;
 	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
 	{

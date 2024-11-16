@@ -20,9 +20,9 @@ void    print_color(t_item *item, t_map *data, int x, int y)
 	col = ((uint32_t *)item->textures[item->index]->pixels)[ft_abs(
 			item->textures[item->index]->height * (y) - (x))];
 	color = color_tex(col);
-	if (item->item_dist / 5 >= 5 && data->fog == true)
-		color = apply_fog(color, item->item_dist / 5);
-	else if (item->item_dist / 5 >= FOG_MAX && data->fog == true)
+	if (item->dist >= 5 && data->fog == true)
+		color = apply_fog(color, item->dist);
+	else if (item->dist >= FOG_MAX && data->fog == true)
 		color = FOG;
 	else
 		color = color_tex(col);

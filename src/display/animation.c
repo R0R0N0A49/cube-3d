@@ -62,7 +62,6 @@ void	ft_anim(t_map *data, t_weapon *current, t_weapon *nodisplay)
 		verif_img(current);
 		data->weapon.selected[data->weapon.index_weapon]->enabled = false;
 		data->weapon.selected[2]->enabled = false;
-		data->weapon.fire = false;
 		return ;
 	}
 	else if (is_move(data->game) && get_time() - data->weapon.time >= 300)

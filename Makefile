@@ -14,14 +14,17 @@ SRCS = cub3d.c \
        read_file.c \
        t_tmp.c \
        texture.c \
-       init_anim.c
+       init_anim.c \
+       init_door.c \
 
 PARS_SRCS = parsing.c \
             pars_line.c \
             pars_map.c \
             check_line.c \
             printerrorpars.c \
-            print_error.c
+            print_error.c \
+            pars_start_line.c \
+            pars_door.c
 
 DISP_SRCS = minimap.c \
             player.c \
@@ -32,7 +35,8 @@ DISP_SRCS = minimap.c \
             animation.c \
             raycast_item.c \
 			mini_iso.c \
-			color_raycast.c
+			color_raycast.c \
+			door.c
 
 ALL_SRCS = $(SRCS) $(PARS_SRCS) $(DISP_SRCS)
 
@@ -45,7 +49,7 @@ CYAN = \033[1;36m
 BLUE = \033[1;34m
 GREEN = \033[1;32m
 GC = \033[6;32m
-WHITE = \033[1;37m
+WHITE = \033[0;37m
 BAR_LENGTH = 20
 
 all: $(NAME)
@@ -54,7 +58,7 @@ $(NAME): CREATE_DIR MLX $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 	clear
 	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
-$(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅"
+$(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅$(WHITE)"
 	@echo "$(GC)Compilation Finish$(WHITE)"
 
 CREATE_DIR :

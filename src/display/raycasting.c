@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/11/08 10:27:23 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/16 11:22:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,37 @@ void	init_step(t_ray *ray, t_map *data)
 	}
 }
 
+void	door(t_ray *ray, t_map *data, int x)
+{
+	int tmp;
+
+	tmp = index_door(data->door, data->nmb_door, ray->map_x, ray->map_y);
+	if (tmp == -1)
+		return ;
+	if (!ray_hit_door(data, ray, tmp))
+		return ;
+	data->door[tmp].x = x;
+	data->door[tmp].sidedist_y = ray->sidedist_y;
+	data->door[tmp].sidedist_x = ray->sidedist_x;
+	data->door[tmp].isvisible = true;
+	data->door[tmp].raydir_x = ray->raydir_x;
+	data->door[tmp].raydir_y = ray->raydir_y;
+	data->door[tmp].dist_center = fabs(data->game->player_y - (double)data->door[tmp].map_y - 0.5)
+			+ fabs(data->game->player_x - (double)data->door[tmp].map_x - 0.5);
+	if (data->door[tmp].side == 1)
+		data->door[tmp].dist = ((ray->sidedist_x + 0.5) - ray->deltadist_x);
+	else
+		data->door[tmp].dist = ((ray->sidedist_y + 0.5) - ray->deltadist_y);
+	if (fabs(data->game->player_y - (double)data->door[tmp].map_y - 0.5) <= 2
+			&& fabs(data->game->player_x - (double)data->door[tmp].map_x - 0.5) <= 2)
+	{
+		data->door[tmp].isanime = true;
+		data->door[tmp].isopen = true;
+	}
+	else
+		data->door[tmp].isopen = false;
+}
+
 void	set_side_step(t_ray *ray, t_map *data, int x)
 {
 	int	hit;
@@ -95,15 +126,21 @@ void	set_side_step(t_ray *ray, t_map *data, int x)
 		if (ray->map_y < 0.25 || ray->map_x < 0.25
 			|| ray->map_y > WINDOWSH - 0.25 || ray->map_x > WINDOWSW - 1.25)
 			break ;
-		else if (data->map[ray->map_y][ray->map_x] > '0')
+		else if (data->map[ray->map_y][ray->map_x] > '0' && data->map[ray->map_y][ray->map_x] < 'D')
 			hit = 1;
 		else if (data->weapon.item.enabled && ray->map_y == (int)(data->weapon.item.posy) && ray->map_x == (int)(data->weapon.item.posx))
 		{
 			data->weapon.item.isvisible = true;
+			if (ray->side == 0)
+				data->weapon.item.dist = ray->sidedist_x - ray->deltadist_x;
+			else
+				data->weapon.item.dist = ray->sidedist_y - ray->deltadist_y;
 			if (data->weapon.item.x == -1)
 				data->weapon.item.x = x;
-			data->weapon.item.x_max = x;
+			data->weapon.item.x_max = x; // une autre fonction comme pour door
 		}
+		if (data->map[ray->map_y][ray->map_x] == 'D')
+			door(ray, data, x);
 	}
 }
 
@@ -153,8 +190,6 @@ void	try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
 		return ;
 	mlx_put_pixel(img, x, y, color);
 }
-
-
 
 void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
@@ -335,10 +370,11 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 		draw_nuit(ray, data, x, data->nuit);
 	else
 	{
-		while (i < ray->draw_start)
-		{
-			mlx_put_pixel(data->rayc, x, i, data->up);
-			i++;
+		if (!ray->isdoor) {
+			while (i < ray->draw_start) {
+				mlx_put_pixel(data->rayc, x, i, data->up);
+				i++;
+			}
 		}
 	}
 	ray->texture_x = (int)(ray->wall_x * (double)tex->height);
@@ -359,6 +395,7 @@ void	raycasting(t_map *data)
 
 	x = 0;
 	ray = data->raycast;
+	ray->isdoor = false;
 	while (x < WINDOWSW)
 	{
 		init_raycast(x, ray, data->game);
@@ -369,6 +406,7 @@ void	raycasting(t_map *data)
 		draw_floor(ray, data, x);
 		if (!data->plafond)
 			draw_ceiling(ray, data, x);
+		chois_door(data, ray);
 		x++;
 	}
 	if (data->plafond)

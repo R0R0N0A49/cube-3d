@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 10:26:46 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/16 12:27:25 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/time.h>
 # include <math.h>
 
+void	init_door(t_map *data);
 void	init_struct(char **src, t_map *data);
 int		free_struct(t_map *data);
 int		verif_start_line(char *line);
@@ -84,5 +85,10 @@ uint32_t	apply_fog(uint32_t color, double current_dist);
 uint32_t 	ft_lerp_color(uint32_t color1, uint32_t color2, double t);
 uint32_t	color_fog(int32_t a, t_ray *ray);
 uint32_t	color_tex(int32_t r);
+void	raycast_door(t_door *door, t_map *data);
+void	draw_door(int x, t_door *door, t_map *data, int i);
+int		index_door(t_door *door, int nmb_door, int x, int y);
+void	chois_door(t_map *data, t_ray *ray);
+int	ray_hit_door(t_map *data, t_ray *ray, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/08 10:19:38 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/08 14:16:06 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,12 +333,15 @@ int	main(int argc, char **argv)
 {
 	t_map	data;
 	t_opt	option;
+	int		i;
 
 	data.menu_option = &option;
+	data.nmb_door = 0;
 	init_null(&data);
 	main_parsing(argc, argv);
 	init_struct(argv, &data);
-	int i = 0;
+	init_door(&data);
+	i = 0;
 	while (data.map && data.map[i])
 	{
 		check_space(data.map, i, '2', '1');
