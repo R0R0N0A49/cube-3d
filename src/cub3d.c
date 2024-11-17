@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/14 13:33:01 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/17 18:50:03 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,40 @@ int	free_struct(t_map *data)
 	return (1);
 }
 
-void	mini_map(t_map *data, mlx_t *mlx)
+static void	init_pos(t_map *data, int i, int j)
+{
+	data->game->plane_x = 0;
+	data->game->plane_y = 0;
+	data->game->dir_x = 0;
+	data->game->dir_y = 0;
+	if (data->map[j][i] == 'N')
+	{
+		data->game->plane_x = 0.66;
+		data->game->dir_y = -1;
+	}
+	if (data->map[j][i] == 'S')
+	{
+		data->game->plane_x = -0.66;
+		data->game->dir_y = 1;
+	}
+	if (data->map[j][i] == 'W')
+	{
+		data->game->plane_y = -0.66;
+		data->game->dir_x = -1;
+	}
+	if (data->map[j][i] == 'E')
+	{
+		data->game->plane_y = 0.66;
+		data->game->dir_x = 1;
+	}
+}
+
+void	init_player(t_map *data)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	(void)mlx;
 	while (data->map[j])
 	{
 		i = 0;
@@ -78,34 +105,7 @@ void	mini_map(t_map *data, mlx_t *mlx)
 				data->game->player_y = (double)j + 0.5;
 				data->m_map->pos_x = i;
 				data->m_map->pos_y = j;
-				if (data->map[j][i] == 'N')
-				{
-					data->game->plane_x = 0.66;
-					data->game->plane_y = 0;
-					data->game->dir_x = 0;
-					data->game->dir_y = -1;
-				}
-				if (data->map[j][i] == 'S')
-				{
-					data->game->plane_x = -0.66;
-					data->game->plane_y = 0;
-					data->game->dir_x = 0;
-					data->game->dir_y = 1;
-				}
-				if (data->map[j][i] == 'W')
-				{
-					data->game->plane_x = 0;
-					data->game->plane_y = -0.66;
-					data->game->dir_x = -1;
-					data->game->dir_y = 0;
-				}
-				if (data->map[j][i] == 'E')
-				{
-					data->game->plane_x = 0;
-					data->game->plane_y = 0.66;
-					data->game->dir_x = 1;
-					data->game->dir_y = 0;
-				}
+				init_pos(data, i, j);
 				data->map[j][i] = '0';
 				break ;
 			}
@@ -129,7 +129,8 @@ void	verif_option(t_opt *option)
 
 void	free_t_textures(t_textures *src, mlx_t *mlx)
 {
-	long unsigned int i;
+	long unsigned int	i;
+
 	i = 0;
 	while (i < src->nb_textures)
 	{
@@ -143,22 +144,52 @@ void	free_t_textures(t_textures *src, mlx_t *mlx)
 	free(src->image);
 }
 
+void	len_map(t_map *data)
+{
+	int	x;
+	int	y;
+	int	save;
+
+	save = 0;
+	x = 0;
+	y = 0;
+	data->h_map = 0;
+	data->w_map = 0;
+	data->h_map = (int)ft_strlen_w(data->map);
+	while (y < data->h_map)
+	{
+		x = (int)ft_strlen(data->map[y]);
+		if (x > save)
+			save = x;
+		y++;
+	}
+	data->w_map = save;
+	printf("y = %d, x = %d\n", data->h_map, data->w_map);
+}
+
+void	option(t_map *data)
+{
+	button_rtn(data->menu_option);
+	button_music(data->menu_option);
+	button_map(data->menu_option);
+	button_fps(data);
+	button_night(data->menu_option);
+}
+
 void	cub3d(t_map *data)
 {
 	t_mini	map;
 	t_ray	raycast;
 	t_game	game;
-	t_button play;
-	t_button option_;
-	t_button edit;
-	t_button exi;
-	mlx_texture_t *logo;
-	// int	i;
-	t_button rtn;
-	t_button music;
-	t_button fov;
-	t_button floor;
-	t_button roof;
+	t_button	play;
+	t_button	option_;
+	t_button	exi;
+	mlx_texture_t	*logo;
+	t_button	rtn;
+	t_button	music;
+	t_button	fov;
+	t_button	floor;
+	t_button	roof;
 
 	(void)data;
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
@@ -172,19 +203,16 @@ void	cub3d(t_map *data)
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
 	data->img_play = mlx_new_image(data->mlx, 400, 150);
 	data->img_option = mlx_new_image(data->mlx, 400, 150);
-	data->img_edit = mlx_new_image(data->mlx, 400, 150);
 	data->img_exit = mlx_new_image(data->mlx, 400, 150);
-	data->sol = mlx_load_png("./tiles/textures/floor.png");
-	data->plaf = mlx_load_png("./tiles/textures/cell.png");
+	data->floor = mlx_load_png("./tiles/textures/floor.png");
+	data->cell = mlx_load_png("./tiles/textures/cell.png");
 	data->cub = mlx_load_png ("./tiles/menu/cub3d.png"); // a free
 	data->texplay = mlx_load_png ("./tiles/menu/play.png"); // a free
 	data->texopt = mlx_load_png ("./tiles/menu/option.png"); // a free
-	data->texedi = mlx_load_png ("./tiles/menu/edit.png"); // a free
 	data->texexit = mlx_load_png ("./tiles/menu/exit.png"); // a free
-	data->nuit = mlx_load_png("./tiles/textures/nuit.png"); // a free
+	data->night = mlx_load_png("./tiles/textures/night.png"); // a free
 	data->menufd = mlx_load_png("./tiles/menu/menufd1.png"); // a free
 	data->menufd2 = mlx_load_png("./tiles/menu/menufd3.png"); // a free
-	mlx_get_window_pos(data->mlx, &data->w, &data->h);
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_setting(MLX_DECORATED, false);
 	mlx_set_icon(data->mlx, logo);
@@ -243,14 +271,12 @@ void	cub3d(t_map *data)
 	data->game = &game;
 	data->raycast = &raycast;
 	data->speed = 2.0;
-	data->actualisation = false;
 	data->rotspeed = 1.69;
 	data->but_play = &play;
-	data->but_edit = &edit;
 	data->but_exit = &exi;
 	data->idx_menu = 0;
 	data->press = false;
-	data->plafond = false;
+	data->ceiling = false;
 	data->game->player_x = 0;
 	data->game->player_y = 0;
 	data->game->move_w = false;
@@ -264,20 +290,17 @@ void	cub3d(t_map *data)
 	data->game->rotate_right = false;
 	data->but_play->click = false;
 	data->but_option->click = false;
-	data->but_edit->click = false;
 	data->but_exit->click = false;
 	data->but_play->press_enter = false;
 	data->but_option->press_enter = false;
-	data->but_edit->press_enter = false;
 	data->but_exit->press_enter = false;
 	data->minima->enabled = true;
 	data->mini_iso->enabled = false;
 	data->game->moove_cur = false;
-	mini_map(data, data->mlx);
+	init_player(data);
 	data->cubd = mlx_texture_to_image(data->mlx, data->cub);
 	data->img_play = mlx_texture_to_image(data->mlx, data->texplay);
 	data->img_option = mlx_texture_to_image(data->mlx, data->texopt);
-	data->img_edit = mlx_texture_to_image(data->mlx, data->texedi);
 	data->img_exit = mlx_texture_to_image(data->mlx, data->texexit);
 	data->menu = mlx_texture_to_image(data->mlx, data->menufd);
 	mlx_image_to_window(data->mlx, data->rayc, 0, 0);
@@ -285,9 +308,8 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->mini_iso, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu, 0, 0);
 	mlx_image_to_window(data->mlx, data->cubd, (WINDOWSW * 0.5 - WINDOWSW / 9), 50);
-	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 310);
-	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 480);
-	mlx_image_to_window(data->mlx, data->img_edit, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 660);
+	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 490);
+	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 660);
 	mlx_image_to_window(data->mlx, data->img_exit, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 840);
 
 	mlx_image_to_window(data->mlx, data->menu_option->bottom, 0, 0);
@@ -313,6 +335,7 @@ void	cub3d(t_map *data)
 	fonts_init(data);
 	fonts_update(data);
 	menu(data);
+	len_map(data);
 	mlx_loop_hook(data->mlx, loop, data);
 	mlx_scroll_hook(data->mlx, scroll, data);
 	mlx_cursor_hook(data->mlx, cursor, data);
@@ -322,10 +345,14 @@ void	cub3d(t_map *data)
 	free_t_textures(&data->font, data->mlx);
 	//free_t_textures(&data->weapon.barrel.walk, data->mlx);
 	//free_t_textures(&data->weapon.e11.walk, data->mlx);
-//	free_t_textures(&data->weapon.barrel.fired, data->mlx);
-//	free_t_textures(&data->weapon.barrel.reload, data->mlx);
-	//mlx_delete_texture(data->weapon.center_txt);
-	//mlx_delete_image(data->mlx, data->weapon.center);
+	mlx_delete_texture(data->texplay);
+	mlx_delete_image(data->mlx, data->img_play);
+	mlx_delete_texture(data->texopt);
+	mlx_delete_image(data->mlx, data->img_option);
+	mlx_delete_texture(data->texexit);
+	mlx_delete_image(data->mlx, data->img_exit);
+	mlx_delete_texture(data->weapon.center_txt);
+	mlx_delete_image(data->mlx, data->weapon.center);
 	mlx_terminate(data->mlx);
 }
 
@@ -333,12 +360,15 @@ int	main(int argc, char **argv)
 {
 	t_map	data;
 	t_opt	option;
+	int		i;
 
 	data.menu_option = &option;
+	data.nmb_door = 0;
 	init_null(&data);
 	main_parsing(argc, argv);
 	init_struct(argv, &data);
-	int i = 0;
+	init_door(&data);
+	i = 0;
 	while (data.map && data.map[i])
 	{
 		check_space(data.map, i, '2', '1');

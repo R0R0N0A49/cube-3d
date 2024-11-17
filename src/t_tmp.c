@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/17 12:12:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/17 16:46:47 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	**ft_tmp_to_tab(t_tmp *src)
 	while (tmp)
 	{
 		map[i] = ft_strdup(tmp->line_map);
-//		ft_printf("tmp->line_map = %s", tmp->line_map);
 		if (tmp->next)
 			tmp = tmp->next;
 		else

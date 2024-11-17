@@ -5,30 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/14 10:45:52 by derey            ###   ########.fr       */
+/*   Created: 2024/09/29 17:45:36 by trebours          #+#    #+#             */
+/*   Updated: 2024/11/17 17:55:00 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void    print_color(t_item *item, t_map *data, int x, int y)
+void	print_color(t_item *item, t_map *data, int x, int y)
 {
-	uint32_t    col;
-	uint32_t    color;
+	uint32_t	col;
+	uint32_t	color;
 
 	col = ((uint32_t *)item->textures[item->index]->pixels)[ft_abs(
 			item->textures[item->index]->height * (y) - (x))];
 	color = color_tex(col);
-	if (item->item_dist / 5 >= 5 && data->fog == true)
-		color = apply_fog(color, item->item_dist / 5);
-	else if (item->item_dist >= FOG_MAX && data->fog == true)
+	if (item->dist >= 5 && data->fog == true)
+		color = apply_fog(color, item->dist);
+	else if (item->dist >= FOG_MAX && data->fog == true)
 		color = FOG;
 	else
 		color = color_tex(col);
 	if ((color & 0xFFFFFFFF) != 0)
 		try_put_pixel(data->rayc, item->px, item->py, color);
-
 }
 
 static void	print_item(t_map *data, t_item *item)
@@ -46,9 +45,10 @@ static void	print_item(t_map *data, t_item *item)
 			while (item->py < item->drawend_y)
 			{
 				item->d = item->py * 256 - WINDOWSH * 128 + item->height * 128;
-				item->tex_y = (int)((item->d * item->textures[item->index]->height)
+				item->tex_y = (int)((item->d
+							* item->textures[item->index]->height)
 						/ item->height) / 256;
-					if (item->tex_y && item->py > 0 && item->py < WINDOWSH)
+				if (item->tex_y && item->py > 0 && item->py < WINDOWSH)
 					print_color(item, data, item->tex_x, item->tex_y);
 				item->py++;
 			}
@@ -59,7 +59,7 @@ static void	print_item(t_map *data, t_item *item)
 
 static void	anim_item(t_item *item)
 {
-	static long time = -1;
+	static long	time = -1;
 
 	if (time == -1)
 		time = get_time();
@@ -70,27 +70,41 @@ static void	anim_item(t_item *item)
 	}
 }
 
-void	display_item(t_map *data, t_item *item)
+void	init_display_item(t_map *data, t_item *item)
 {
-	anim_item(item);
-	item->item_dist = (data->game->player_x - item->posx) * (data->game->player_x - item->posx) + (data->game->player_y - item->posy) * (data->game->player_y - item->posy);
-//	printf("dist = %f\n", item->item_dist);
 	if (item->item_dist < 0.5)
 	{
 		item->enabled = false;
 		data->weapon.nb_availed_weapon = 2;
-		data->weapon.selected[data->weapon.index_weapon]->enabled = false;
+		data->weapon.selected \
+				[data->weapon.index_weapon]->enabled = false;
 		data->weapon.index_weapon = !data->weapon.index_weapon;
-		data->weapon.selected[data->weapon.index_weapon]->enabled = true;
+		data->weapon.selected \
+				[data->weapon.index_weapon]->enabled = true;
 	}
 	item->sprite_x = item->posx - data->game->player_x;
 	item->sprite_y = item->posy - data->game->player_y;
-	item->invdet = 1.0 / (data->game->plane_x * data->game->dir_y - data->game->dir_x * data->game->plane_y);
-	item->transform_x = item->invdet * (data->game->dir_y * item->sprite_x - data->game->dir_x * item->sprite_y);
-	item->transform_y = item->invdet * (-data->game->plane_y * item->sprite_x + data->game->plane_x * item->sprite_y);
-	item->screen_x = (int)((WINDOWSW / 2) * (1 + item->transform_x / item->transform_y));
-	item->height = ft_abs((int)(WINDOWSH/ item->transform_y));
+	item->invdet = 1.0 / (data->game->plane_x
+			* data->game->dir_y - data->game->dir_x
+			* data->game->plane_y);
+	item->transform_x = item->invdet * (data->game->dir_y * item->sprite_x
+			- data->game->dir_x * item->sprite_y);
+	item->transform_y = item->invdet * (-data->game->plane_y * item->sprite_x
+			+ data->game->plane_x * item->sprite_y);
+	item->screen_x = (int)((WINDOWSW / 2) * (1 + item->transform_x
+				/ item->transform_y));
+	item->height = ft_abs((int)(WINDOWSH / item->transform_y));
 	item->drawstart_y = -item->height / 2 + WINDOWSH / 2;
+}
+
+void	display_item(t_map *data, t_item *item)
+{
+	anim_item(item);
+	item->item_dist = (data->game->player_x - item->posx)
+		* (data->game->player_x - item->posx)
+		+ (data->game->player_y - item->posy)
+		* (data->game->player_y - item->posy);
+	init_display_item(data, item);
 	if (item->drawstart_y < 0)
 		item->drawstart_y = 0;
 	item->drawend_y = item->height / 2 + WINDOWSH / 2;

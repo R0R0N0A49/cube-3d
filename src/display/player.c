@@ -6,12 +6,11 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:48:44 by derey             #+#    #+#             */
-/*   Updated: 2024/11/14 16:20:56 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/17 18:51:11 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-#define COLOR_PLAYER 0xFF5000FF
 
 void	time_fps(t_map	*data)
 {
@@ -25,7 +24,7 @@ void	time_fps(t_map	*data)
 	}
 }
 
-int	get_pourcent(int value, int size, int max)
+int	get_pc(int value, int size, int max)
 {
 	return ((size * value) / max);
 }
@@ -40,7 +39,6 @@ void	pause_game(t_map *data)
 	data->cubd->enabled = true;
 	data->img_play->enabled = true;
 	data->img_option->enabled = true;
-	data->img_edit->enabled = true;
 	data->img_exit->enabled = true;
 	data->game->move_w = false;
 	data->game->rotate_left = false;
@@ -72,7 +70,6 @@ void	play_game(t_map *data)
 	data->cubd->enabled = false;
 	data->img_play->enabled = false;
 	data->img_option->enabled = false;
-	data->img_edit->enabled = false;
 	data->img_exit->enabled = false;
 	data->game->move_w = false;
 	data->game->rotate_left = false;
@@ -82,239 +79,12 @@ void	play_game(t_map *data)
 	data->game->move_d = false;
 	data->but_play->good = false;
 	data->but_option->good = false;
-	data->but_edit->good = false;
 	data->but_exit->good = false;
 	data->menu_option->but_rtn->good = false;
 	data->weapon.enable_anim = true;
 	data->weapon.center->enabled = true;
 }
 
-void	check_but_play(t_map *data)
-{
-	int x_min;
-	int x_max;
-	int y_min;
-	int y_max;
-
-	x_min = get_pourcent(data->mlx->width, data->but_play->but_x_min, WINDOWSW);
-	x_max = get_pourcent(data->mlx->width, data->but_play->but_x_max, WINDOWSW);
-	y_min = get_pourcent(data->mlx->height, data->but_play->but_y_min, WINDOWSH);
-	y_max = get_pourcent(data->mlx->height, data->but_play->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->idx_menu = 0;
-		data->but_play->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->but_play->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->but_play->good == true ) || data->but_play->press_enter == true)
-		play_game(data);
-}
-
-void	check_but_option(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->but_option->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->but_option->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->but_option->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->but_option->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->idx_menu = 0;
-		data->but_option->click = true;
-	}	
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->but_option->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y >= y_min && data->game->cursor_y < y_max && data->but_option->good == true) || data->but_option->press_enter == true )
-	{
-		data->pause = true;
-		data->idx_menu = 0;
-		data->menu_option->index = 0;
-		data->but_option->press_enter = false;
-		data->but_option->good = false;
-		data->menu->enabled = false;
-		data->menu_option->visible = true;
-		data->cubd->enabled = false;
-		data->img_play->enabled = false;
-		data->img_option->enabled = false;
-		data->img_edit->enabled = false;
-		data->img_exit->enabled = false;
-		data->menu_option->bottom->enabled = true;
-		data->menu_option->rtn->enabled = true;
-		data->menu_option->cub->enabled = true;
-		data->menu_option->music->enabled = true;
-		data->menu_option->fps->enabled = true;
-		data->menu_option->roof->enabled = true;
-		data->menu_option->mini->enabled = true;
-		data->menu_option->unvalid->enabled = true;
-		data->menu_option->valid->enabled = true;
-	}
-}
-
-void	check_but_edit(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->but_edit->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->but_edit->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->but_edit->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->but_edit->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->idx_menu = 0;
-		data->but_edit->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->but_edit->good = false;
-}
-
-void	check_but_exit(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->but_exit->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->but_exit->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->but_exit->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->but_exit->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->idx_menu = 0;
-		data->but_exit->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->but_exit->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->but_exit->good == true) || data->but_exit->press_enter == true)
-		exit_cub3d(data);
-}
-
-void	check_but_rtn(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->menu_option->but_rtn->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->menu_option->but_rtn->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->menu_option->but_rtn->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->menu_option->but_rtn->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->idx_menu = 0;
-		data->menu_option->but_rtn->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->menu_option->but_rtn->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->menu_option->but_rtn->good) || data->menu_option->but_rtn->press_enter)
-	{
-		data->pause = true;
-		data->idx_menu = 0;
-		data->menu_option->index = 0;
-		data->menu->enabled = true;
-		data->menu_option->visible = false;
-		data->cubd->enabled = true;
-		data->img_play->enabled = true;
-		data->img_option->enabled = true;
-		data->img_edit->enabled = true;
-		data->img_exit->enabled = true;
-		data->menu_option->bottom->enabled = false;
-		data->menu_option->rtn->enabled = false;
-		data->menu_option->cub->enabled = false;
-		data->menu_option->but_rtn->press_enter = false;
-		data->menu_option->unvalid->enabled = false;
-		data->menu_option->valid->enabled = false;
-		data->menu_option->music->enabled = false;
-		data->menu_option->fps->enabled = false;
-		data->menu_option->roof->enabled = false;
-		data->menu_option->mini->enabled = false;
-	}
-}
-
-void	check_but_music(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->menu_option->but_music->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->menu_option->but_music->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->menu_option->but_music->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->menu_option->but_music->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->menu_option->index = 0;
-		data->menu_option->but_music->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->menu_option->but_music->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->menu_option->but_music->good) || data->menu_option->but_music->press_enter)
-	{
-		data->menu_option->but_music->good = false;
-		data->menu_option->but_music->press_enter = false;
-		data->menu_option->play_music = !data->menu_option->play_music;
-		data->menu_option->valid->instances[0].enabled = data->menu_option->play_music;
-		data->menu_option->unvalid->instances[0].enabled = !data->menu_option->play_music;
-	}
-}
-
-void	check_but_map(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->menu_option->but_map->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->menu_option->but_map->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->menu_option->but_map->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->menu_option->but_map->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->menu_option->index = 0;
-		data->menu_option->but_map->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->menu_option->but_map->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->menu_option->but_map->good) || data->menu_option->but_map->press_enter)
-	{
-		data->menu_option->but_map->good = false;
-		data->menu_option->but_map->press_enter = false;
-		data->menu_option->display_map = !data->menu_option->display_map;
-		data->minima->enabled = data->menu_option->display_map;
-		data->menu_option->valid->instances[1].enabled = data->menu_option->display_map;
-		data->menu_option->unvalid->instances[1].enabled = !data->menu_option->display_map;
-	}
-}
-
-void	check_but_fps(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->menu_option->but_fps->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->menu_option->but_fps->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->menu_option->but_fps->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->menu_option->but_fps->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->menu_option->index = 0;
-		data->menu_option->but_fps->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->menu_option->but_fps->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->menu_option->but_fps->good) || data->menu_option->but_fps->press_enter)
-	{
-		data->menu_option->but_fps->good = false;
-		data->menu_option->but_fps->press_enter = false;
-		data->menu_option->display_fps = !data->menu_option->display_fps;
-		fonts_disabled(data);
-		data->menu_option->valid->instances[2].enabled = data->menu_option->display_fps;
-		data->menu_option->unvalid->instances[2].enabled = !data->menu_option->display_fps;
-	}
-}
-
-void	check_but_night(t_map *data)
-{
-	int x_min = get_pourcent(data->mlx->width, data->menu_option->but_night->but_x_min, WINDOWSW);
-	int x_max = get_pourcent(data->mlx->width, data->menu_option->but_night->but_x_max, WINDOWSW);
-	int y_min = get_pourcent(data->mlx->height, data->menu_option->but_night->but_y_min, WINDOWSH);
-	int y_max = get_pourcent(data->mlx->height, data->menu_option->but_night->but_y_max, WINDOWSH);
-	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max)
-	{
-		data->menu_option->index = 0;
-		data->menu_option->but_night->click = true;
-	}
-	if (data->game->cursor_x < x_min || data->game->cursor_x > x_max || data->game->cursor_y < y_min || data->game->cursor_y > y_max)
-		data->menu_option->but_night->good = false;
-	if ((data->game->cursor_x > x_min && data->game->cursor_x < x_max && data->game->cursor_y > y_min && data->game->cursor_y < y_max && data->menu_option->but_night->good) || data->menu_option->but_night->press_enter)
-	{
-		data->menu_option->but_night->good = false;
-		data->menu_option->but_night->press_enter = false;
-		data->menu_option->night_mode = !data->menu_option->night_mode;
-		data->fog = !data->fog;
-		data->plafond = !data->plafond;
-		data->menu_option->valid->instances[3].enabled = data->menu_option->night_mode;
-		data->menu_option->unvalid->instances[3].enabled = !data->menu_option->night_mode;
-	}
-}
 
 void	check_music(t_map *data)
 {
@@ -325,14 +95,14 @@ void	check_music(t_map *data)
 	{
 		if (is_play)
 			i = system("killall paplay");
-		//i = system("paplay Music/Menu.wav &");
+		i = system("paplay Music/Menu.wav &");
 		is_play = 2;
 	}
 	else if ((!is_play || is_play == 2) && data->menu_option->play_music && !data->pause)
 	{
 		if (is_play)
 			i = system("killall paplay");
-		//i = system("paplay ./Music/InGame.wav &");
+		i = system("paplay ./Music/InGame.wav &");
 		is_play = 1;
 	}
 	else if (is_play && !data->menu_option->play_music)
@@ -343,42 +113,40 @@ void	check_music(t_map *data)
 	(void)i;
 }
 
-void	loop(void *param)
+void	check_door_open(t_map	*data)
 {
-	t_map	*data;
+	int	i;
 
-	data = (t_map *)param;
-	if (data->pause != true)
+	i = 0;
+	while (i < data->nmb_door)
 	{
-		raycasting(data);
-//		choose_weapon(data)
-		choose_weapon(data);
+		if (data->door[i].isopen)
+		{
+			if (ft_abs(data->door[i].map_x - (int)data->game->player_x) > 2)
+			{
+				data->door[i].isopen = false;
+				data->door[i].index = 0;
+			}
+			if (ft_abs(data->door[i].map_y - (int)data->game->player_y) > 2)
+			{
+				data->door[i].isopen = false;
+				data->door[i].index = 0;
+			}
+		}
+		i++;
 	}
-	//	mlx_resize_hook()
-	time_fps(data);
-	if (data->menu_option->display_map)
-		mini(data);
-	if (data->game->move_w)
-		move_w(data);
-	if (data->game->move_s)
-		move_s(data);
-	if (data->game->move_a)
-		move_a(data);
-	if (data->game->move_d)
-		move_d(data);
-	if (data->game->rotate_left)
-		rotate_left(data);
-	if (data->game->rotate_right)
-		rotate_right(data);
+	
+}
+
+void	loop_button(t_map *data)
+{
 	if (data->menu->enabled)
 	{
 		check_but_play(data);
 		check_but_option(data);
-		check_but_edit(data);
 		check_but_exit(data);
 		button_play(data);
 		button_option(data);
-		button_edit(data);
 		button_exit(data);
 	}
 	if (data->menu_option->visible)
@@ -394,131 +162,72 @@ void	loop(void *param)
 		button_fps(data);
 		button_night(data->menu_option);
 	}
+}
+
+void	loop_moove(t_map *data)
+{
+	if (data->game->move_w)
+		move_w(data);
+	if (data->game->move_s)
+		move_s(data);
+	if (data->game->move_a)
+		move_a(data);
+	if (data->game->move_d)
+		move_d(data);
+	if (data->game->rotate_left)
+		rotate_left(data);
+	if (data->game->rotate_right)
+		rotate_right(data);
+}
+
+void	loop(void *param)
+{
+	t_map	*data;
+
+	data = (t_map *)param;
+	if (data->pause != true)
+	{
+		raycasting(data);
+		choose_weapon(data);
+	}
+	time_fps(data);
+	if (data->menu_option->display_map)
+		mini(data);
+	loop_moove(data);
+	loop_button(data);
 	check_music(data);
 	fonts_update(data);
+	check_door_open(data);
 }
 
-void	move_w(t_map *data)
+int check_open(t_map *data, int x, int y)
 {
-	double testx;
-	double testy;
-
-	testx = data->game->player_x;
-	testy = data->game->player_y;
-
-	testx += data->game->dir_x * data->speed * data->mlx->delta_time;
-	testy += data->game->dir_y * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	if (data->map[y][x] == 'D')
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
-			return;
-		data->game->player_x = testx;
-		return ;
+		if (data->door[index_door(data->door, data->nmb_door, x, y)].isopen)
+			return (0);
+		return (1);
 	}
-	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
-		return;
-	data->game->player_x = testx;
-	
+	return (0);
 }
 
-void	move_s(t_map *data)
+void	mouse_left_r(t_map	*data)
 {
-	double testx;
-	double testy;
-
-	testx = data->game->player_x;
-	testy = data->game->player_y;
-
-	testx -= data->game->dir_x * data->speed * data->mlx->delta_time;
-	testy -= data->game->dir_y * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	data->press = false;
+	if (data->menu->enabled)
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
-			return;
-		data->game->player_x = testx;
-		return ;
+		data->but_play->good = true;
+		data->but_option->good = true;
+		data->but_exit->good = true;
 	}
-	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
-		return;
-	data->game->player_x = testx;
-}
-
-void	move_a(t_map *data)
-{
-	double testx;
-	double testy;
-
-	testx = data->game->player_x;
-	testy = data->game->player_y;
-
-	testx += data->game->dir_y * data->speed * data->mlx->delta_time;
-	testy -= data->game->dir_x * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
+	if (data->menu_option->visible)
 	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
-			return;
-		data->game->player_x = testx;
-		return ;
+		data->menu_option->but_rtn->good = true;
+		data->menu_option->but_music->good = true;
+		data->menu_option->but_map->good = true;
+		data->menu_option->but_fps->good = true;
+		data->menu_option->but_night->good = true;
 	}
-	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
-		return;
-	data->game->player_x = testx;
-}
-
-void	move_d(t_map *data)
-{
-	double testx;
-	double testy;
-
-	testx = data->game->player_x;
-	testy = data->game->player_y;
-
-	testx -= data->game->dir_y * data->speed * data->mlx->delta_time;
-	testy += data->game->dir_x * data->speed * data->mlx->delta_time;
-	if (data->map[(int)testy][(int)data->game->player_x] == '1')
-	{
-		if (data->map[(int)data->game->player_y][(int)testx] == '1')
-			return;
-		data->game->player_x = testx;
-		return ;
-	}
-	data->game->player_y = testy;
-	if (data->map[(int)data->game->player_y][(int)testx] == '1')
-		return;
-	data->game->player_x = testx;
-}
-
-void	rotate_left(t_map *map)
-{
-	double	olddri_x;
-	double	oldplane_x;
-	double	speed;
-
-	olddri_x = map->game->dir_x;
-	speed = map->rotspeed * map->mlx->delta_time;
-	map->game->dir_x = map->game->dir_x * cos(-speed) - map->game->dir_y * sin(-speed);
-	map->game->dir_y = olddri_x * sin(-speed) + map->game->dir_y* cos(-speed);
-	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(-speed) -  map->game->plane_y * sin(-speed);
-	map->game->plane_y =  oldplane_x * sin(-speed) +  map->game->plane_y * cos(-speed);
-}
-
-void	rotate_right(t_map *map)
-{
-	double	olddri_x;
-	double	oldplane_x;
-	double	speed;
-
-	olddri_x = map->game->dir_x;
-	speed = map->rotspeed * map->mlx->delta_time;
-	map->game->dir_x = map->game->dir_x * cos(speed) - map->game->dir_y * sin(speed);
-	map->game->dir_y = olddri_x * sin(speed) + map->game->dir_y * cos(speed);
-	oldplane_x = map->game->plane_x;
-	map->game->plane_x =  map->game->plane_x * cos(speed) -  map->game->plane_y * sin(speed);
-	map->game->plane_y =  oldplane_x * sin(speed) +  map->game->plane_y * cos(speed);
 }
 
 void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param)
@@ -527,7 +236,6 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 	
 	data = (t_map *)param;
 	(void)mods;
-
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		if (data->pause)
@@ -535,54 +243,26 @@ void	mouse(mouse_key_t button, action_t action, modifier_key_t mods, void* param
 			data->idx_menu = 0;
 			data->press = true;
 		}
-		else
-			data->weapon.fire = true;
 	}
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
-	{
-		data->press = false;
-		if (data->menu->enabled)
-		{
-			data->but_play->good = true;
-			data->but_option->good = true;
-			data->but_edit->good = true;
-			data->but_exit->good = true;
-		}
-		if (data->menu_option->visible)
-		{
-			data->menu_option->but_rtn->good = true;
-			data->menu_option->but_music->good = true;
-			data->menu_option->but_map->good = true;
-			data->menu_option->but_fps->good = true;
-			data->menu_option->but_night->good = true;
-		}
-	}
+		mouse_left_r(data);
 }
 
-void	cursor(double xpos, double ypos, void* param)
+void	cursor(double xpos, double ypos, void *param)
 {
 	t_map	*data;
-	double test;
 
-	test = 0;
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-	test += (xpos - WINDOWSW * 0.5) * data->speed;
-	
-	if (test < 0 && data->pause == false)
-		data->game->rotate_left = true;
-	if (test > 0 && data->pause == false)
-		data->game->rotate_right = true;
-	if (data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
-		mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5,  WINDOWSH * 0.5);
-	if (test == 0 && data->pause == false && (data->game->rotate_left == true || data->game->rotate_right == true))
+
+	if (data->pause == false)
 	{
-		data->game->rotate_right = false;
-		data->game->rotate_left = false;
-	}
 		
+		mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);
+	}
 }
+
 
 void	key_press(mlx_key_data_t keydata, void *param)
 {
@@ -638,7 +318,7 @@ void	key_press(mlx_key_data_t keydata, void *param)
 		{
 			if (!data->menu_option->visible)
 			{
-				if (data->idx_menu >= 4)
+				if (data->idx_menu >= 3)
 					data->idx_menu = 1;
 				else
 					data->idx_menu++;
@@ -660,7 +340,7 @@ void	key_press(mlx_key_data_t keydata, void *param)
 				if (data->idx_menu > 1)
 					data->idx_menu--;
 				else
-					data->idx_menu = 4;
+					data->idx_menu = 3;
 			}
 			else if (data->menu_option->visible)
 			{
@@ -681,8 +361,6 @@ void	key_press(mlx_key_data_t keydata, void *param)
 			if (data->idx_menu == 2)
 				data->but_option->press_enter = true;
 			if (data->idx_menu == 3)
-				data->but_edit->press_enter = true;
-			if (data->idx_menu == 4)
 				data->but_exit->press_enter = true;
 			if (data->menu_option->index == 1)
 				data->menu_option->but_music->press_enter = true;
@@ -693,7 +371,7 @@ void	key_press(mlx_key_data_t keydata, void *param)
 			if (data->menu_option->index == 4)
 				data->menu_option->but_night->press_enter = true;
 		}
-		if (keydata.key == MLX_KEY_TAB && data->pause == false)
+		if (keydata.key == MLX_KEY_TAB && data->pause == false && data->w_map <= 35 && data->h_map <= 25)
 			{
 				data->mini_iso->enabled = !data->mini_iso->enabled;
 				data->weapon.center->enabled = !data->weapon.center->enabled;
@@ -702,7 +380,7 @@ void	key_press(mlx_key_data_t keydata, void *param)
 		if (keydata.key == MLX_KEY_P && data->pause == false)
 		{
 			data->menu_option->night_mode = !data->menu_option->night_mode;
-			data->plafond = !data->plafond;
+			data->ceiling = !data->ceiling;
 		}
 		if (keydata.key == MLX_KEY_F && data->pause == false)
 				data->fog = !data->fog;

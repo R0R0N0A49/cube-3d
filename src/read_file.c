@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:40:49 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 11:58:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/17 16:44:27 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_struct(char **src, t_map *data)
 	map = malloc(1 * sizeof(t_tmp));
 	map->line_map = NULL;
 	map->next = NULL;
-	data->file = open(src[1],  O_RDONLY);
+	data->file = open(src[1], O_RDONLY);
 	if (data->file < 0)
 	{
 		ft_putstr_fd("error\nFile can't open\n", 2);
@@ -56,6 +56,7 @@ void	init_struct(char **src, t_map *data)
 	data->file = -1;
 	if (ft_verif_first(data))
 	{
+		ft_putstr_fd(RED, 2);
 		ft_putstr_fd("error\nfile empty\n", 2);
 		ft_tmpclear(&map, free);
 		exit (free_struct(data));

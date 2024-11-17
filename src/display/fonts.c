@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:45:36 by derey             #+#    #+#             */
-/*   Updated: 2024/10/30 15:29:29 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/16 18:44:42 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	fonts_init(t_map *data)
 	{
 		i = 0;
 		while (i < 10)
-			mlx_image_to_window(data->mlx, data->font.image[i++], 16 + (x * 32), 0);
+			mlx_image_to_window(data->mlx, data->font.image[i++], \
+				16 + (x * 32), 0);
 		x++;
 	}
 	fonts_disabled(data);

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/24 13:35:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:48:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	isfine(char **map, int i, int j)
 	char	*lstchar;
 	int		k;
 
-	lstchar = "210 NSWE\n\0";
+	lstchar = "210 NSWED\n\0";
 	k = 0;
 	while (lstchar[k])
 	{
@@ -106,7 +106,7 @@ int	verif_char(t_map *data)
 		check_space(data->map, j, ' ', '2');
 		checkline(data->map, j++, data->len_map, data);
 	}
-	if (player != 1)
+	if (player != 1 || pars_door(data->map, data))
 		error_player(player, data);
 	return (0);
 }

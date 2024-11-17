@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 16:14:37 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/05 12:09:48 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:53:01 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,18 @@ int	verif_start_line(char *line)
 	return (0);
 }
 
+static int	verif_line(char *line)
+{
+	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
+		|| !ft_strncmp(line, "WE", 2) || !ft_strncmp(line, "EA", 2)
+		|| !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
+	{
+		if (line[2] != ' ')
+			return (1);
+	}
+	return (0);
+}
+
 void	print_error(char *line, t_map *data, t_tmp *map)
 {
 	int	index;
@@ -89,6 +101,12 @@ void	print_error(char *line, t_map *data, t_tmp *map)
 	else if (line[0] == '\n')
 		index = write(STDERR_FILENO, "the map must not contain an"
 				" empty line/n", 39) - 31;
+	else if (verif_line(line))
+	{
+		index = write(STDERR_FILENO, "no information behind ", 22);
+		write(STDERR_FILENO, line, ft_strlen(line));
+		write(STDERR_FILENO, "\n", 1);
+	}
 	else
 		index = write(STDERR_FILENO, "the first lines must be tex"
 				"ture or color/n", 41) - 32;
