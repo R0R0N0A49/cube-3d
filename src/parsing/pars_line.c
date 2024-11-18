@@ -31,8 +31,8 @@ bool	stringisdigit(char *src)
 int	ft_stringtab_len(char **src)
 {
 	int	i;
-	i = 0;
 
+	i = 0;
 	while (src[i])
 		i++;
 	return (i);
@@ -88,9 +88,9 @@ TXT	*verif_png(char *png)
 	while (png[i] == ' ')
 		i++;
 	if (png[i] == '\0')
-		return (NULL); // message error
+		return (NULL);
 	tmp = mlx_load_png(&png[i]);
 	if (!tmp)
-		return (NULL); // message error
+		return (NULL);
 	return (tmp);
 }

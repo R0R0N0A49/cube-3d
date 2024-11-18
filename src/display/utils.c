@@ -37,3 +37,22 @@ void	try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
 		return ;
 	mlx_put_pixel(img, x, y, color);
 }
+
+long	get_time(void)
+{
+	struct timeval	time;
+	long			current_time;
+
+	gettimeofday(&time, NULL);
+	current_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (current_time);
+}
+
+t_vector	set_vector(double x, double y)
+{
+	t_vector	result_vector;
+
+	result_vector.x = x;
+	result_vector.y = y;
+	return (result_vector);
+}

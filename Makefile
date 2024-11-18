@@ -11,46 +11,56 @@ DISP_DIR = src/display
 OBJS_DIR = OBJS
 
 SRCS = cub3d.c \
-       read_file.c \
        t_tmp.c \
        texture.c \
+       read_file.c \
        init_anim.c \
        init_door.c \
+	   t_tmp_clear.c \
 	   init_anim_p2.c
 
 PARS_SRCS = parsing.c \
-            pars_line.c \
             pars_map.c \
+            pars_line.c \
+            pars_door.c \
             check_line.c \
-            printerrorpars.c \
             print_error.c \
-            pars_start_line.c \
-            pars_door.c
+            printerrorpars.c \
+            pars_start_line.c
 
-DISP_SRCS = minimap.c \
-            player.c \
-            raycasting.c \
+DISP_SRCS =	door.c \
             menu.c \
-            option.c \
             fonts.c \
-            animation.c \
-            raycast_item.c \
-			mini_iso.c \
-			color_raycast.c \
-			door.c \
-			check_button.c \
-			moove.c \
-			init_raycasting.c \
+            option.c \
 			utils.c \
-			raycasting_bonus.c \
-			raycasting_dda.c \
-			draw_iso.c \
+			moove.c \
 			rotate.c \
+            player.c \
+ 			minimap.c \
+			mini_iso.c \
+			draw_iso.c \
 			draw_menu.c \
-			condition_option.c \
-			init_minimap.c \
+            animation.c \
+            raycasting.c \
+			door_utils.c \
+            raycast_item.c \
 			draw_minimap.c \
-			draw_rayminimap.c
+			check_button.c \
+			init_minimap.c \
+			button_utils.c \
+			color_raycast.c \
+			raycasting_dda.c \
+			init_raycasting.c \
+			draw_rayminimap.c \
+			door_raycasting.c \
+			condition_option.c \
+			raycasting_bonus.c \
+			check_option_button.c \
+			loop.c \
+			mouse.c \
+			key_press_utils.c \
+			key_press.c \
+			check.c
 
 ALL_SRCS = $(SRCS) $(PARS_SRCS) $(DISP_SRCS)
 

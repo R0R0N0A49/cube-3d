@@ -20,16 +20,6 @@ void	choose_weapon(t_map *data)
 		ft_anim(data, &data->weapon.e11, &data->weapon.barrel);
 }
 
-long	get_time(void)
-{
-	struct timeval	time;
-	long			current_time;
-
-	gettimeofday(&time, NULL);
-	current_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	return (current_time);
-}
-
 int	is_move(t_game *game)
 {
 	if (game->move_a)
@@ -57,11 +47,12 @@ void	verif_img(t_weapon *weapon)
 void	ft_anim(t_map *data, t_weapon *current, t_weapon *nodisplay)
 {
 	verif_img(nodisplay);
+	data->weapon.selected[data->weapon.index_weapon]->enabled = \
+			data->weapon.enable_anim;
+	data->weapon.selected[2]->enabled = data->weapon.enable_anim;
 	if (!data->weapon.enable_anim)
 	{
 		verif_img(current);
-		data->weapon.selected[data->weapon.index_weapon]->enabled = false;
-		data->weapon.selected[2]->enabled = false;
 		return ;
 	}
 	else if (is_move(data->game) && get_time() - data->weapon.time >= 300)

@@ -12,9 +12,9 @@
 
 #include "../../includes/cub3d.h"
 
-static int verif_nmb(char **map, int i, int j)
+static int	verif_nmb(char **map, int i, int j)
 {
-	int rsl;
+	int	rsl;
 
 	rsl = 0;
 	if (map[j - 1][i] == '1')
@@ -28,20 +28,24 @@ static int verif_nmb(char **map, int i, int j)
 	return (rsl);
 }
 
-static int	verif_pos(char **map, int i, int j)
+static int	verif_pos(char **map, size_t i, size_t j)
 {
-	if (verif_nmb(map, i, j) != 2)
+	int	z;
+	int	o;
+
+	z = '0';
+	o = '1';
+	if (verif_nmb(map, (int)i, (int)j) != 2)
 		return (1);
-//	printf(" %c \n%c%c%c\n %c \n", map[j - 1][i], map[j][i - 1], map[j][i], map[j][i + 1], map[j + 1][i]);
-	if ((int)ft_strlen(map[j - 1]) - 1 <= i || (int)ft_strlen(map[j + 1]) - 1 <= i)
+	if (ft_strlen(map[j - 1]) - 1 <= i || ft_strlen(map[j + 1]) - 1 <= i)
 		return (1);
-	if (map[j][i - 1] == '1' && (map[j][i + 1] != '1' && map[j][i + 1] != '2'))
+	if (map[j][i - 1] == o && (map[j][i + 1] != o && map[j][i + 1] != '2'))
 		return (1);
-	if (map[j][i - 1] == '0' && (map[j][i + 1] != '0' && !isplayer(map[j][i + 1])))
+	if (map[j][i - 1] == z && (map[j][i + 1] != z && !isplayer(map[j][i + 1])))
 		return (1);
-	if (map[j - 1][i] == '1' && (map[j + 1][i] != '1' && map[j + 1][i] != '2'))
+	if (map[j - 1][i] == o && (map[j + 1][i] != o && map[j + 1][i] != '2'))
 		return (1);
-	if (map[j - 1][i] == '0' && (map[j + 1][i] != '0' && !isplayer(map[j + 1][i])))
+	if (map[j - 1][i] == z && (map[j + 1][i] != z && !isplayer(map[j + 1][i])))
 		return (1);
 	return (0);
 }
@@ -61,14 +65,13 @@ int	pars_door(char **map, t_map *data)
 			{
 				data->nmb_door++;
 				if (i == 0)
-					exit(print_charerror(map, j, i, data)); // msg erreur
+					exit(print_charerror(map, j, i, data));
 				if (i == 1 && map[j][i - 1] != 1)
 					exit(print_charerror(map, j, i, data));
 				if (verif_pos(map, i, j))
 					exit(print_charerror(map, j, i, data));
 			}
 			i++;
-
 		}
 		j++;
 	}
