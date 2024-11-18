@@ -50,6 +50,7 @@ void	info_item(TXT *tmp, t_map *data, int i)
 	else
 		mlx_image_to_window(data->mlx, data->weapon.selected[i],
 			WINDOWSW - 175, WINDOWSH - 128);
+	mlx_delete_texture(tmp);
 }
 
 void	txt_item(char *src, t_item *item)
@@ -92,11 +93,11 @@ void	init_item(t_item *item, t_map *data)
 	data->weapon.selected = ft_calloc(3, sizeof(IMG *));
 	tmp = mlx_load_png("tiles/animation/item/db_item.png");
 	info_item(tmp, data, 0);
-	mlx_delete_texture(tmp);
+//	mlx_delete_texture(tmp);
 	tmp = mlx_load_png("tiles/animation/item/pm_item.png");
 	info_item(tmp, data, 1);
-	mlx_delete_texture(tmp);
+//	mlx_delete_texture(tmp);
 	tmp = mlx_load_png("tiles/animation/item/ammo.png");
 	info_item(tmp, data, 2);
-	mlx_delete_texture(tmp);
+//	mlx_delete_texture(tmp);
 }

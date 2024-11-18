@@ -171,6 +171,5 @@ void		key_up(t_map *data);
 void		key_enter(t_map *data);
 void		check_music(t_map *data);
 void		check_door_open(t_map	*data);
-int	check_open(t_map *data, int x, int y);
 
 #endif

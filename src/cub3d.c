@@ -135,7 +135,7 @@ void	free_t_textures(t_textures *src, mlx_t *mlx)
 	while (i < src->nb_textures)
 	{
 		mlx_delete_texture(src->textures[i]);
-		mlx_delete_image(mlx, src->image[i]); // a modif pour ne plus avoir de leak
+		mlx_delete_image(mlx, src->image[i]);
 		free(src->textures_name[i]);
 		i++;
 	}
@@ -176,20 +176,56 @@ void	option(t_map *data)
 	button_night(data->menu_option);
 }
 
+void	free_at_end(t_map *data) // renomer ?
+{
+	mlx_delete_texture(data->cub);
+	mlx_delete_texture(data->cell);
+	mlx_delete_texture(data->floor);
+	mlx_delete_texture(data->night);
+	mlx_delete_texture(data->texopt);
+	mlx_delete_texture(data->menufd);
+	mlx_delete_texture(data->texplay);
+	mlx_delete_texture(data->texexit);
+	mlx_delete_texture(data->menufd2);
+	mlx_delete_texture(data->menu_option->unvalid_txt);
+	mlx_delete_texture(data->menu_option->valid_txt);
+	mlx_delete_texture(data->menu_option->rtn_txt);
+	mlx_delete_texture(data->menu_option->music_txt);
+	mlx_delete_texture(data->menu_option->fps_txt);
+	mlx_delete_texture(	data->menu_option->roof_txt);
+	mlx_delete_texture(	data->menu_option->mini_txt);
+	for (int i = 0; i < 2; i++) {
+		mlx_delete_texture(data->weapon.item.textures[i]);
+	}
+	for (int j = 0; j < data->nmb_door; j++)
+	{
+		for (int i = 0; i < 14; i++) {
+			mlx_delete_texture(data->door[j].door[i]);
+		}
+		free(data->door[j].door);
+	}
+	mlx_delete_image(data->mlx, data->weapon.selected[0]);
+	mlx_delete_image(data->mlx, data->weapon.selected[1]);
+	mlx_delete_image(data->mlx, data->weapon.selected[2]);
+	free(data->weapon.selected);
+	free(data->door);
+	free(data->weapon.item.textures);
+}
+
 void	cub3d(t_map *data)
 {
-	t_mini	map;
-	t_ray	raycast;
-	t_game	game;
-	t_button	play;
-	t_button	option_;
-	t_button	exi;
+	t_mini			map;
+	t_ray			raycast;
+	t_game			game;
+	t_button		play;
+	t_button		option_;
+	t_button		exi;
 	mlx_texture_t	*logo;
-	t_button	rtn;
-	t_button	music;
-	t_button	fov;
-	t_button	floor;
-	t_button	roof;
+	t_button		rtn;
+	t_button		music;
+	t_button		fov;
+	t_button		floor;
+	t_button		roof;
 
 	(void)data;
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
@@ -197,37 +233,37 @@ void	cub3d(t_map *data)
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->mini_iso = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->menu = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
-
 	mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);
-	logo = mlx_load_png("./tiles/logo.png"); // a free
+	logo = mlx_load_png("./tiles/logo.png");
 	data->cubd = mlx_new_image(data->mlx, 400, 200);
 	data->img_play = mlx_new_image(data->mlx, 400, 150);
 	data->img_option = mlx_new_image(data->mlx, 400, 150);
 	data->img_exit = mlx_new_image(data->mlx, 400, 150);
 	data->floor = mlx_load_png("./tiles/textures/floor.png");
 	data->cell = mlx_load_png("./tiles/textures/cell.png");
-	data->cub = mlx_load_png ("./tiles/menu/cub3d.png"); // a free
-	data->texplay = mlx_load_png ("./tiles/menu/play.png"); // a free
-	data->texopt = mlx_load_png ("./tiles/menu/option.png"); // a free
-	data->texexit = mlx_load_png ("./tiles/menu/exit.png"); // a free
-	data->night = mlx_load_png("./tiles/textures/night.png"); // a free
-	data->menufd = mlx_load_png("./tiles/menu/menufd1.png"); // a free
-	data->menufd2 = mlx_load_png("./tiles/menu/menufd3.png"); // a free
+	data->cub = mlx_load_png ("./tiles/menu/cub3d.png");
+	data->texplay = mlx_load_png ("./tiles/menu/play.png");
+	data->texopt = mlx_load_png ("./tiles/menu/option.png");
+	data->texexit = mlx_load_png ("./tiles/menu/exit.png");
+	data->night = mlx_load_png("./tiles/textures/night.png");
+	data->menufd = mlx_load_png("./tiles/menu/menufd1.png");
+	data->menufd2 = mlx_load_png("./tiles/menu/menufd3.png");
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 	mlx_set_setting(MLX_DECORATED, false);
 	mlx_set_icon(data->mlx, logo);
-	data->menu_option->unvalid_txt = mlx_load_png("./tiles/menu/checkB.png"); // a free
-	data->menu_option->valid_txt = mlx_load_png("./tiles/menu/checkG.png"); // a free
+	mlx_delete_texture(logo);
+	data->menu_option->unvalid_txt = mlx_load_png("./tiles/menu/checkB.png");
+	data->menu_option->valid_txt = mlx_load_png("./tiles/menu/checkG.png");
 	data->menu_option->unvalid = mlx_texture_to_image(data->mlx, data->menu_option->unvalid_txt);
 	data->menu_option->valid = mlx_texture_to_image(data->mlx, data->menu_option->valid_txt);
 	data->menu_option->cub = mlx_texture_to_image(data->mlx, data->cub);
-	data->menu_option->rtn_txt = mlx_load_png("./tiles/menu/return.png"); // a free
+	data->menu_option->rtn_txt = mlx_load_png("./tiles/menu/return.png");
 	data->menu_option->rtn = mlx_texture_to_image(data->mlx, data->menu_option->rtn_txt);
-	data->menu_option->music_txt = mlx_load_png("./tiles/menu/music.png"); // a free
+	data->menu_option->music_txt = mlx_load_png("./tiles/menu/music.png");
 	data->menu_option->music = mlx_texture_to_image(data->mlx, data->menu_option->music_txt);
-	data->menu_option->fps_txt = mlx_load_png("./tiles/menu/FPS.png"); // a free
-	data->menu_option->roof_txt = mlx_load_png("./tiles/menu/roof.png"); // a free
-	data->menu_option->mini_txt = mlx_load_png("./tiles/menu/mini.png"); // a free
+	data->menu_option->fps_txt = mlx_load_png("./tiles/menu/FPS.png");
+	data->menu_option->roof_txt = mlx_load_png("./tiles/menu/roof.png");
+	data->menu_option->mini_txt = mlx_load_png("./tiles/menu/mini.png");
 	data->menu_option->fps = mlx_texture_to_image(data->mlx, data->menu_option->fps_txt);
 	data->menu_option->roof = mlx_texture_to_image(data->mlx, data->menu_option->roof_txt);
 	data->menu_option->mini = mlx_texture_to_image(data->mlx, data->menu_option->mini_txt);
@@ -311,7 +347,6 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->img_play, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 490);
 	mlx_image_to_window(data->mlx, data->img_option, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 660);
 	mlx_image_to_window(data->mlx, data->img_exit, (WINDOWSW * 0.5 - WINDOWSW / 6 + 10), 840);
-
 	mlx_image_to_window(data->mlx, data->menu_option->bottom, 0, 0);
 	mlx_image_to_window(data->mlx, data->menu_option->rtn, data->menu_option->but_rtn->but_x_min, data->menu_option->but_rtn->but_y_min + 5);
 	mlx_image_to_window(data->mlx, data->menu_option->cub, (WINDOWSW * 0.5 - WINDOWSW / 9), 50);
@@ -319,12 +354,10 @@ void	cub3d(t_map *data)
 	mlx_image_to_window(data->mlx, data->menu_option->fps, data->menu_option->but_fps->but_x_min + 4, data->menu_option->but_fps->but_y_min + 10);
 	mlx_image_to_window(data->mlx, data->menu_option->roof, data->menu_option->but_night->but_x_min + 4, data->menu_option->but_night->but_y_min + 15);
 	mlx_image_to_window(data->mlx, data->menu_option->mini, data->menu_option->but_map->but_x_min + 4, data->menu_option->but_map->but_y_min + 15);
-
 	mlx_image_to_window(data->mlx, data->menu_option->unvalid, data->menu_option->but_music->but_x_max - 75, data->menu_option->but_music->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->unvalid, data->menu_option->but_map->but_x_max - 75, data->menu_option->but_map->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->unvalid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->unvalid, data->menu_option->but_night->but_x_max - 75, data->menu_option->but_night->but_y_max - 100);
-
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_music->but_x_max - 75, data->menu_option->but_music->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_map->but_x_max - 75, data->menu_option->but_map->but_y_max - 100);
 	mlx_image_to_window(data->mlx, data->menu_option->valid, data->menu_option->but_fps->but_x_max - 75, data->menu_option->but_fps->but_y_max - 100);
@@ -343,13 +376,11 @@ void	cub3d(t_map *data)
 	mlx_key_hook(data->mlx, key_press, data);
 	mlx_loop(data->mlx);
 	free_t_textures(&data->font, data->mlx);
-	//free_t_textures(&data->weapon.barrel.walk, data->mlx);
-	//free_t_textures(&data->weapon.e11.walk, data->mlx);
-	mlx_delete_texture(data->texplay);
+	free_t_textures(&data->weapon.barrel.walk, data->mlx);
+	free_t_textures(&data->weapon.e11.walk, data->mlx);
+	free_at_end(data);
 	mlx_delete_image(data->mlx, data->img_play);
-	mlx_delete_texture(data->texopt);
 	mlx_delete_image(data->mlx, data->img_option);
-	mlx_delete_texture(data->texexit);
 	mlx_delete_image(data->mlx, data->img_exit);
 	mlx_delete_texture(data->weapon.center_txt);
 	mlx_delete_image(data->mlx, data->weapon.center);

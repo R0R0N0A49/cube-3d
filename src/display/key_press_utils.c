@@ -107,4 +107,3 @@ void	key_enter(t_map *data)
 	if (data->menu_option->index == 4)
 		data->menu_option->but_night->press_enter = true;
 }
-
