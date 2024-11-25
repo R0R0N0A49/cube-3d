@@ -17,7 +17,7 @@ static void	verif_len(t_map *data, char **map, int j, int i)
 	if (ft_strlen(map[j]) > ft_strlen(map[j + 1]))
 	{
 		i = ft_strlen(map[j + 1]) - 1;
-		while (map[j][i] == '1')
+		while (map[j][i] == '1' || map[j][i] == ' ')
 			i++;
 		if (map[j][i] == '0' || map[j][i] == '2')
 			exit(print_charerror(map, j, i, data));

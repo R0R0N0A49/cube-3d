@@ -41,34 +41,6 @@ int	isplayer(char const c)
 	return (0);
 }
 
-void	check_space(char **map, int j, char fst, char scd)
-{
-	int	i;
-	int	t;
-
-	i = 0;
-	t = 0;
-	while (map[j][i])
-	{
-		if (j && map[j][i] == '1')
-			t = 1;
-		if (j == 0 && map[j][i] == '2')
-			map[j][i] = ' ';
-		if (t && (map[j][i] == '0' || isplayer(map[j][i])))
-		{
-			if (map[j + 1] && map[j + 1][i] == fst)
-				map[j + 1][i] = scd;
-			if (j == 2 && map[j - 1][i] == fst)
-				map[j - 1][i] = scd;
-			if (i && map[j][i - 1] == fst)
-				map[j][i - 1] = scd;
-			if (map[j][i + 1] == fst)
-				map[j][i + 1] = scd;
-		}
-		i++;
-	}
-}
-
 int	checkline(char **map, int j, int len, t_map *data)
 {
 	int	i;

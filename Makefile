@@ -21,6 +21,7 @@ PARS_SRCS = parsing.c \
             pars_line.c \
             check_line.c \
             print_error.c \
+            check_space.c \
             printerrorpars.c \
             pars_start_line.c
 
@@ -54,6 +55,7 @@ PARS_SRCS_BONUS =	parsing_bonus.c \
            			pars_line_bonus.c \
             		pars_door_bonus.c \
             		check_line_bonus.c \
+            		check_space_bonus.c \
             		print_error_bonus.c \
             		printerrorpars_bonus.c \
             		pars_start_line_bonus.c
