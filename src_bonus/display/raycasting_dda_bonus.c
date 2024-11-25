@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_dda.c                                   :+:      :+:    :+:   */
+/*   raycasting_dda_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:45:40 by derey             #+#    #+#             */
-/*   Updated: 2024/11/17 17:46:20 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:58 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 static int	set_side_step_end(t_ray *ray, t_map *data, int x)
 {

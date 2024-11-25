@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_item.c                                     :+:      :+:    :+:   */
+/*   raycast_item_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:45:36 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/17 17:55:00 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:53 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	print_color(t_item *item, t_map *data, int x, int y)
 {

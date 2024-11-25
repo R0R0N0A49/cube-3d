@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
+/*   draw_raycasting_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:39:46 by derey             #+#    #+#             */
-/*   Updated: 2024/11/17 17:43:13 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:05 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	draw_ceiling(t_ray *ray, t_map *data, int x, int y)
 {

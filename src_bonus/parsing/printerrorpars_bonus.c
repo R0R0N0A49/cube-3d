@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printerrorpars.c                                   :+:      :+:    :+:   */
+/*   printerrorpars_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:19:55 by trebours          #+#    #+#             */
-/*   Updated: 2024/09/18 12:18:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:10:11 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	error_file(char *file, int index)
 {

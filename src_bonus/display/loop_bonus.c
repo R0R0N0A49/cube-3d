@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   loop_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/18 13:48:33 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:14:08 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	loop_button(t_map *data)
 {
@@ -49,9 +49,9 @@ void	loop_moove(t_map *data)
 	if (data->game->move_d)
 		move_d(data);
 	if (data->game->rotate_left)
-		rotate_left(data);
+		rotate_left(data, data->rotspeed * data->mlx->delta_time);
 	if (data->game->rotate_right)
-		rotate_right(data);
+		rotate_right(data, data->rotspeed * data->mlx->delta_time);
 }
 
 void	loop(void *param)
@@ -72,4 +72,5 @@ void	loop(void *param)
 	check_music(data);
 	fonts_update(data);
 	check_door_open(data);
+	rotate_cur(data);
 }

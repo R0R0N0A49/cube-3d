@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_image.c                                       :+:      :+:    :+:   */
+/*   init_image_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:52:57 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/25 10:52:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:09:23 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	init_txt_menu(t_map *data)
 {

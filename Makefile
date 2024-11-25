@@ -5,10 +5,36 @@ CFLAGS = -Ofast -Wall -Werror -Wextra -I./MLX42/include -g
 MLXFLAGS = -ldl -lX11 -lglfw -lm -lz -lbsd -lXext
 RM = rm -rf
 
+SRCS_DIR = src
+PARS_DIR = src/parsing
+DISP_DIR = src/display
+OBJS_DIR = OBJS
+
+SRCS =	cub3d.c \
+       	t_tmp.c \
+    	read_file.c \
+		t_tmp_clear.c \
+		init.c
+
+PARS_SRCS = parsing.c \
+            pars_map.c \
+            pars_line.c \
+            check_line.c \
+            print_error.c \
+            printerrorpars.c \
+            pars_start_line.c
+
+DISP_SRCS = utils.c \
+			moove.c \
+			rotate.c \
+            raycasting.c \
+			raycasting_dda.c \
+			init_raycasting.c \
+			key_press.c
+
 SRCS_DIR_BONUS = src_bonus
 PARS_DIR_BONUS = src_bonus/parsing
 DISP_DIR_BONUS = src_bonus/display
-OBJS_DIR = OBJS
 
 SRCS_BONUS =	t_tmp_bonus.c \
 				cub3d_bonus.c \
@@ -66,8 +92,10 @@ DISP_SRCS_BONUS =	door_bonus.c \
 					key_press_bonus.c \
 					check_bonus.c
 
+ALL_SRCS = $(SRCS) $(PARS_SRCS) $(DISP_SRCS)
 ALL_SRCS_BONUS = $(SRCS_BONUS) $(PARS_SRCS_BONUS) $(DISP_SRCS_BONUS)
 
+OBJS = $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJS_BONUS = $(ALL_SRCS_BONUS:%.c=$(OBJS_DIR)/%.o)
 
 LIBFT_DIR = includes/libft
@@ -100,6 +128,49 @@ $(OBJS_DIR):
 
 $(LIBFT):
 	@make --directory $(LIBFT_DIR)
+
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT)/$(TOTAL))"
+
+TOTAL_P := $(words $(PARS_SRCS))
+COUNT_P = 0
+
+$(OBJS_DIR)/%.o: $(PARS_DIR)/%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT_P=$(shell echo $$(($(COUNT_P)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT_P) * $(BAR_LENGTH) / $(TOTAL_P) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT_P)/$(TOTAL_P))"
+
+TOTAL_D := $(words $(DISP_SRCS))
+COUNT_D = 0
+
+$(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	clear
+	@$(eval COUNT_D=$(shell echo $$(($(COUNT_D)+1))))
+	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
+	$(GREEN) ✅\n$(BLUE)Compiling Display :$(CYAN)"
+	@echo -n "["
+	@completed=$$(( $(COUNT_D) * $(BAR_LENGTH) / $(TOTAL_D) )); \
+	remaining=$$(( $(BAR_LENGTH) - completed )); \
+	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
+	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
+	@echo "] ($(COUNT_D)/$(TOTAL_D))"
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR_BONUS)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@

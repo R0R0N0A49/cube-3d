@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   door_raycasting.c                                  :+:      :+:    :+:   */
+/*   door_raycasting_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:02:20 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/18 11:02:22 by trebours         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:07:50 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 int	ray_hit_door(t_map *data, t_ray *ray, int i)
 {

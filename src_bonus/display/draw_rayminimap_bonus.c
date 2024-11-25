@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_rayminimap.c                                  :+:      :+:    :+:   */
+/*   draw_rayminimap_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:24:23 by derey             #+#    #+#             */
-/*   Updated: 2024/11/17 19:24:51 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 14:00:20 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	draw_lines(t_map *data, t_vector x0, t_vector x1, uint32_t color)
 {

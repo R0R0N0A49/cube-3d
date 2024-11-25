@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_minimap.c                                     :+:      :+:    :+:   */
+/*   init_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:18:26 by derey             #+#    #+#             */
-/*   Updated: 2024/11/17 19:19:05 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:13 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	init_draw_lines(t_line_bresenham *bres, t_vector x0, t_vector x1)
 {

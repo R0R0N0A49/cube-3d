@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   condition_option.c                                 :+:      :+:    :+:   */
+/*   condition_option_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 18:48:24 by derey             #+#    #+#             */
-/*   Updated: 2024/11/17 18:48:35 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:07:45 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	condition_button_music(t_opt *option, int x, int y)
 {
