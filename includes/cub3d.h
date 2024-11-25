@@ -42,7 +42,6 @@ void		init_door(t_map *data);
 void		init_struct(char **src, t_map *data);
 int			free_struct(t_map *data);
 int			verif_start_line(char *line);
-void		init_player(t_map *data);
 void		mini(t_map *data);
 void		draw_cube(t_map *data, int i, int j, uint32_t te);
 
@@ -77,7 +76,7 @@ void		fonts_init(t_map *data);
 void		fonts_update(t_map *data);
 void		fonts_disabled(t_map *data);
 
-t_textures	init_txtr(size_t nb_textures);
+t_textures	init_txtr(size_t nb_textures, t_map *data);
 void		init_anim(t_map *data);
 void		anime_txt(t_textures *weapone, int *index);
 void		ft_anim(t_map *data, t_weapon *current, t_weapon *nodisplay);
@@ -171,5 +170,21 @@ void		key_up(t_map *data);
 void		key_enter(t_map *data);
 void		check_music(t_map *data);
 void		check_door_open(t_map	*data);
+void		free_at_end(t_map *data);
+void		ft_error(t_map *data);
+
+void		init_player(t_map *data);
+void		init_menu_option(t_map *data);
+t_button	*init_button(void);
+void		init_bool(t_map *data);
+
+void		init_txt_menu(t_map *data);
+void		place_img(t_map *data, t_opt *opt);
+void		init_mlx_and_new_image(t_map *data);
+void		init_txt_menu_option(t_map *data, t_opt *opt);
+
+void		len_map(t_map *data);
+void		init_null(t_map *data);
+void		verif_option(t_opt *option);
 
 #endif

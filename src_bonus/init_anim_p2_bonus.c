@@ -93,11 +93,8 @@ void	init_item(t_item *item, t_map *data)
 	data->weapon.selected = ft_calloc(3, sizeof(IMG *));
 	tmp = mlx_load_png("tiles/animation/item/db_item.png");
 	info_item(tmp, data, 0);
-//	mlx_delete_texture(tmp);
 	tmp = mlx_load_png("tiles/animation/item/pm_item.png");
 	info_item(tmp, data, 1);
-//	mlx_delete_texture(tmp);
 	tmp = mlx_load_png("tiles/animation/item/ammo.png");
 	info_item(tmp, data, 2);
-//	mlx_delete_texture(tmp);
 }

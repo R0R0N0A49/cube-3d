@@ -141,10 +141,10 @@ typedef struct s_ray
 
 typedef struct s_button
 {
-	int		but_x_min;
-	int		but_x_max;
-	int		but_y_min;
-	int		but_y_max;
+	int		x_min;
+	int		x_max;
+	int		y_min;
+	int		y_max;
 	bool	click;
 	bool	good;
 	bool	press_enter;

@@ -12,12 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-void	ft_error(void)
-{
-	ft_printf("%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
 void	set_fonts_textures_names(char ***t_names)
 {
 	(*t_names)[0] = ft_strdup("font0.png");
@@ -32,26 +26,26 @@ void	set_fonts_textures_names(char ***t_names)
 	(*t_names)[9] = ft_strdup("font9.png");
 }
 
-t_textures	init_txtr(size_t nb_textures)
+t_textures	init_txtr(size_t nb_textures, t_map *data)
 {
 	t_textures	tmp;
 
 	tmp.nb_textures = nb_textures;
 	tmp.textures_name = ft_calloc(sizeof(char *), nb_textures);
 	if (!tmp.textures_name)
-		ft_error();
+		ft_error(data);
 	tmp.textures = ft_calloc(sizeof(mlx_texture_t *), nb_textures);
 	if (!tmp.textures)
 	{
 		free(tmp.textures_name);
-		ft_error();
+		ft_error(data);
 	}
 	tmp.image = ft_calloc(sizeof(mlx_image_t *), nb_textures);
 	if (!tmp.image)
 	{
 		free(tmp.textures_name);
 		free(tmp.textures);
-		ft_error();
+		ft_error(data);
 	}
 	return (tmp);
 }
@@ -68,20 +62,20 @@ void	set_textures(t_map	*data, t_textures *txtr, char *path,
 	{
 		name = ft_strjoin(path, txtr->textures_name[i]);
 		if (!name)
-			ft_error();
+			ft_error(data);
 		txtr->textures[i] = mlx_load_png(name);
 		txtr->image[i] = mlx_texture_to_image(data->mlx, txtr->textures[i]);
 		if (name)
 			free(name);
 		if (!txtr->textures[i] || !txtr->image[i])
-			ft_error();
+			ft_error(data);
 		i++;
 	}
 }
 
 void	set_textures_terrain(t_map	*data)
 {
-	data->font = init_txtr(10);
+	data->font = init_txtr(10, data);
 	set_textures(data, &data->font, "./tiles/fonts/",
 		&set_fonts_textures_names);
 }

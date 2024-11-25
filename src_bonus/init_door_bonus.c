@@ -92,7 +92,10 @@ void	init_door(t_map *data)
 	int	i;
 
 	if (!data->nmb_door)
+	{
+		data->door = NULL;
 		return ;
+	}
 	data->door = malloc(data->nmb_door * sizeof(t_door));
 	if (!data->door)
 		exit(1);

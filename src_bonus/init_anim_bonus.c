@@ -12,9 +12,10 @@
 
 #include "../../includes/cub3d.h"
 
-static void	ft_error(void)
+void	ft_error(t_map *data)
 {
-	ft_printf("%s", mlx_strerror(mlx_errno));
+	ft_printf("%s\n", mlx_strerror(mlx_errno));
+	free_at_end(data);
 	exit(EXIT_FAILURE);
 }
 
@@ -33,7 +34,7 @@ static void	init_name(t_textures *weapon, int nmb)
 	}
 }
 
-static void	init_txt(t_textures *weapon, char *path)
+static void	init_txt(t_textures *weapon, char *path, t_map *data)
 {
 	long unsigned int	i;
 	char				*path_final;
@@ -45,7 +46,7 @@ static void	init_txt(t_textures *weapon, char *path)
 		weapon->textures[i] = mlx_load_png(path_final);
 		free(path_final);
 		if (!weapon->textures[i])
-			ft_error();
+			ft_error(data);
 		i++;
 	}
 }
@@ -62,7 +63,7 @@ static void	init_img(t_map *data, t_textures *weapon)
 		mlx_resize_image(weapon->image[i], weapon->image[i]->width * 1.7,
 			weapon->image[i]->height * 1.7);
 		if (!weapon->image[i])
-			ft_error();
+			ft_error(data);
 		mlx_image_to_window(data->mlx, weapon->image[i], (int32_t)(
 				(float)(WINDOWSW - weapon->image[0]->width) / 2),
 			WINDOWSH - weapon->image[0]->height);
@@ -73,13 +74,14 @@ static void	init_img(t_map *data, t_textures *weapon)
 
 void	init_anim(t_map *data)
 {
+	init_item(&data->weapon.item, data);
 	data->weapon.time = get_time();
 	data->weapon.enable_anim = true;
 	data->weapon.nb_availed_weapon = 1;
 	data->weapon.barrel.index_walk = 0;
 	data->weapon.e11.index_walk = 0;
-	data->weapon.barrel.walk = init_txtr(4);
-	data->weapon.e11.walk = init_txtr(4);
+	data->weapon.barrel.walk = init_txtr(4, data);
+	data->weapon.e11.walk = init_txtr(4, data);
 	data->weapon.center_txt = mlx_load_png("tiles/animation/center.png");
 	data->weapon.center = mlx_texture_to_image(data->mlx,
 			data->weapon.center_txt);
@@ -89,9 +91,8 @@ void	init_anim(t_map *data)
 		(int)(WINDOWSH - data->weapon.center->height) / 2);
 	init_name(&data->weapon.barrel.walk, 4);
 	init_name(&data->weapon.e11.walk, 4);
-	init_txt(&data->weapon.barrel.walk, "tiles/animation/DOUBLE BARREL/");
+	init_txt(&data->weapon.barrel.walk, "tiles/animation/DOUBLE BARREL/", data);
 	init_img(data, &data->weapon.barrel.walk);
-	init_txt(&data->weapon.e11.walk, "tiles/animation/E11/");
+	init_txt(&data->weapon.e11.walk, "tiles/animation/E11/", data);
 	init_img(data, &data->weapon.e11.walk);
-	init_item(&data->weapon.item, data);
 }

@@ -23,6 +23,7 @@ void	but_rtn_utils(t_map *data)
 	data->img_play->enabled = true;
 	data->img_option->enabled = true;
 	data->img_exit->enabled = true;
+	data->but_option->good = false;
 	data->menu_option->bottom->enabled = false;
 	data->menu_option->rtn->enabled = false;
 	data->menu_option->cub->enabled = false;

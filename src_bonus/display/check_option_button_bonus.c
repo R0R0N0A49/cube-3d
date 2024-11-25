@@ -21,10 +21,10 @@ void	check_but_rtn(t_map *data)
 	t_button	*but;
 
 	but = data->menu_option->but_rtn;
-	x_min = get_pc(data->mlx->width, but->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, but->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, but->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, but->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, but->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, but->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, but->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, but->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
@@ -49,10 +49,10 @@ void	check_but_music(t_map *data)
 	t_button	*but;
 
 	but = data->menu_option->but_music;
-	x_min = get_pc(data->mlx->width, but->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, but->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, but->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, but->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, but->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, but->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, but->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, but->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
@@ -77,10 +77,10 @@ void	check_but_map(t_map *data)
 	t_button	*but;
 
 	but = data->menu_option->but_map;
-	x_min = get_pc(data->mlx->width, but->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, but->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, but->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, but->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, but->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, but->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, but->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, but->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
@@ -105,10 +105,10 @@ void	check_but_fps(t_map *data)
 	t_button	*but;
 
 	but = data->menu_option->but_fps;
-	x_min = get_pc(data->mlx->width, but->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, but->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, but->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, but->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, but->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, but->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, but->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, but->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
@@ -133,10 +133,10 @@ void	check_but_night(t_map *data)
 	t_button	*but;
 
 	but = data->menu_option->but_night;
-	x_min = get_pc(data->mlx->width, but->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, but->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, but->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, but->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, but->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, but->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, but->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, but->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{

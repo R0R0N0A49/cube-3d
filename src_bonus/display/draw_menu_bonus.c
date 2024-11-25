@@ -17,16 +17,16 @@ void	draw_button_play(t_map *data, int x, int y)
 	if ((x >= 140 || y >= 630) && ((data->but_play->click == true)
 			|| data->idx_menu == 1))
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_play->but_y_min, 0xED0010FF);
+			x + data->but_play->y_min, 0xED0010FF);
 	else if ((data->but_play->click == true) || data->idx_menu == 1)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_play->but_y_min, 0x850606FF);
+			x + data->but_play->y_min, 0x850606FF);
 	else if (x >= 140 || y >= 630)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_play->but_y_min, 0x850606FF);
+			x + data->but_play->y_min, 0x850606FF);
 	else
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_play->but_y_min, 0xED0010FF);
+			x + data->but_play->y_min, 0xED0010FF);
 }
 
 void	draw_button_option(t_map *data, int x, int y)
@@ -34,16 +34,16 @@ void	draw_button_option(t_map *data, int x, int y)
 	if ((x >= 140 || y >= 630) && ((data->but_option->click == true)
 			|| data->idx_menu == 2))
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_option->but_y_min, 0xED0010FF);
+			x + data->but_option->y_min, 0xED0010FF);
 	else if ((data->but_option->click == true) || data->idx_menu == 2)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_option->but_y_min, 0x850606FF);
+			x + data->but_option->y_min, 0x850606FF);
 	else if (x >= 140 || y >= 630)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_option->but_y_min, 0x850606FF);
+			x + data->but_option->y_min, 0x850606FF);
 	else
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_option->but_y_min, 0xED0010FF);
+			x + data->but_option->y_min, 0xED0010FF);
 }
 
 void	draw_button_exit(t_map *data, int x, int y)
@@ -51,14 +51,14 @@ void	draw_button_exit(t_map *data, int x, int y)
 	if ((x >= 140 || y >= 630) && ((data->but_exit->click == true)
 			|| data->idx_menu == 3))
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_exit->but_y_min, 0xED0010FF);
+			x + data->but_exit->y_min, 0xED0010FF);
 	else if ((data->but_exit->click == true) || data->idx_menu == 3)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_exit->but_y_min, 0x850606FF);
+			x + data->but_exit->y_min, 0x850606FF);
 	else if (x >= 140 || y >= 630)
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_exit->but_y_min, 0x850606FF);
+			x + data->but_exit->y_min, 0x850606FF);
 	else
 		mlx_put_pixel(data->menu, y + 640, \
-			x + data->but_exit->but_y_min, 0xED0010FF);
+			x + data->but_exit->y_min, 0xED0010FF);
 }

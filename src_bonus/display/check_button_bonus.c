@@ -19,10 +19,10 @@ void	check_but_play(t_map *data)
 	int	ymin;
 	int	ymax;
 
-	xmin = get_pc(data->mlx->width, data->but_play->but_x_min, WINDOWSW);
-	xmax = get_pc(data->mlx->width, data->but_play->but_x_max, WINDOWSW);
-	ymin = get_pc(data->mlx->height, data->but_play->but_y_min, WINDOWSH);
-	ymax = get_pc(data->mlx->height, data->but_play->but_y_max, WINDOWSH);
+	xmin = get_pc(data->mlx->width, data->but_play->x_min, WINDOWSW);
+	xmax = get_pc(data->mlx->width, data->but_play->x_max, WINDOWSW);
+	ymin = get_pc(data->mlx->height, data->but_play->y_min, WINDOWSH);
+	ymax = get_pc(data->mlx->height, data->but_play->y_max, WINDOWSH);
 	if (data->game->cursor_x > xmin && data->game->cursor_x < xmax
 		&& data->game->cursor_y > ymin && data->game->cursor_y < ymax)
 	{
@@ -70,10 +70,10 @@ void	check_but_option(t_map *data)
 	int	y_min;
 	int	y_max;
 
-	x_min = get_pc(data->mlx->width, data->but_option->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, data->but_option->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, data->but_option->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, data->but_option->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, data->but_option->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, data->but_option->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, data->but_option->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, data->but_option->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
@@ -97,10 +97,10 @@ void	check_but_exit(t_map *data)
 	int	y_min;
 	int	y_max;
 
-	x_min = get_pc(data->mlx->width, data->but_exit->but_x_min, WINDOWSW);
-	x_max = get_pc(data->mlx->width, data->but_exit->but_x_max, WINDOWSW);
-	y_min = get_pc(data->mlx->height, data->but_exit->but_y_min, WINDOWSH);
-	y_max = get_pc(data->mlx->height, data->but_exit->but_y_max, WINDOWSH);
+	x_min = get_pc(data->mlx->width, data->but_exit->x_min, WINDOWSW);
+	x_max = get_pc(data->mlx->width, data->but_exit->x_max, WINDOWSW);
+	y_min = get_pc(data->mlx->height, data->but_exit->y_min, WINDOWSH);
+	y_max = get_pc(data->mlx->height, data->but_exit->y_max, WINDOWSH);
 	if (data->game->cursor_x > x_min && data->game->cursor_x < x_max
 		&& data->game->cursor_y > y_min && data->game->cursor_y < y_max)
 	{
