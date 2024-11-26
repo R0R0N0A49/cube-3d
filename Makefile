@@ -114,7 +114,7 @@ all: $(NAME)
 
 $(NAME): CREATE_DIR MLX $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
-	clear
+	@clear
 	@echo "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :\
 $(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅$(WHITE)"
 	@echo "$(GC)Compilation Finish$(WHITE)"
@@ -251,7 +251,7 @@ end: fclean
 re: fclean all
 
 bonus:  CREATE_DIR MLX $(LIBFT) $(OBJS_BONUS)
-		@$(CC) $(CFLAGS) -o $(NAME) $(OBJS_BONUS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
+		@$(CC) $(CFLAGS) -OFAST -o $(NAME) $(OBJS_BONUS) $(LIBFT) ./MLX42/build/libmlx42.a $(MLXFLAGS)
 		clear
 		@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :"
 		@echo "$(GREEN) ✅\n$(BLUE)Compiling Display :$(GREEN) ✅$(WHITE)"
