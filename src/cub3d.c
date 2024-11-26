@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/19 12:57:58 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 13:44:48 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	cub3d(t_map *data)
 	mlx_texture_t	*logo;
 
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
+	if (!data->mlx)
+		error_mlx(data);
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);
 	logo = mlx_load_png("./tiles/logo.png");

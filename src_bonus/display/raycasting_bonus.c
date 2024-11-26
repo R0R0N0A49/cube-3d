@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:52:53 by derey             #+#    #+#             */
-/*   Updated: 2024/11/25 13:08:56 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 14:27:38 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	draw_ray(int x, t_ray *ray, t_map *data)
 	i = 0;
 	tex = get_texture(ray, data);
 	if (data->ceiling == true)
-		draw_nuit(ray, data, x, data->night);
+		draw_night(ray, data, x, data->night);
 	else
 	{
 		if (!ray->isdoor)
@@ -97,7 +97,7 @@ void	raycasting(t_map *data)
 		draw_floor(ray, data, x, ray->draw_end);
 		if (!data->ceiling)
 			draw_ceiling(ray, data, x, ray->draw_start);
-		chois_door(data);
+		choice_door(data);
 		x++;
 	}
 	if (data->mini_iso->enabled && data->w_map <= 35 && data->h_map <= 25)

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:22:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/19 11:14:47 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 13:45:05 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void		rotate_right(t_map *map);
 /*=================================utils.c====================================*/
 void		try_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
 int			ft_abs(int nb);
+void		error_mlx(t_map *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:52:57 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/25 13:09:23 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 13:42:15 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ void	init_mlx_and_new_image(t_map *data)
 	mlx_texture_t	*logo;
 
 	data->mlx = mlx_init(WINDOWSW, WINDOWSH, "Cub3d", true);
+	if (!data->mlx)
+	{
+		free_struct(data);
+		ft_printf("%s\n", mlx_strerror(mlx_errno));
+		exit(EXIT_FAILURE);
+	}
 	data->rayc = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->minima = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);
 	data->mini_iso = mlx_new_image(data->mlx, WINDOWSW, WINDOWSH);

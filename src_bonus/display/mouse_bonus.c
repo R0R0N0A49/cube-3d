@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/26 09:21:34 by derey            ###   ########.fr       */
+/*   Created: 2024/09/29 17:35:38 by derey             #+#    #+#             */
+/*   Updated: 2024/11/26 13:42:18 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	cursor(double xpos, double ypos, void *param)
 	data = (t_map *)param;
 	data->game->cursor_x = xpos;
 	data->game->cursor_y = ypos;
-/*	if (data->pause == false)
-		mlx_set_mouse_pos(data->mlx, WINDOWSW * 0.5, WINDOWSH * 0.5);*/
 }
 
 void	scroll(double i, double y, void *param)

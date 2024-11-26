@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:39:46 by derey             #+#    #+#             */
-/*   Updated: 2024/11/25 13:08:05 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 14:27:13 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	draw_floor(t_ray *ray, t_map *data, int x, int y)
 	}
 }
 
-void	draw_nuit(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
+void	draw_night(t_ray *ray, t_map *data, int x, mlx_texture_t *tex)
 {
 	int			y;
 	uint32_t	cl;

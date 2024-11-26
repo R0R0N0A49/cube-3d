@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:45:36 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/25 13:07:47 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 14:24:40 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	next(t_door *door, int *result, int max, int tmp)
 	}
 }
 
-void	chois_door(t_map *data)
+void	choice_door(t_map *data)
 {
 	int	i;
 	int	*j;
