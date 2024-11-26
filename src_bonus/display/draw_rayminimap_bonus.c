@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 19:24:23 by derey             #+#    #+#             */
-/*   Updated: 2024/11/25 14:00:20 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 09:27:04 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	loop_raymini(t_map *data, t_raymini *ray_mi)
 			break ;
 		if (data->map[ray_mi->map_y][ray_mi->map_x] == '1'
 			|| data->map[ray_mi->map_y][ray_mi->map_x] == '\n'
+			|| data->map[ray_mi->map_y][ray_mi->map_x] == ' '
 			|| (data->map[ray_mi->map_y][ray_mi->map_x] == 'D'
 			&& !data->door[index_door(data->door, data->nmb_door, \
 				ray_mi->map_x, ray_mi->map_y)].isopen))

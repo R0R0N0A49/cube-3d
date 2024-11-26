@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 16:40:12 by derey             #+#    #+#             */
-/*   Updated: 2024/11/25 13:09:16 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 09:29:26 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	init_item(t_item *item, t_map *data)
 	item->enabled = true;
 	creat_pos_item(item, data);
 	data->weapon.index_weapon = rand() % 2;
-	printf("pos_x = %f / pos_y = %f\n", item->posx, item->posy);
 	data->weapon.item.x = -1;
 	item->isvisible = false;
 	item->index = 0;

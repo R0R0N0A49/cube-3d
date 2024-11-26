@@ -6,7 +6,7 @@
 /*   By: derey <derey@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:59:34 by trebours          #+#    #+#             */
-/*   Updated: 2024/11/25 13:09:07 by derey            ###   ########.fr       */
+/*   Updated: 2024/11/26 09:29:20 by derey            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,4 @@ void	len_map(t_map *data)
 		y++;
 	}
 	data->w_map = save;
-	printf("y = %d, x = %d\n", data->h_map, data->w_map);
 }
