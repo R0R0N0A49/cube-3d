@@ -131,6 +131,9 @@ $(OBJS_DIR):
 $(LIBFT):
 	@make --directory $(LIBFT_DIR)
 
+TOTAL := $(words $(SRCS))
+COUNT = 0
+
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
@@ -174,47 +177,50 @@ $(OBJS_DIR)/%.o: $(DISP_DIR)/%.c | $(OBJS_DIR)
 	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
 	@echo "] ($(COUNT_D)/$(TOTAL_D))"
 
+TOTAL_B := $(words $(SRCS_BONUS))
+COUNT_B = 0
+
 $(OBJS_DIR)/%.o: $(SRCS_DIR_BONUS)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
-	@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
+	@$(eval COUNT_B=$(shell echo $$(($(COUNT_B)+1))))
 	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(CYAN)"
 	@echo -n "["
-	@completed=$$(( $(COUNT) * $(BAR_LENGTH) / $(TOTAL) )); \
+	@completed=$$(( $(COUNT_B) * $(BAR_LENGTH) / $(TOTAL_B) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
 	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
 	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
-	@echo "] ($(COUNT)/$(TOTAL))"
+	@echo "] ($(COUNT_B)/$(TOTAL_B))"
 
-TOTAL_P := $(words $(PARS_SRCS_BONUS))
-COUNT_P = 0
+TOTAL_PB := $(words $(PARS_SRCS_BONUS))
+COUNT_PB = 0
 
 $(OBJS_DIR)/%.o: $(PARS_DIR_BONUS)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
-	@$(eval COUNT_P=$(shell echo $$(($(COUNT_P)+1))))
+	@$(eval COUNT_PB=$(shell echo $$(($(COUNT_PB)+1))))
 	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :$(CYAN)"
 	@echo -n "["
-	@completed=$$(( $(COUNT_P) * $(BAR_LENGTH) / $(TOTAL_P) )); \
+	@completed=$$(( $(COUNT_PB) * $(BAR_LENGTH) / $(TOTAL_PB) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
 	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
 	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
-	@echo "] ($(COUNT_P)/$(TOTAL_P))"
+	@echo "] ($(COUNT_PB)/$(TOTAL_PB))"
 
-TOTAL_D := $(words $(DISP_SRCS_BONUS))
-COUNT_D = 0
+TOTAL_DB := $(words $(DISP_SRCS_BONUS))
+COUNT_DB = 0
 
 $(OBJS_DIR)/%.o: $(DISP_DIR_BONUS)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	clear
-	@$(eval COUNT_D=$(shell echo $$(($(COUNT_D)+1))))
+	@$(eval COUNT_DB=$(shell echo $$(($(COUNT_DB)+1))))
 	@echo -n "$(BLUE)Compiling MLX42   :$(GREEN) ✅\n$(BLUE)Compiling Libft   :$(GREEN) ✅\n$(BLUE)Compiling Cub3d   :$(GREEN) ✅\n$(BLUE)Compiling Parsing :"
 	@echo -n "$(GREEN) ✅\n$(BLUE)Compiling Display :$(CYAN) ["
-	@completed=$$(( $(COUNT_D) * $(BAR_LENGTH) / $(TOTAL_D) )); \
+	@completed=$$(( $(COUNT_DB) * $(BAR_LENGTH) / $(TOTAL_DB) )); \
 	remaining=$$(( $(BAR_LENGTH) - completed )); \
 	for i in $$(seq 1 $$completed); do echo -n "█"; done; \
 	for i in $$(seq 1 $$remaining); do echo -n "▒"; done
-	@echo "] ($(COUNT_D)/$(TOTAL_D))"
+	@echo "] ($(COUNT_DB)/$(TOTAL_DB))"
 
 MLX:
 	@clear
