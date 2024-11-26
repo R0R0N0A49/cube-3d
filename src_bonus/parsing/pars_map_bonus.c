@@ -17,7 +17,7 @@ static int	isfine(char **map, int i, int j)
 	char	*lstchar;
 	int		k;
 
-	lstchar = "210 NSWED\n\0";
+	lstchar = "10 NSWED\n\0";
 	k = 0;
 	while (lstchar[k])
 	{
