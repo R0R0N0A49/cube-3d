@@ -59,6 +59,7 @@ uint32_t	pasthexa(char *line, t_map *data, t_tmp *map)
 	int		r;
 	int		g;
 	int		b;
+	int		i;
 
 	if (!line)
 		return (0);
@@ -73,9 +74,10 @@ uint32_t	pasthexa(char *line, t_map *data, t_tmp *map)
 	r = -1;
 	g = -1;
 	b = -1;
-	if (loop_hexa(tmp, &r, &g, &b))
-		error_colors(line, 0, data, map);
+	i = loop_hexa(tmp, &r, &g, &b);
 	ft_free_stringtab(tmp);
+	if (i)
+		error_colors(line, 0, data, map);
 	return ((r << 24) + ((g) << 16) + ((b << 8)) + 255);
 }
 

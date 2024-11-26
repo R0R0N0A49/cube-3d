@@ -6,7 +6,7 @@ WE ./tiles/textures/brique.png
 
 EA ./tiles/textures/bricks.png
 
-F 158,158,158
+F .,158,158
 
 C 192,223,239
 
